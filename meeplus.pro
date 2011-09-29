@@ -51,6 +51,9 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # CONFIG += mobility
 # MOBILITY +=
 
+# Speed up launching on MeeGo/Harmattan when using applauncherd daemon
+CONFIG += qdeclarative-boostable
+
 # Add dependency to symbian components
 # CONFIG += qtquickcomponents
 
