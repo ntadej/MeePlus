@@ -19,9 +19,29 @@
 #include <QtGui/QColor>
 #include <QtGui/QFont>
 
+#include "Config.h"
 #include "Constants.h"
 
-QDeclarativePropertyMap *Constants::uiConstants()
+QDeclarativePropertyMap *MeePlus::Constants::common()
+{
+    QDeclarativePropertyMap *commonConstantsData = new QDeclarativePropertyMap();
+
+#ifdef VERSION_PATCH
+    commonConstantsData->insert("MeePlusVersion", QVariant(QString(VERSION) + "-" + QString(VERSION_PATCH));
+#else
+    commonConstantsData->insert("MeePlusVersion", QVariant(QString(VERSION)));
+#endif
+
+#ifdef CLIENT_ID
+    commonConstantsData->insert("GoogleClientId", QVariant(QString().number(CLIENT_ID) + ".apps.googleusercontent.com"));
+#else
+    commonConstantsData->insert("GoogleClientId", QVariant(-1));
+#endif
+
+    return commonConstantsData;
+}
+
+QDeclarativePropertyMap *MeePlus::Constants::ui()
 {
     QDeclarativePropertyMap *uiConstantsData = new QDeclarativePropertyMap();
     uiConstantsData->insert("DefaultMargin", QVariant(16));

@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 import QtQuick 1.1
+import QtWebKit 1.0
 import com.nokia.meego 1.0
 
 import "../common"
@@ -33,13 +34,22 @@ Page {
         IconMenu {}
     }
 
-    Button {
-        id: button
-        anchors {
-            top: header.bottom
-        }
-        text: qsTr("Login")
-        onClicked: MeePlusJs.addPage("LoginPage.qml")
+    WebView {
+        id: login
+        url: "https://accounts.google.com/o/oauth2/auth?client_id=" + MeePlusCommon.GoogleClientId + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=https://www.google.com/m8/feeds/&response_type=code"
+
+        preferredHeight: height
+        preferredWidth: width
+
+        anchors.top: header.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -parent.anchors.bottomMargin
+        anchors.leftMargin: -parent.anchors.leftMargin
+        anchors.rightMargin: -parent.anchors.rightMargin
+
+        onTitleChanged: { visible: MeePlusJs.validateLogin(title); console.debug(title); console.debug(MeePlusJs.validateLogin(title)) }
     }
 
     PageHeader {

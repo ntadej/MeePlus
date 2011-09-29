@@ -18,3 +18,8 @@ function replacePage(file) {
         console.log("Error loading component:", component.errorString());
     }
 }
+
+// Login
+function validateLogin(title) {
+    return title.indexOf("code") != -1
+}

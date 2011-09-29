@@ -1,0 +1,7 @@
+MeePlus - Google+ client for Harmattan
+==============================================
+
+Installation
+============
+Configure with:
+qmake CLIENT_ID="number part of Google Client ID"

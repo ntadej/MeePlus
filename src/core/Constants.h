@@ -17,13 +17,17 @@
 *****************************************************************************/
 
 #ifndef MEEPLUS_CONSTANTS_H_
-#define MEEPLUS_MOBILECONSTANTS_H_
+#define MEEPLUS_CONSTANTS_H_
 
 #include <QtDeclarative/QDeclarativePropertyMap>
 
-namespace Constants
+namespace MeePlus
 {
-    QDeclarativePropertyMap *uiConstants();
+    namespace Constants
+    {
+        QDeclarativePropertyMap *common();
+        QDeclarativePropertyMap *ui();
+    }
 }
 
 #endif // MEEPLUS_CONSTANTS_H_

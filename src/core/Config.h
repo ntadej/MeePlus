@@ -16,24 +16,12 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
-#include <QtGui/QApplication>
-#include <QtDeclarative/QDeclarativeContext>
+#ifndef MEEPLUS_CONFIG_H_
+#define MEEPLUS_CONFIG_H_
 
-#include "qmlapplicationviewer.h"
+#define VERSION "0.1.0"
+#ifdef GIT
+    #define VERSION_PATCH GIT
+#endif
 
-#include "core/Constants.h"
-
-int main(int argc, char *argv[])
-{
-    QApplication app(argc, argv);
-
-    QmlApplicationViewer viewer;
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.rootContext()->setContextProperty("MeePlusCommon", MeePlus::Constants::common());
-    viewer.rootContext()->setContextProperty("MeePlusUi", MeePlus::Constants::ui());
-    viewer.setMainQmlFile(QLatin1String("qml/main.qml"));
-    viewer.showExpanded();
-
-    return app.exec();
-}
+#endif // MEEPLUS_CONFIG_H_
