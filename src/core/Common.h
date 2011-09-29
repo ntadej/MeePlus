@@ -19,9 +19,13 @@
 #ifndef MEEPLUS_COMMON_H_
 #define MEEPLUS_COMMON_H_
 
+#include <QtCore/QString>
+
 namespace MeePlus
 {
-
+    QString locateResource(const QString &file);
+    QString settingsPath();
+    QString version();
 }
 
 #endif // MEEPLUS_COMMON_H_

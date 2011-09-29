@@ -17,29 +17,47 @@
 *****************************************************************************/
 
 #include <QtCore/QDebug>
-#include <QtGui/QApplication>
-#include <QtDeclarative/QDeclarativeContext>
+#include <QtCore/QRegExp>
 
-#include "qmlapplicationviewer.h"
+#include "Authentication.h"
 
-#include "core/Constants.h"
-#include "core/Authentication.h"
-
-int main(int argc, char *argv[])
+MPAuthentication::MPAuthentication(QObject *parent)
+    : QObject(parent)
 {
-    QApplication app(argc, argv);
 
-    QmlApplicationViewer viewer;
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+}
 
-    viewer.rootContext()->setContextProperty("MeePlusCommon", MeePlus::Constants::common());
-    viewer.rootContext()->setContextProperty("MeePlusUi", MeePlus::Constants::ui());
+MPAuthentication::~MPAuthentication()
+{
 
-    MPAuthentication *auth = new MPAuthentication();
-    viewer.rootContext()->setContextProperty("MeePlusAuth", auth);
+}
 
-    viewer.setMainQmlFile(QLatin1String("qml/main.qml"));
-    viewer.showExpanded();
 
-    return app.exec();
+QString MPAuthentication::requestUrl() const
+{
+    QString clientId;
+#ifdef CLIENT_ID
+    clientId = QString().number(CLIENT_ID) + ".apps.googleusercontent.com";
+#else
+    return QString("error");
+#endif
+
+    QString url = "https://accounts.google.com/o/oauth2/auth?"
+            "client_id=" + clientId + "&"
+            "redirect_uri=urn:ietf:wg:oauth:2.0:oob&"
+            "scope=https://www.googleapis.com/auth/plus.me&"
+            "response_type=code";
+    return url;
+}
+
+bool MPAuthentication::responseCode(const QString &title) const
+{
+    if(!title.contains("code"))
+        return false;
+
+    QRegExp exp(".*=(.*)");
+    exp.indexIn(title);
+    qDebug() << exp.cap(1);
+
+    return true;
 }

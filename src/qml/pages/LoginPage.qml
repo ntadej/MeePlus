@@ -34,27 +34,23 @@ Page {
         IconMenu {}
     }
 
-    WebView {
+    WebBrowser {
         id: login
-        url: "https://accounts.google.com/o/oauth2/auth?client_id=" + MeePlusCommon.GoogleClientId + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=https://www.google.com/m8/feeds/&response_type=code"
-
-        preferredHeight: height
-        preferredWidth: width
+        url: MeePlusAuth.requestUrl();
 
         anchors.top: header.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -parent.anchors.bottomMargin
-        anchors.leftMargin: -parent.anchors.leftMargin
-        anchors.rightMargin: -parent.anchors.rightMargin
 
-        onTitleChanged: { visible: MeePlusJs.validateLogin(title); console.debug(title); console.debug(MeePlusJs.validateLogin(title)) }
+        onTitleChanged: {
+            if(MeePlusAuth.responseCode(title)) {
+                login.done = true
+                pageStack.pop();
+            }
+        }
     }
 
     PageHeader {
         id: header
 
-        title: "MeePlus (Alpha)"
+        title: qsTr("Login")
     }
 }

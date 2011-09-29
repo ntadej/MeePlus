@@ -16,30 +16,20 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
-#include <QtGui/QApplication>
-#include <QtDeclarative/QDeclarativeContext>
+#ifndef MEEPLUS_AUTHENTICATION_H_
+#define MEEPLUS_AUTHENTICATION_H_
 
-#include "qmlapplicationviewer.h"
+#include <QtCore/QObject>
 
-#include "core/Constants.h"
-#include "core/Authentication.h"
-
-int main(int argc, char *argv[])
+class MPAuthentication : public QObject
 {
-    QApplication app(argc, argv);
+Q_OBJECT
+public:
+    MPAuthentication(QObject *parent = 0);
+    ~MPAuthentication();
 
-    QmlApplicationViewer viewer;
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    Q_INVOKABLE QString requestUrl() const;
+    Q_INVOKABLE bool responseCode(const QString &title) const;
+};
 
-    viewer.rootContext()->setContextProperty("MeePlusCommon", MeePlus::Constants::common());
-    viewer.rootContext()->setContextProperty("MeePlusUi", MeePlus::Constants::ui());
-
-    MPAuthentication *auth = new MPAuthentication();
-    viewer.rootContext()->setContextProperty("MeePlusAuth", auth);
-
-    viewer.setMainQmlFile(QLatin1String("qml/main.qml"));
-    viewer.showExpanded();
-
-    return app.exec();
-}
+#endif // MEEPLUS_AUTHENTICATION_H_

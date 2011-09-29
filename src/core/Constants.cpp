@@ -19,18 +19,14 @@
 #include <QtGui/QColor>
 #include <QtGui/QFont>
 
-#include "Config.h"
+#include "Common.h"
 #include "Constants.h"
 
 QDeclarativePropertyMap *MeePlus::Constants::common()
 {
     QDeclarativePropertyMap *commonConstantsData = new QDeclarativePropertyMap();
 
-#ifdef VERSION_PATCH
-    commonConstantsData->insert("MeePlusVersion", QVariant(QString(VERSION) + "-" + QString(VERSION_PATCH));
-#else
-    commonConstantsData->insert("MeePlusVersion", QVariant(QString(VERSION)));
-#endif
+    commonConstantsData->insert("MeePlusVersion", MeePlus::version());
 
 #ifdef CLIENT_ID
     commonConstantsData->insert("GoogleClientId", QVariant(QString().number(CLIENT_ID) + ".apps.googleusercontent.com"));
