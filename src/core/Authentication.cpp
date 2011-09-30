@@ -18,39 +18,54 @@
 
 #include <QtCore/QDebug>
 #include <QtCore/QRegExp>
+#include <QtCore/QUrl>
+#include <QtNetwork/QNetworkRequest>
 
 #include "Authentication.h"
+#include "Common.h"
+#include "NetworkRequest.h"
 
 MPAuthentication::MPAuthentication(QObject *parent)
     : QObject(parent)
 {
-
+    _nr = new MPNetworkRequest(this);
+    connect(_nr, SIGNAL(result(QString)), this, SLOT(token(QString)));
 }
 
 MPAuthentication::~MPAuthentication()
 {
-
+    delete _nr;
 }
-
 
 QString MPAuthentication::requestUrl() const
 {
-    QString clientId;
-#ifdef CLIENT_ID
-    clientId = QString().number(CLIENT_ID) + ".apps.googleusercontent.com";
-#else
-    return QString("error");
-#endif
-
     QString url = "https://accounts.google.com/o/oauth2/auth?"
-            "client_id=" + clientId + "&"
+            "client_id=" + MeePlus::clientId() + "&"
             "redirect_uri=urn:ietf:wg:oauth:2.0:oob&"
             "scope=https://www.googleapis.com/auth/plus.me&"
             "response_type=code";
     return url;
 }
 
-bool MPAuthentication::responseCode(const QString &title) const
+void MPAuthentication::requestToken(const QString &code)
+{
+    QNetworkRequest request(QUrl("https://accounts.google.com/o/oauth2/token"));
+    request.setRawHeader("Host", "accounts.google.com");
+    request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+    request.setRawHeader("User-Agent", QString("MeePlus " + MeePlus::version()).toUtf8());
+
+    QString data = "client_id=" + MeePlus::clientId() + "&"
+            "client_secret=" + MeePlus::clientSecret() + "&"
+            "code=" + code + "&"
+            "redirect_uri=urn:ietf:wg:oauth:2.0:oob&"
+            "grant_type=authorization_code";
+
+    qDebug() << data.toUtf8();
+
+    _nr->postRequest(request, data.toUtf8());
+}
+
+bool MPAuthentication::responseCode(const QString &title)
 {
     if(!title.contains("code"))
         return false;
@@ -59,5 +74,16 @@ bool MPAuthentication::responseCode(const QString &title) const
     exp.indexIn(title);
     qDebug() << exp.cap(1);
 
+    QString code = exp.cap(1);
+    requestToken(code);
+
     return true;
+}
+
+void MPAuthentication::token(const QString &token)
+{
+    //if(!ok)
+    //    return;
+
+    qDebug() << token;
 }

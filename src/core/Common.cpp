@@ -24,6 +24,26 @@
 #include "Common.h"
 #include "Config.h"
 
+QString MeePlus::clientId()
+{
+    QString clientId = "";
+#ifdef CLIENT_ID
+    clientId = QString(CLIENT_ID);
+#endif
+
+    return clientId;
+}
+
+QString MeePlus::clientSecret()
+{
+    QString clientSecret = "";
+#ifdef CLIENT_SECRET
+    clientSecret = QString(CLIENT_SECRET);
+#endif
+
+    return clientSecret;
+}
+
 QString MeePlus::locateResource(const QString &file)
 {
     QString path;

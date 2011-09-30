@@ -16,21 +16,43 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_COMMON_H_
-#define MEEPLUS_COMMON_H_
+#ifndef MEEPLUS_NETWORK_REQUEST_H_
+#define MEEPLUS_NETWORK_REQUEST_H_
 
-#include <QtCore/QString>
+#include <QtCore/QUrl>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
 
-namespace MeePlus
+class MPNetworkRequest : public QObject
 {
-    // Main
-    QString locateResource(const QString &file);
-    QString settingsPath();
-    QString version();
+Q_OBJECT
+public:
+	MPNetworkRequest(QObject *parent = 0);
+	~MPNetworkRequest();
 
-    // Authentication
-    QString clientId();
-    QString clientSecret();
-}
+	void getRequest(const QNetworkRequest &request);
+	void postRequest(const QNetworkRequest &request,
+					 const QByteArray &data);
 
-#endif // MEEPLUS_COMMON_H_
+signals:
+	void result(const QString &);
+
+private slots:
+	void httpReadyRead();
+	void httpRequestFinished();
+
+private:
+	void startRequest(const QNetworkRequest &request,
+					  const QByteArray &data = 0);
+
+	QNetworkAccessManager _nam;
+	QNetworkReply *_nreply;
+
+	QByteArray _currentData;
+	QNetworkRequest _currentRequest;
+	QString _currentResult;
+
+	QUrl _url;
+};
+
+#endif // MEEPLUS_NETWORK_REQUEST_H_

@@ -38,15 +38,15 @@ public:
     static const bool DEFAULT_CONFIGURED;
     inline QString language() const { return _language; }
     inline void setLanguage(const QString &s) { _language = s; }
-    static const QString DEFAULT_LANGUAGE;
 
     // Authentication
     inline QString name() const { return _name; }
     inline void setName(const QString &s) { _name = s; }
     static const QString DEFAULT_NAME;
-    inline QString token() const { return _token; }
-    inline void setToken(const QString &s) { _token = s; }
-    static const QString DEFAULT_TOKEN;
+    inline QString accessToken() const { return _accessToken; }
+    inline void setAccessToken(const QString &s) { _accessToken = s; }
+    inline QString refreshToken() const { return _refreshToken; }
+    inline void setRefreshToken(const QString &s) { _refreshToken = s; }
 
 private:
     // General variables
@@ -56,7 +56,8 @@ private:
 
     // Authentication
     QString _name;
-    QString _token;
+    QString _accessToken;
+    QString _refreshToken;
 };
 
 #endif // MEEPLUS_SETTINGS_H_

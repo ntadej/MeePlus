@@ -23,10 +23,8 @@
 
 // Define defaults - General
 const bool MPSettings::DEFAULT_CONFIGURED = false;
-const QString MPSettings::DEFAULT_LANGUAGE = "";
 // Authentication
 const QString MPSettings::DEFAULT_NAME = "Google";
-const QString MPSettings::DEFAULT_TOKEN = "";
 
 MPSettings::MPSettings(QObject *parent)
     : QSettings(QSettings::IniFormat,
@@ -44,10 +42,11 @@ void MPSettings::readSettings()
 {
     setConfigurationVersion(value("general/version", MeePlus::version()).toString());
     setConfigured(value("general/configured", DEFAULT_CONFIGURED).toBool());
-    setLanguage(value("general/language", DEFAULT_LANGUAGE).toString());
+    setLanguage(value("general/language").toString());
 
     setName(value("auth/name", DEFAULT_NAME).toString());
-    setToken(value("auth/token", DEFAULT_TOKEN).toString());
+    setAccessToken(value("auth/access-token").toString());
+    setRefreshToken(value("auth/refresh-token").toString());
 }
 
 void MPSettings::writeSettings()
@@ -57,7 +56,8 @@ void MPSettings::writeSettings()
     setValue("general/language", language());
 
     setValue("auth/name", name());
-    setValue("auth/token", token());
+    setValue("auth/access-token", accessToken());
+    setValue("auth/refresh-token", refreshToken());
 
     sync();
 }

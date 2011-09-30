@@ -16,14 +16,21 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>./
 #############################################################################
 
+# Defines
 !isEmpty( GIT ) {
     DEFINES += GIT=$$GIT
 }
 
 !isEmpty( CLIENT_ID ) {
-    DEFINES += CLIENT_ID=$$CLIENT_ID
+    DEFINES += CLIENT_ID=\\\"$$CLIENT_ID\\\"
 } else {
     error("Please set CLIENT_ID!")
+}
+
+!isEmpty( CLIENT_SECRET ) {
+    DEFINES += CLIENT_SECRET=\\\"$$CLIENT_SECRET\\\"
+} else {
+    error("Please set CLIENT_SECRET!")
 }
 
 # Add more folders to ship with the application, here
@@ -46,6 +53,9 @@ symbian:TARGET.UID3 = 0xE86D2774
 # Allow network access on Symbian
 symbian:TARGET.CAPABILITY += NetworkServices
 
+# Add Qt modules
+QT += network
+
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
 # CONFIG += mobility
@@ -62,7 +72,11 @@ SOURCES += src/main.cpp \
     src/core/Common.cpp \
     src/core/Authentication.cpp \
     src/core/Settings.cpp \
-    src/core/LocaleManager.cpp
+    src/core/LocaleManager.cpp  \
+    src/core/NetworkRequest.cpp
+
+SOURCES += \
+    src/json/json.cpp
 
 HEADERS += \
     src/core/Constants.h \
@@ -70,7 +84,8 @@ HEADERS += \
     src/core/Config.h \
     src/core/Authentication.h \
     src/core/Settings.h \
-    src/core/LocaleManager.h
+    src/core/LocaleManager.h  \
+    src/core/NetworkRequest.h
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
