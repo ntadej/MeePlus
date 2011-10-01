@@ -20,9 +20,9 @@
 #include <QtCore/QDir>
 #include <QtCore/QLocale>
 
-#include "Common.h"
-#include "LocaleManager.h"
-#include "Settings.h"
+#include "core/Common.h"
+#include "core/LocaleManager.h"
+#include "core/Settings.h"
 
 MPLocaleManager::MPLocaleManager()
 {

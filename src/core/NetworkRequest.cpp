@@ -16,7 +16,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "NetworkRequest.h"
+#include "core/NetworkRequest.h"
 
 MPNetworkRequest::MPNetworkRequest(QObject *parent)
     : QObject(parent),

@@ -21,8 +21,8 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QSettings>
 
-#include "Common.h"
-#include "Config.h"
+#include "core/Common.h"
+#include "core/Config.h"
 
 QString MeePlus::clientId()
 {

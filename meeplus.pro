@@ -33,6 +33,12 @@
     error("Please set CLIENT_SECRET!")
 }
 
+# Include all subdirectories
+
+INCLUDEPATH += src \
+    src/core \
+    src/json
+
 # Add more folders to ship with the application, here
 qml_deploy.source = src/qml
 qml_deploy.target =

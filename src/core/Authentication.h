@@ -38,6 +38,7 @@ private slots:
     void token(const QString &token);
 
 private:
+    void refreshToken();
     void requestToken(const QString &code);
 
     MPNetworkRequest *_nr;

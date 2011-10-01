@@ -20,7 +20,7 @@
 #include <QtGui/QApplication>
 #include <QtDeclarative/QDeclarativeContext>
 
-#include "qmlapplicationviewer.h"
+#include "qmlapplicationviewer/qmlapplicationviewer.h"
 
 #include "core/Constants.h"
 #include "core/Authentication.h"

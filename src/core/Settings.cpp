@@ -18,8 +18,8 @@
 
 #include <QtCore/QDir>
 
-#include "Common.h"
-#include "Settings.h"
+#include "core/Common.h"
+#include "core/Settings.h"
 
 // Define defaults - General
 const bool MPSettings::DEFAULT_CONFIGURED = false;

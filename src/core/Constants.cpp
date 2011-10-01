@@ -19,20 +19,16 @@
 #include <QtGui/QColor>
 #include <QtGui/QFont>
 
-#include "Common.h"
-#include "Constants.h"
+#include "core/Common.h"
+#include "core/Constants.h"
 
 QDeclarativePropertyMap *MeePlus::Constants::common()
 {
     QDeclarativePropertyMap *commonConstantsData = new QDeclarativePropertyMap();
 
     commonConstantsData->insert("MeePlusVersion", MeePlus::version());
-
-#ifdef CLIENT_ID
-    commonConstantsData->insert("GoogleClientId", QVariant(QString().number(CLIENT_ID) + ".apps.googleusercontent.com"));
-#else
-    commonConstantsData->insert("GoogleClientId", QVariant(-1));
-#endif
+    commonConstantsData->insert("GoogleClientId", MeePlus::clientId());
+    commonConstantsData->insert("GoogleClientSecret", MeePlus::clientSecret());
 
     return commonConstantsData;
 }
@@ -43,7 +39,7 @@ QDeclarativePropertyMap *MeePlus::Constants::ui()
     uiConstantsData->insert("DefaultMargin", QVariant(16));
     uiConstantsData->insert("ButtonSpacing", QVariant(6));
     uiConstantsData->insert("HeaderDefaultHeightPortrait", QVariant(72));
-    uiConstantsData->insert("HeaderDefaultHeightLandscape", QVariant(46));
+    uiConstantsData->insert("HeaderDefaultHeightLandscape", QVariant(56));
     uiConstantsData->insert("HeaderDefaultTopSpacingPortrait", QVariant(20));
     uiConstantsData->insert("HeaderDefaultBottomSpacingPortrait", QVariant(20));
     uiConstantsData->insert("HeaderDefaultTopSpacingLandscape", QVariant(16));
@@ -57,7 +53,7 @@ QDeclarativePropertyMap *MeePlus::Constants::ui()
     // Colors
     uiConstantsData->insert("FieldLabelColor", QVariant(QColor("#505050")));
     uiConstantsData->insert("HeaderColor", QVariant(QColor("#FFFFFF")));
-    uiConstantsData->insert("HighlightColor", QVariant(QColor("#2D2D2D")));
+    uiConstantsData->insert("HighlightColor", QVariant(QColor("#DD4B39")));
 
     // Fonts
     QFont bodyTextFont;
