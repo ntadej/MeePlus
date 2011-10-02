@@ -19,18 +19,9 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "common"
-import "pages"
+import "../js/core.js" as MeePlusJs
 
-import "js/core.js" as MeePlusJs
-
-PageStackWindow {
-    id: appWindow
-    anchors.margins: MeePlusUi.DefaultMargin
-
-    initialPage: welcomePage
-
-    MainMenu { id: menu }
-
-    WelcomePage { id: welcomePage }
+ToolIcon {
+    iconId: "toolbar-settings"
+    onClicked: MeePlusJs.addPage("../pages/SettingsPage.qml")
 }

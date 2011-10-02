@@ -19,18 +19,46 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "common"
-import "pages"
+import "../common"
+import "../icons"
 
-import "js/core.js" as MeePlusJs
+import "../js/core.js" as MeePlusJs
 
-PageStackWindow {
-    id: appWindow
-    anchors.margins: MeePlusUi.DefaultMargin
+CommonPage {
+    id: welcomePage
+    title: qsTr("Account")
+    tools: ToolBarLayout {
+        id: welcomePageTools
+        visible: true
+        IconBack {}
+        IconMenu {}
+    }
 
-    initialPage: welcomePage
+    Column {
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-    MainMenu { id: menu }
+        Label {
+            id: labelName
 
-    WelcomePage { id: welcomePage }
+            text: qsTr("Account name:")
+        }
+
+        TextField {
+            id: name
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
+
+
+
+            text: MeePlusSettings.name()
+            onTextChanged: {
+                MeePlusSettings.setName(text)
+                MeePlusSettings.writeSettings()
+            }
+        }
+    }
 }

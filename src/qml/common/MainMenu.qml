@@ -28,7 +28,7 @@ Menu {
 
     AboutDialog { id: about }
     MenuLayout {
-        MenuItem { text: qsTr("Page"); } //onClicked: MeePlusJs.addPage("../pages/SettingsPage.qml") }
+        //MenuItem { text: qsTr("Page"); } onClicked: MeePlusJs.addPage("../pages/SettingsPage.qml") }
         MenuItem { text: qsTr("About"); onClicked: about.open() }
         MenuItem { text: qsTr("Exit"); onClicked: Qt.quit() }
     }

@@ -19,7 +19,34 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-ToolIcon {
-    iconId: "toolbar-view-menu"
-    onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
+import "../common"
+import "../icons"
+
+import "../js/core.js" as MeePlusJs
+
+CommonPage {
+    id: settingsPage
+    title: qsTr("Settings")
+    tools: ToolBarLayout {
+        id: settingsPageTools
+        visible: true
+        IconBack {}
+        IconMenu {}
+    }
+
+    Column {
+        anchors.fill: parent
+
+        CheckBox {
+            id: themeInverted
+
+            text: qsTr("Inverted theme")
+            checked: MeePlusSettings.inverted()
+            onCheckedChanged: {
+                MeePlusSettings.setInverted(checked)
+                MeePlusSettings.writeSettings()
+                theme.inverted = checked
+            }
+        }
+    }
 }

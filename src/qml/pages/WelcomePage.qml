@@ -20,31 +20,36 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 import "../common"
+import "../icons"
 
 import "../js/core.js" as MeePlusJs
 
-Page {
+CommonPage {
     id: welcomePage
-    anchors.margins: MeePlusUi.DefaultMargin
+    title: "MeePlus (Alpha)"
     tools: ToolBarLayout {
         id: welcomePageTools
         visible: true
-        ButtonOrientation {}
+        IconSettings {}
+        IconAccount {}
         IconMenu {}
     }
 
-    Button {
-        id: button
-        anchors {
-            top: header.bottom
+    onStatusChanged: MeePlusJs.settings()
+
+    Column {
+        anchors.centerIn: parent
+
+        Button {
+            id: buttonLogin
+            text: qsTr("Login")
+            onClicked: MeePlusJs.addPage("LoginPage.qml")
         }
-        text: qsTr("Login")
-        onClicked: MeePlusJs.addPage("LoginPage.qml")
-    }
 
-    PageHeader {
-        id: header
-
-        title: "MeePlus (Alpha)"
+        Button {
+            id: buttonTheme
+            text: qsTr("Invert theme")
+            onClicked: { theme.inverted = !theme.inverted }
+        }
     }
 }

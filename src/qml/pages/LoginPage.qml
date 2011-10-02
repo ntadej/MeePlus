@@ -21,16 +21,17 @@ import QtWebKit 1.0
 import com.nokia.meego 1.0
 
 import "../common"
+import "../icons"
 
 import "../js/core.js" as MeePlusJs
 
-Page {
+CommonPage {
     id: welcomePage
-    anchors.margins: MeePlusUi.DefaultMargin
+    title: qsTr("Login")
     tools: ToolBarLayout {
         id: welcomePageTools
         visible: true
-        ButtonOrientation {}
+        IconBack {}
         IconMenu {}
     }
 
@@ -46,11 +47,5 @@ Page {
                 pageStack.pop();
             }
         }
-    }
-
-    PageHeader {
-        id: header
-
-        title: qsTr("Login")
     }
 }

@@ -22,8 +22,9 @@
 
 #include "qmlapplicationviewer/qmlapplicationviewer.h"
 
-#include "core/Constants.h"
 #include "core/Authentication.h"
+#include "core/Constants.h"
+#include "core/Settings.h"
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +35,9 @@ int main(int argc, char *argv[])
 
     viewer.rootContext()->setContextProperty("MeePlusCommon", MeePlus::Constants::common());
     viewer.rootContext()->setContextProperty("MeePlusUi", MeePlus::Constants::ui());
+
+    MPSettings *settings = new MPSettings();
+    viewer.rootContext()->setContextProperty("MeePlusSettings", settings);
 
     MPAuthentication *auth = new MPAuthentication();
     viewer.rootContext()->setContextProperty("MeePlusAuth", auth);

@@ -19,18 +19,8 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "common"
-import "pages"
-
-import "js/core.js" as MeePlusJs
-
-PageStackWindow {
-    id: appWindow
-    anchors.margins: MeePlusUi.DefaultMargin
-
-    initialPage: welcomePage
-
-    MainMenu { id: menu }
-
-    WelcomePage { id: welcomePage }
+ToolIcon {
+    iconId: "toolbar-view-menu"
+    onClicked: menu.status == DialogStatus.Closed ? menu.open() : menu.close()
+    anchors.right: parent.right
 }

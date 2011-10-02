@@ -25,6 +25,8 @@
 const bool MPSettings::DEFAULT_CONFIGURED = false;
 // Authentication
 const QString MPSettings::DEFAULT_NAME = "Google";
+// Theme
+const bool MPSettings::DEFAULT_INVERTED = false;
 
 MPSettings::MPSettings(QObject *parent)
     : QSettings(QSettings::IniFormat,
@@ -47,6 +49,8 @@ void MPSettings::readSettings()
     setName(value("auth/name", DEFAULT_NAME).toString());
     setAccessToken(value("auth/access-token").toString());
     setRefreshToken(value("auth/refresh-token").toString());
+
+    setInverted(value("theme/inverted", DEFAULT_INVERTED).toBool());
 }
 
 void MPSettings::writeSettings()
@@ -58,6 +62,8 @@ void MPSettings::writeSettings()
     setValue("auth/name", name());
     setValue("auth/access-token", accessToken());
     setValue("auth/refresh-token", refreshToken());
+
+    setValue("theme/inverted", inverted());
 
     sync();
 }

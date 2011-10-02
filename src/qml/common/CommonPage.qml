@@ -19,18 +19,26 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "common"
-import "pages"
-
-import "js/core.js" as MeePlusJs
-
-PageStackWindow {
-    id: appWindow
+Page {
+    id: commonPage
     anchors.margins: MeePlusUi.DefaultMargin
+    anchors.topMargin: MeePlusUi.DefaultMargin + header.height
 
-    initialPage: welcomePage
+    property alias title: header.title
 
-    MainMenu { id: menu }
+    Flickable {
+        id: flickable
 
-    WelcomePage { id: welcomePage }
+        anchors.topMargin: MeePlusUi.DefaultMargin
+        anchors.bottomMargin: MeePlusUi.DefaultMargin
+
+        anchors.top: header.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+    }
+
+    PageHeader {
+        id: header
+    }
 }

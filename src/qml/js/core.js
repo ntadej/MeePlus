@@ -19,6 +19,10 @@ function replacePage(file) {
     }
 }
 
+function settings() {
+    theme.inverted = MeePlusSettings.inverted()
+}
+
 // Login
 function validateLogin(title) {
     return title.indexOf("code") != -1

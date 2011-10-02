@@ -20,9 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 ToolIcon {
-    iconId: "toolbar-back"
-    onClicked: {
-        menu.close();
-        pageStack.pop();
-    }
+    iconId: "toolbar-done"
+    anchors.centerIn: parent
+    //onClicked:
 }

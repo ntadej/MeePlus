@@ -19,8 +19,9 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-ToolButton {
-    text: "Change orientation";
-    onClicked: orientationLock = (screen.currentOrientation == Screen.Portrait) ?
-                   PageOrientation.LockLandscape : PageOrientation.LockPortrait
+import "../js/core.js" as MeePlusJs
+
+ToolIcon {
+    iconId: "toolbar-contact"
+    onClicked: MeePlusJs.addPage("../pages/AccountPage.qml")
 }

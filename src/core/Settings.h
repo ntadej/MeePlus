@@ -23,12 +23,13 @@
 
 class MPSettings : public QSettings
 {
+Q_OBJECT
 public:
     MPSettings(QObject * parent = 0);
     ~MPSettings();
 
-    void readSettings();
-    void writeSettings();
+    Q_INVOKABLE void readSettings();
+    Q_INVOKABLE void writeSettings();
 
     // General
     inline QString configurationVersion() { return _configurationVersion; }
@@ -36,17 +37,22 @@ public:
     inline bool configured() const { return _configured; }
     inline void setConfigured(const bool &b) { _configured = b; }
     static const bool DEFAULT_CONFIGURED;
-    inline QString language() const { return _language; }
-    inline void setLanguage(const QString &s) { _language = s; }
+    Q_INVOKABLE inline QString language() const { return _language; }
+    Q_INVOKABLE inline void setLanguage(const QString &s) { _language = s; }
 
     // Authentication
-    inline QString name() const { return _name; }
-    inline void setName(const QString &s) { _name = s; }
+    Q_INVOKABLE inline QString name() const { return _name; }
+    Q_INVOKABLE inline void setName(const QString &s) { _name = s; }
     static const QString DEFAULT_NAME;
     inline QString accessToken() const { return _accessToken; }
     inline void setAccessToken(const QString &s) { _accessToken = s; }
     inline QString refreshToken() const { return _refreshToken; }
     inline void setRefreshToken(const QString &s) { _refreshToken = s; }
+
+    // Theme
+    Q_INVOKABLE inline bool inverted() const { return _inverted; }
+    Q_INVOKABLE inline void setInverted(const bool &b) { _inverted = b; }
+    static const bool DEFAULT_INVERTED;
 
 private:
     // General variables
@@ -58,6 +64,9 @@ private:
     QString _name;
     QString _accessToken;
     QString _refreshToken;
+
+    // Theme
+    bool _inverted;
 };
 
 #endif // MEEPLUS_SETTINGS_H_
