@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="80" width="80">
+ <defs>
+  <linearGradient id="hicg_overlay_grad" gradientUnits="userSpaceOnUse" x1="39.9995" y1="5.1816" x2="39.9995" y2="58.8019">
+   <stop offset="0" style="stop-color:#FFFFFF"/>
+   <stop offset="1" style="stop-color:#000000"/>
+  </linearGradient>
+  <filter id="hicg_drop_shadow">
+    <feOffset in="SourceAlpha" dx="0" dy="4"/>
+    <feGaussianBlur stdDeviation="4"/>
+	<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.5 0" result="shadow"/>
+    <feBlend in="SourceGraphic" in2="shadow" mode="normal"/>
+  </filter>
+ </defs>
+ <g>
+  <path id="hicg_background" fill="#dd4b39" d="M79,40c0,28.893-10.105,39-39,39S1,68.893,1,40C1,11.106,11.105,1,40,1S79,11.106,79,40z"/>
+  <path id="hicg_highlight" fill="#fff" opacity="0.25" d="M39.999,1C11.105,1,1,11.106,1,40c0,28.893,10.105,39,38.999,39   C68.896,79,79,68.893,79,40C79,11.106,68.896,1,39.999,1z M39.999,78.025C11.57,78.025,1.976,68.43,1.976,40   c0-28.429,9.595-38.024,38.023-38.024c28.43,0,38.024,9.596,38.024,38.024C78.023,68.43,68.429,78.025,39.999,78.025z"/>
+  <path id="hicg_overlay" opacity="0.4" fill="url(#hicg_overlay_grad)" d="M78.977,40c0,28.893-10.1,39-38.977,39S1.023,68.893,1.023,40c0-28.894,10.1-39,38.977-39S78.977,11.106,78.977,40z"/>
+ </g>
+<g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" transform="translate(13, 13) scale(0.27)" filter="url(#hicg_drop_shadow)">
+  <defs xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" id="defs3591">
+    <linearGradient inkscape:collect="always" xlink:href="#linearGradient280" id="linearGradient3556" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-36.2061,-36.2061,0,106,103.953)" spreadMethod="pad" x1="0" y1="0" x2="1" y2="0"/>
+    <linearGradient x1="0" y1="0" x2="1" y2="0" id="linearGradient280" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-36.2061,-36.2061,0,106,103.953)" spreadMethod="pad">
+      <stop id="stop282" style="stop-color:#9d9d9d;stop-opacity:1;" offset="0"/>
+      <stop id="stop284" style="stop-color:#2d2d2d;stop-opacity:1;" offset="1"/>
+    </linearGradient>
+    <linearGradient inkscape:collect="always" xlink:href="#linearGradient280" id="linearGradient3633" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-36.2061,-36.2061,0,106,103.953)" spreadMethod="pad" x1="0" y1="0" x2="1" y2="0"/>
+    <linearGradient inkscape:collect="always" xlink:href="#linearGradient280" id="linearGradient4422" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-36.2061,-36.2061,0,106,103.953)" spreadMethod="pad" x1="0" y1="0" x2="1" y2="0"/>
+  </defs>
+  <sodipodi:namedview xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="2.8" inkscape:cx="79.913187" inkscape:cy="85.650897" inkscape:document-units="px" inkscape:current-layer="g278" showgrid="false" inkscape:window-width="1869" inkscape:window-height="1145" inkscape:window-x="48" inkscape:window-y="32" inkscape:window-maximized="1"/>
+  <metadata xmlns="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" id="metadata3594">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-852.36215)">
+    <g id="g3635" transform="matrix(4.4347491,0,0,4.4347491,-305.46144,-3215.6345)">
+      <g transform="matrix(1.25,0,0,-1.25,113.87908,937.39868)" id="g264">
+        <path d="m 0,0 -16,0 0,16 -4,0 0,-16 -16,0 0,-4 16,0 0,-16 4,0 0,16 16,0 0,4 z" id="path266" style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" inkscape:connector-curvature="0"/>
+      </g>
+      <g transform="matrix(1.25,0,0,-1.25,-41.12092,1047.3003)" id="g268">
+        <g id="g270">
+          <g id="g276">
+            <g id="g278">
+              <path d="m 104,104 0,-16 -16,0 0,-4 16,0 0,-16 4,0 0,16 16,0 0,4 -16,0 0,16 -4,0 z" id="path286" style="fill:url(#linearGradient4422);stroke:none" inkscape:connector-curvature="0"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</g></svg>
