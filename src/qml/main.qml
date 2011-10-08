@@ -22,11 +22,11 @@ import com.nokia.meego 1.0
 import "common"
 import "pages"
 
-import "js/core.js" as MeePlusJs
+import "js/core.js" as MPJs
 
 PageStackWindow {
     id: appWindow
-    anchors.margins: MeePlusUi.DefaultMargin
+    anchors.margins: MPUi.DefaultMargin
 
     initialPage: welcomePage
 

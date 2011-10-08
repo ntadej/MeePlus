@@ -24,11 +24,11 @@ Rectangle {
     property bool orientation: screen.currentOrientation == Screen.Landscape
 
     color: theme.inverted ?
-               MeePlusUi.HighlightColorInverted :
-               MeePlusUi.HighlightColor
+               MPUi.HighlightColorInverted :
+               MPUi.HighlightColor
     height: orientation ?
-                MeePlusUi.HeaderDefaultHeightLandscape :
-                MeePlusUi.HeaderDefaultHeightPortrait
+                MPUi.HeaderDefaultHeightLandscape :
+                MPUi.HeaderDefaultHeightPortrait
     width: parent.width
 
     anchors.top: parent.top
@@ -40,14 +40,14 @@ Rectangle {
 
     Text {
         id: heading
-        color: MeePlusUi.HeaderColor
-        font: MeePlusUi.HeaderFont
+        color: MPUi.HeaderColor
+        font: MPUi.HeaderFont
         anchors.fill: parent
         anchors.topMargin: orientation ?
-                               MeePlusUi.HeaderDefaultTopSpacingLandscape :
-                               MeePlusUi.HeaderDefaultTopSpacingPortrait
-        anchors.rightMargin: MeePlusUi.DefaultMargin
-        anchors.leftMargin: MeePlusUi.DefaultMargin
+                               MPUi.HeaderDefaultTopSpacingLandscape :
+                               MPUi.HeaderDefaultTopSpacingPortrait
+        anchors.rightMargin: MPUi.DefaultMargin
+        anchors.leftMargin: MPUi.DefaultMargin
     }
 
     MouseArea {

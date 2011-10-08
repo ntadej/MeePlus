@@ -19,9 +19,9 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "../js/core.js" as MeePlusJs
+import "../js/core.js" as MPJs
 
 ToolIcon {
     iconId: "toolbar-settings"
-    onClicked: MeePlusJs.addPage("../pages/SettingsPage.qml")
+    onClicked: MPJs.addPage("../pages/SettingsPage.qml")
 }

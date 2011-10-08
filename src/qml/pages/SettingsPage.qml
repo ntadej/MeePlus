@@ -22,7 +22,7 @@ import com.nokia.meego 1.0
 import "../common"
 import "../icons"
 
-import "../js/core.js" as MeePlusJs
+import "../js/core.js" as MPJs
 
 CommonPage {
     id: settingsPage
@@ -41,10 +41,10 @@ CommonPage {
             id: themeInverted
 
             text: qsTr("Inverted theme")
-            checked: MeePlusSettings.inverted()
+            checked: MPSettings.inverted()
             onCheckedChanged: {
-                MeePlusSettings.setInverted(checked)
-                MeePlusSettings.writeSettings()
+                MPSettings.setInverted(checked)
+                MPSettings.writeSettings()
                 theme.inverted = checked
             }
         }

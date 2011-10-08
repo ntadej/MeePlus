@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "../js/core.js" as MeePlusJs
+import "../js/core.js" as MPJs
 
 import "../dialogs"
 
@@ -28,7 +28,7 @@ Menu {
 
     AboutDialog { id: about }
     MenuLayout {
-        //MenuItem { text: qsTr("Page"); } onClicked: MeePlusJs.addPage("../pages/SettingsPage.qml") }
+        //MenuItem { text: qsTr("Page"); } onClicked: MPJs.addPage("../pages/SettingsPage.qml") }
         MenuItem { text: qsTr("About"); onClicked: about.open() }
         MenuItem { text: qsTr("Exit"); onClicked: Qt.quit() }
     }

@@ -22,7 +22,7 @@ import com.nokia.meego 1.0
 import "../common"
 import "../icons"
 
-import "../js/core.js" as MeePlusJs
+import "../js/core.js" as MPJs
 
 CommonPage {
     id: welcomePage
@@ -35,7 +35,7 @@ CommonPage {
         IconMenu {}
     }
 
-    onStatusChanged: MeePlusJs.settings()
+    onStatusChanged: MPJs.settings()
 
     Column {
         anchors.centerIn: parent
@@ -43,12 +43,12 @@ CommonPage {
         Button {
             id: buttonLogin
             text: qsTr("Login")
-            onClicked: MeePlusJs.addPage("LoginPage.qml")
+            onClicked: MPJs.addPage("LoginPage.qml")
         }
 
         Button {
             id: buttonTheme
-            text: qsTr("Invert theme")
+            text: qsTr("My profile")
             onClicked: { theme.inverted = !theme.inverted }
         }
     }

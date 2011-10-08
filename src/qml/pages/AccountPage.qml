@@ -22,7 +22,7 @@ import com.nokia.meego 1.0
 import "../common"
 import "../icons"
 
-import "../js/core.js" as MeePlusJs
+import "../js/core.js" as MPJs
 
 CommonPage {
     id: welcomePage
@@ -54,10 +54,10 @@ CommonPage {
 
 
 
-            text: MeePlusSettings.name()
+            text: MPSettings.name()
             onTextChanged: {
-                MeePlusSettings.setName(text)
-                MeePlusSettings.writeSettings()
+                MPSettings.setName(text)
+                MPSettings.writeSettings()
             }
         }
     }

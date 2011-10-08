@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 QueryDialog {
-    titleText: qsTr("About MeePlus " + MeePlusCommon.MeePlusVersion)
+    titleText: qsTr("About MeePlus " + MPCommon.MeePlusVersion)
     message: qsTr("MeePlus - Google+ client for Harmattan.\n\n") +
              qsTr("This application is currently in an experimental stage.")
     rejectButtonText: "Close"

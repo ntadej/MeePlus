@@ -23,7 +23,7 @@ import com.nokia.meego 1.0
 import "../common"
 import "../icons"
 
-import "../js/core.js" as MeePlusJs
+import "../js/core.js" as MPJs
 
 CommonPage {
     id: welcomePage
@@ -37,12 +37,12 @@ CommonPage {
 
     WebBrowser {
         id: login
-        url: MeePlusAuth.requestUrl();
+        url: MPAuth.requestUrl();
 
         anchors.top: header.bottom
 
         onTitleChanged: {
-            if(MeePlusAuth.responseCode(title)) {
+            if(MPAuth.responseCode(title)) {
                 login.done = true
                 pageStack.pop();
             }

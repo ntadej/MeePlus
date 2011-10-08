@@ -21,16 +21,16 @@ import com.nokia.meego 1.0
 
 Page {
     id: commonPage
-    anchors.margins: MeePlusUi.DefaultMargin
-    anchors.topMargin: MeePlusUi.DefaultMargin + header.height
+    anchors.margins: MPUi.DefaultMargin
+    anchors.topMargin: MPUi.DefaultMargin + header.height
 
     property alias title: header.title
 
     Flickable {
         id: flickable
 
-        anchors.topMargin: MeePlusUi.DefaultMargin
-        anchors.bottomMargin: MeePlusUi.DefaultMargin
+        anchors.topMargin: MPUi.DefaultMargin
+        anchors.bottomMargin: MPUi.DefaultMargin
 
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
