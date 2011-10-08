@@ -20,7 +20,6 @@
 #define MEEPLUS_AUTHENTICATION_H_
 
 #include <QtCore/QObject>
-#include <QtNetwork/QHttp>
 
 class MPNetworkRequest;
 
@@ -34,11 +33,17 @@ public:
     Q_INVOKABLE QString requestUrl() const;
     Q_INVOKABLE bool responseCode(const QString &title);
 
+public slots:
+    void refreshToken();
+
+signals:
+    void authenticated();
+
 private slots:
+    void error(const int &err);
     void token(const QString &token);
 
 private:
-    void refreshToken();
     void requestToken(const QString &code);
 
     MPNetworkRequest *_nr;

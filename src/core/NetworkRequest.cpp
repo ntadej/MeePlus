@@ -16,6 +16,8 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include <QtCore/QDebug>
+
 #include "core/NetworkRequest.h"
 
 MPNetworkRequest::MPNetworkRequest(QObject *parent)
@@ -31,8 +33,16 @@ void MPNetworkRequest::getRequest(const QNetworkRequest &request)
     _currentRequest = request;
 
     _nreply = _nam.get(request);
+    connect(_nreply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpError(QNetworkReply::NetworkError)));
     connect(_nreply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
     connect(_nreply, SIGNAL(finished()), this, SLOT(httpRequestFinished()));
+}
+
+void MPNetworkRequest::httpError(const QNetworkReply::NetworkError &err)
+{
+    qDebug() << "MPNetworkRequest Error" << err;
+
+    emit error(err);
 }
 
 void MPNetworkRequest::httpReadyRead()
@@ -61,6 +71,7 @@ void MPNetworkRequest::httpRequestFinished()
         emit result(_currentResult);
     }
 
+    disconnect(_nreply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpError(QNetworkReply::NetworkError)));
     disconnect(_nreply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
     disconnect(_nreply, SIGNAL(finished()), this, SLOT(httpRequestFinished()));
     _nreply->deleteLater();
@@ -78,6 +89,7 @@ void MPNetworkRequest::postRequest(const QNetworkRequest &request,
     _currentRequest = request;
 
     _nreply = _nam.post(request, data);
+    connect(_nreply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpError(QNetworkReply::NetworkError)));
     connect(_nreply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
     connect(_nreply, SIGNAL(finished()), this, SLOT(httpRequestFinished()));
 }

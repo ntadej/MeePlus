@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>./
 #############################################################################
-
+# Configuration #
+#################
 # Defines
 !isEmpty( GIT ) {
     DEFINES += GIT=$$GIT
@@ -34,10 +35,12 @@
 }
 
 # Include all subdirectories
-
 INCLUDEPATH += src \
     src/core \
-    src/json
+    src/json \
+    src/models \
+    src/models/person \
+    src/plus
 
 # Add more folders to ship with the application, here
 qml_deploy.source = src/qml
@@ -73,26 +76,59 @@ CONFIG += qdeclarative-boostable
 # Add dependency to symbian components
 # CONFIG += qtquickcomponents
 
-SOURCES += src/main.cpp \
-    src/core/Constants.cpp \
-    src/core/Common.cpp \
-    src/core/Authentication.cpp \
-    src/core/Settings.cpp \
-    src/core/LocaleManager.cpp  \
-    src/core/NetworkRequest.cpp
 
+###########
+# Sources #
+###########
+# Core
+SOURCES += src/main.cpp \
+    src/core/Authentication.cpp \
+    src/core/Common.cpp \
+    src/core/Constants.cpp \
+    src/core/LocaleManager.cpp  \
+    src/core/NetworkRequest.cpp \
+    src/core/Settings.cpp
+
+# Json
 SOURCES += \
     src/json/json.cpp
 
+# Models
+SOURCES += \
+    src/models/ListModel.cpp \
+    src/models/people/Person.cpp
+
+# Google+
+SOURCES += \
+    src/plus/PeopleHandler.cpp
+
+###########
+# Headers #
+###########
+# Core
 HEADERS += \
-    src/core/Constants.h \
+    src/core/Authentication.h \
     src/core/Common.h \
     src/core/Config.h \
-    src/core/Authentication.h \
-    src/core/Settings.h \
+    src/core/Constants.h \
     src/core/LocaleManager.h  \
-    src/core/NetworkRequest.h
+    src/core/NetworkRequest.h \
+    src/core/Settings.h
 
+# Models
+HEADERS += \
+    src/models/ListItem.h \
+    src/models/ListModel.h \
+    src/models/people/Person.h
+
+# Google+
+HEADERS += \
+    src/plus/PeopleHandler.h
+
+
+##############
+# Deployment #
+##############
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()

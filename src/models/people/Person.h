@@ -16,45 +16,41 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_NETWORKREQUEST_H_
-#define MEEPLUS_NETWORKREQUEST_H_
+#ifndef MEEPLUS_PERSON_H_
+#define MEEPLUS_PERSON_H_
 
-#include <QtCore/QUrl>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 
-class MPNetworkRequest : public QObject
+#include "models/ListItem.h"
+
+class Person : public MPListItem
 {
 Q_OBJECT
 public:
-	MPNetworkRequest(QObject *parent = 0);
-	~MPNetworkRequest();
+    enum Roles {
+        DisplayRole = Qt::DisplayRole,
+        DisplayIconRole = Qt::DecorationRole,
+        IdRole = Qt::UserRole + 1,
+        NameRole
+    };
 
-	void getRequest(const QNetworkRequest &request);
-	void postRequest(const QNetworkRequest &request,
-					 const QByteArray &data);
+    Person(const QString &id = 0,
+           QObject *parent = 0);
+    ~Person();
 
-signals:
-	void error(const int &);
-	void result(const QString &);
+    inline QString id() const { return _id; }
+    QVariant data(int role) const;
+    QString display() const;
+    QIcon displayIcon() const;
+    QHash<int, QByteArray> roleNames() const;
 
-private slots:
-	void httpError(const QNetworkReply::NetworkError &err);
-	void httpReadyRead();
-	void httpRequestFinished();
+    inline QString name() const { return _name; }
+    void setName(const QString &name);
 
 private:
-	void startRequest(const QNetworkRequest &request,
-					  const QByteArray &data = 0);
-
-	QNetworkAccessManager _nam;
-	QNetworkReply *_nreply;
-
-	QByteArray _currentData;
-	QNetworkRequest _currentRequest;
-	QString _currentResult;
-
-	QUrl _url;
+    QString _id;
+    QString _name;
 };
 
-#endif // MEEPLUS_NETWORKREQUEST_H_
+#endif // MEEPLUS_PERSON_H_

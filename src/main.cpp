@@ -25,6 +25,7 @@
 #include "core/Authentication.h"
 #include "core/Constants.h"
 #include "core/Settings.h"
+#include "plus/PeopleHandler.h"
 
 int main(int argc, char *argv[])
 {
@@ -33,17 +34,26 @@ int main(int argc, char *argv[])
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 
-    viewer.rootContext()->setContextProperty("MeePlusCommon", MeePlus::Constants::common());
-    viewer.rootContext()->setContextProperty("MeePlusUi", MeePlus::Constants::ui());
+    viewer.rootContext()->setContextProperty("MPCommon", MeePlus::Constants::common());
+    viewer.rootContext()->setContextProperty("MPUi", MeePlus::Constants::ui());
 
     MPSettings *settings = new MPSettings();
-    viewer.rootContext()->setContextProperty("MeePlusSettings", settings);
+    viewer.rootContext()->setContextProperty("MPSettings", settings);
 
     MPAuthentication *auth = new MPAuthentication();
-    viewer.rootContext()->setContextProperty("MeePlusAuth", auth);
+    viewer.rootContext()->setContextProperty("MPAuth", auth);
+
+    MPPeopleHandler *profile = new MPPeopleHandler();
+    viewer.rootContext()->setContextProperty("MPProfile", auth);
+
+    QObject::connect(profile, SIGNAL(requestAuthentication()), auth, SLOT(refreshToken()));
+    QObject::connect(auth, SIGNAL(authenticated()), profile, SLOT(retry()));
 
     viewer.setMainQmlFile(QLatin1String("qml/main.qml"));
     viewer.showExpanded();
+
+    // Tests
+    profile->requestProfile("me");
 
     return app.exec();
 }

@@ -31,12 +31,19 @@ MPAuthentication::MPAuthentication(QObject *parent)
     : QObject(parent)
 {
     _nr = new MPNetworkRequest(this);
+    connect(_nr, SIGNAL(error(int)), this, SLOT(error(int)));
     connect(_nr, SIGNAL(result(QString)), this, SLOT(token(QString)));
 }
 
 MPAuthentication::~MPAuthentication()
 {
     delete _nr;
+}
+
+void MPAuthentication::error(const int &err)
+{
+    if(err == 204)
+        refreshToken();
 }
 
 void MPAuthentication::refreshToken()
@@ -117,4 +124,6 @@ void MPAuthentication::token(const QString &token)
     delete settings;
 
     delete reader;
+
+    emit authenticated();
 }

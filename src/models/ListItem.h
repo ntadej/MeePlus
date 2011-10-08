@@ -1,6 +1,7 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
 * Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Based on ListModel by Christophe Dumez <dchris@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -16,45 +17,28 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_NETWORKREQUEST_H_
-#define MEEPLUS_NETWORKREQUEST_H_
+#ifndef MEEPLUS_LISTITEM_H_
+#define MEEPLUS_LISTITEM_H_
 
-#include <QtCore/QUrl>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
+#include <QtCore/QHash>
+#include <QtCore/QObject>
+#include <QtCore/QVariant>
+#include <QtGui/QIcon>
 
-class MPNetworkRequest : public QObject
+class MPListItem : public QObject
 {
 Q_OBJECT
 public:
-	MPNetworkRequest(QObject *parent = 0);
-	~MPNetworkRequest();
-
-	void getRequest(const QNetworkRequest &request);
-	void postRequest(const QNetworkRequest &request,
-					 const QByteArray &data);
+    MPListItem(QObject* parent = 0) : QObject(parent) {}
+    virtual ~MPListItem() {}
+    virtual QString id() const = 0;
+    virtual QVariant data(int role) const = 0;
+    virtual QString display() const = 0;
+    virtual QIcon displayIcon() const = 0;
+    virtual QHash<int, QByteArray> roleNames() const = 0;
 
 signals:
-	void error(const int &);
-	void result(const QString &);
-
-private slots:
-	void httpError(const QNetworkReply::NetworkError &err);
-	void httpReadyRead();
-	void httpRequestFinished();
-
-private:
-	void startRequest(const QNetworkRequest &request,
-					  const QByteArray &data = 0);
-
-	QNetworkAccessManager _nam;
-	QNetworkReply *_nreply;
-
-	QByteArray _currentData;
-	QNetworkRequest _currentRequest;
-	QString _currentResult;
-
-	QUrl _url;
+    void dataChanged();
 };
 
-#endif // MEEPLUS_NETWORKREQUEST_H_
+#endif // MEEPLUS_LISTITEM_H_

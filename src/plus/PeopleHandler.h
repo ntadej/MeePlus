@@ -16,45 +16,36 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_NETWORKREQUEST_H_
-#define MEEPLUS_NETWORKREQUEST_H_
+#ifndef MEEPLUS_PROFILEHANDLER_H_
+#define MEEPLUS_PROFILEHANDLER_H_
 
-#include <QtCore/QUrl>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
+#include <QtCore/QObject>
 
-class MPNetworkRequest : public QObject
+class MPNetworkRequest;
+
+class MPPeopleHandler : public QObject
 {
 Q_OBJECT
 public:
-	MPNetworkRequest(QObject *parent = 0);
-	~MPNetworkRequest();
+    MPPeopleHandler(QObject *parent = 0);
+    ~MPPeopleHandler();
 
-	void getRequest(const QNetworkRequest &request);
-	void postRequest(const QNetworkRequest &request,
-					 const QByteArray &data);
+    Q_INVOKABLE void requestProfile(const QString &profile);
+
+public slots:
+    void retry();
 
 signals:
-	void error(const int &);
-	void result(const QString &);
+    void requestAuthentication();
 
 private slots:
-	void httpError(const QNetworkReply::NetworkError &err);
-	void httpReadyRead();
-	void httpRequestFinished();
+    void error(const int &err);
+    void profile(const QString &profile);
 
 private:
-	void startRequest(const QNetworkRequest &request,
-					  const QByteArray &data = 0);
+    MPNetworkRequest *_nr;
 
-	QNetworkAccessManager _nam;
-	QNetworkReply *_nreply;
-
-	QByteArray _currentData;
-	QNetworkRequest _currentRequest;
-	QString _currentResult;
-
-	QUrl _url;
+    QString _currentProfile;
 };
 
-#endif // MEEPLUS_NETWORKREQUEST_H_
+#endif // MEEPLUS_PROFILEHANDLER_H_
