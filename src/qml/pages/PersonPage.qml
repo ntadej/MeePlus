@@ -19,26 +19,41 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
+import "../common"
+import "../icons"
+
+import "../js/core.js" as MPJs
+
 Page {
-    id: commonPage
-    anchors.margins: MPUi.DefaultMargin
-    anchors.topMargin: MPUi.DefaultMargin + header.height
-
-    property alias title: header.title
-
-    Flickable {
-        id: flickable
-
-        anchors.topMargin: MPUi.DefaultMargin
-        anchors.bottomMargin: MPUi.DefaultMargin
-
-        anchors.top: header.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+    id: welcomePage
+    tools: ToolBarLayout {
+        id: welcomePageTools
+        visible: true
+        IconBack {}
+        ButtonRow {
+            platformStyle: TabButtonStyle { }
+            TabButton {
+                iconSource: "image://theme/icon-m-toolbar-contact"
+                tab: profile
+            }
+            TabButton {
+                iconSource: "image://theme/icon-m-toolbar-new-message"
+                tab: activities
+            }
+        }
     }
 
-    PageHeader {
-        id: header
+    TabGroup {
+        id: person
+        currentTab: profile
+
+        ProfilePage {
+            id: profile
+        }
+
+        ActivitiesPage {
+            id: activities
+        }
     }
+
 }

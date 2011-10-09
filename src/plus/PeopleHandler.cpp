@@ -51,6 +51,7 @@ void MPPeopleHandler::profile(const QString &profile)
     JsonReader *reader = new JsonReader();
     reader->parse(profile);
 
+    qDebug() << profile;
     qDebug() << reader->result();
 
     delete reader;

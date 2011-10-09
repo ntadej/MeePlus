@@ -24,9 +24,10 @@ import "../icons"
 
 import "../js/core.js" as MPJs
 
-CommonPage {
+Page {
     id: settingsPage
-    title: qsTr("Settings")
+    anchors.margins: MPUi.DefaultMargin
+    anchors.topMargin: header.height
     tools: ToolBarLayout {
         id: settingsPageTools
         visible: true
@@ -48,5 +49,10 @@ CommonPage {
                 theme.inverted = checked
             }
         }
+    }
+
+    PageHeader {
+        id: header
+        title: qsTr("Settings")
     }
 }

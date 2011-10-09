@@ -25,9 +25,10 @@ import "../icons"
 
 import "../js/core.js" as MPJs
 
-CommonPage {
+Page {
     id: welcomePage
-    title: qsTr("Login")
+    anchors.margins: MPUi.DefaultMargin
+    anchors.topMargin: header.height
     tools: ToolBarLayout {
         id: welcomePageTools
         visible: true
@@ -39,7 +40,7 @@ CommonPage {
         id: login
         url: MPAuth.requestUrl();
 
-        anchors.top: header.bottom
+        anchors.fill: parent
 
         onTitleChanged: {
             if(MPAuth.responseCode(title)) {
@@ -47,5 +48,10 @@ CommonPage {
                 pageStack.pop();
             }
         }
+    }
+
+    PageHeader {
+        id: header
+        title: qsTr("Login")
     }
 }

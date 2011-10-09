@@ -34,30 +34,32 @@ CommonPage {
         IconMenu {}
     }
 
-    Column {
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        Label {
-            id: labelName
-
-            text: qsTr("Account name:")
-        }
-
-        TextField {
-            id: name
-
+    CommonFlickable {
+        Column {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
+            Label {
+                id: labelName
+
+                text: qsTr("Account name:")
+            }
+
+            TextField {
+                id: name
+
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
 
 
 
-            text: MPSettings.name()
-            onTextChanged: {
-                MPSettings.setName(text)
-                MPSettings.writeSettings()
+                text: MPSettings.name()
+                onTextChanged: {
+                    MPSettings.setName(text)
+                    MPSettings.writeSettings()
+                }
             }
         }
     }

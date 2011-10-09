@@ -24,9 +24,10 @@ import "../icons"
 
 import "../js/core.js" as MPJs
 
-CommonPage {
+Page {
     id: welcomePage
-    title: "MeePlus (Alpha)"
+    anchors.margins: MPUi.DefaultMargin
+    anchors.topMargin: header.height
     tools: ToolBarLayout {
         id: welcomePageTools
         visible: true
@@ -49,7 +50,12 @@ CommonPage {
         Button {
             id: buttonTheme
             text: qsTr("My profile")
-            onClicked: { theme.inverted = !theme.inverted }
+            onClicked: { MPJs.addPage("PersonPage.qml") }
         }
+    }
+
+    PageHeader {
+        id: header
+        title: "MeePlus (alpha)"
     }
 }

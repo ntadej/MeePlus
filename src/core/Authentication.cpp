@@ -120,6 +120,7 @@ void MPAuthentication::token(const QString &token)
     settings->setAccessToken(reader->result().toMap()["access_token"].toString());
     settings->writeSettings();
 
+    qDebug() << token;
     qDebug() << settings->refreshToken() << settings->accessToken();
     delete settings;
 
