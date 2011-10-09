@@ -18,27 +18,33 @@
 
 #include "models/people/Person.h"
 
-Person::Person(const QString &id,
-               QObject *parent)
+MPPerson::MPPerson(const QString &id,
+                   QObject *parent)
     : MPListItem(parent),
-      _id(id)
-{
+      _id(id) { }
 
-}
+MPPerson::~MPPerson() { }
 
-Person::~Person() { }
-
-QHash<int, QByteArray> Person::roleNames() const
+QHash<int, QByteArray> MPPerson::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[DisplayRole] = "display";
     names[DisplayIconRole] = "displayIcon";
     names[IdRole] = "id";
     names[NameRole] = "name";
+    names[NicknameRole] = "nickname";
+    names[TaglineRole] = "tagline";
+    names[BirthdayRole] = "birthday";
+    names[GenderRole] = "gender";
+    names[AboutMeRole] = "aboutMe";
+    names[CurrentLocationRole] = "currentLocation";
+    names[RelationshipStatusRole] = "relationshipStatus";
+    names[UrlRole] = "url";
+    names[ImageRole] = "image";
     return names;
 }
 
-QVariant Person::data(int role) const
+QVariant MPPerson::data(int role) const
 {
     switch (role)
     {
@@ -50,25 +56,115 @@ QVariant Person::data(int role) const
         return id();
     case NameRole:
         return name();
+    case NicknameRole:
+        return nickname();
+    case TaglineRole:
+        return tagline();
+    case BirthdayRole:
+        return birthday();
+    case GenderRole:
+        return gender();
+    case AboutMeRole:
+        return aboutMe();
+    case CurrentLocationRole:
+        return currentLocation();
+    case RelationshipStatusRole:
+        return relationshipStatus();
+    case UrlRole:
+        return url();
+    case ImageRole:
+        return image();
     default:
         return QVariant();
     }
 }
 
-QString Person::display() const
+QString MPPerson::display() const
 {
     return name();
 }
 
-QIcon Person::displayIcon() const
+QIcon MPPerson::displayIcon() const
 {
     return QIcon();
 }
 
-void Person::setName(const QString &name)
+void MPPerson::setName(const QString &name)
 {
     if(_name != name) {
         _name = name;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setNickname(const QString &nickname)
+{
+    if(_nickname != nickname) {
+        _nickname = nickname;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setTagline(const QString &tagline)
+{
+    if(_tagline != tagline) {
+        _tagline = tagline;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setBirthday(const QString &birthday)
+{
+    if(_birthday != birthday) {
+        _birthday = birthday;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setGender(const QString &gender)
+{
+    if(_gender != gender) {
+        _gender = gender;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setAboutMe(const QString &aboutMe)
+{
+    if(_aboutMe != aboutMe) {
+        _aboutMe = aboutMe;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setCurrentLocation(const QString &currentLocation)
+{
+    if(_currentLocation != currentLocation) {
+        _currentLocation = currentLocation;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setRelationshipStatus(const QString &relationshipStatus)
+{
+    if(_relationshipStatus != relationshipStatus) {
+        _relationshipStatus = relationshipStatus;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setUrl(const QString &url)
+{
+    if(_url != url) {
+        _url = url;
+        emit dataChanged();
+    }
+}
+
+void MPPerson::setImage(const QString &image)
+{
+    if(_image != image) {
+        _image = image;
         emit dataChanged();
     }
 }

@@ -24,7 +24,7 @@
 
 #include "models/ListItem.h"
 
-class Person : public MPListItem
+class MPPerson : public MPListItem
 {
 Q_OBJECT
 public:
@@ -32,12 +32,21 @@ public:
         DisplayRole = Qt::DisplayRole,
         DisplayIconRole = Qt::DecorationRole,
         IdRole = Qt::UserRole + 1,
-        NameRole
+        NameRole,
+        NicknameRole,
+        TaglineRole,
+        BirthdayRole,
+        GenderRole,
+        AboutMeRole,
+        CurrentLocationRole,
+        RelationshipStatusRole,
+        UrlRole,
+        ImageRole
     };
 
-    Person(const QString &id = 0,
+    MPPerson(const QString &id = 0,
            QObject *parent = 0);
-    ~Person();
+    ~MPPerson();
 
     inline QString id() const { return _id; }
     QVariant data(int role) const;
@@ -47,10 +56,37 @@ public:
 
     inline QString name() const { return _name; }
     void setName(const QString &name);
+    inline QString nickname() const { return _nickname; }
+    void setNickname(const QString &nickname);
+    inline QString tagline() const { return _tagline; }
+    void setTagline(const QString &tagline);
+    inline QString birthday() const { return _birthday; }
+    void setBirthday(const QString &birthday);
+    inline QString gender() const { return _gender; }
+    void setGender(const QString &gender);
+    inline QString aboutMe() const { return _aboutMe; }
+    void setAboutMe(const QString &aboutMe);
+    inline QString currentLocation() const { return _currentLocation; }
+    void setCurrentLocation(const QString &currentLocation);
+    inline QString relationshipStatus() const { return _relationshipStatus; }
+    void setRelationshipStatus(const QString &relationshipStatus);
+    inline QString url() const { return _url; }
+    void setUrl(const QString &url);
+    inline QString image() const { return _image; }
+    void setImage(const QString &image);
 
 private:
     QString _id;
     QString _name;
+    QString _nickname;
+    QString _tagline;
+    QString _birthday;
+    QString _gender;
+    QString _aboutMe;
+    QString _currentLocation;
+    QString _relationshipStatus;
+    QString _url;
+    QString _image;
 };
 
 #endif // MEEPLUS_PERSON_H_

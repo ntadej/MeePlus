@@ -96,6 +96,8 @@ SOURCES += \
 # Models
 SOURCES += \
     src/models/ListModel.cpp \
+    src/models/PeopleFilterModel.cpp \
+    src/models/PeopleModel.cpp \
     src/models/people/Person.cpp
 
 # Google+
@@ -119,6 +121,8 @@ HEADERS += \
 HEADERS += \
     src/models/ListItem.h \
     src/models/ListModel.h \
+    src/models/PeopleFilterModel.h \
+    src/models/PeopleModel.h \
     src/models/people/Person.h
 
 # Google+
