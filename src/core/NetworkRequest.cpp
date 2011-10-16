@@ -34,7 +34,6 @@ void MPNetworkRequest::getRequest(const QNetworkRequest &request)
 
     _nreply = _nam.get(request);
     connect(_nreply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpError(QNetworkReply::NetworkError)));
-    connect(_nreply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
     connect(_nreply, SIGNAL(finished()), this, SLOT(httpRequestFinished()));
 }
 
@@ -43,11 +42,6 @@ void MPNetworkRequest::httpError(const QNetworkReply::NetworkError &err)
     qDebug() << "MPNetworkRequest Error" << err;
 
     emit error(err);
-}
-
-void MPNetworkRequest::httpReadyRead()
-{
-    _currentResult = _nreply->readAll();
 }
 
 void MPNetworkRequest::httpRequestFinished()
@@ -68,11 +62,11 @@ void MPNetworkRequest::httpRequestFinished()
 
         return;
     } else {
+        _currentResult = _nreply->readAll();
         emit result(_currentResult);
     }
 
     disconnect(_nreply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpError(QNetworkReply::NetworkError)));
-    disconnect(_nreply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
     disconnect(_nreply, SIGNAL(finished()), this, SLOT(httpRequestFinished()));
     _nreply->deleteLater();
     _nreply = 0;
@@ -90,6 +84,5 @@ void MPNetworkRequest::postRequest(const QNetworkRequest &request,
 
     _nreply = _nam.post(request, data);
     connect(_nreply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpError(QNetworkReply::NetworkError)));
-    connect(_nreply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
     connect(_nreply, SIGNAL(finished()), this, SLOT(httpRequestFinished()));
 }

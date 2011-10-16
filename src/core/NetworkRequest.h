@@ -40,7 +40,6 @@ signals:
 
 private slots:
 	void httpError(const QNetworkReply::NetworkError &err);
-	void httpReadyRead();
 	void httpRequestFinished();
 
 private:
