@@ -28,19 +28,10 @@ Page {
     anchors.margins: MPUi.DefaultMargin
     anchors.topMargin: header.height
 
-    ListModel {
-        id: testModel
-        ListElement {
-            name: "Tadej Novak"
-            image: ""
-            tagline: "Tagline"
-        }
-    }
-
     ListView {
         id: listView
         anchors.fill: parent
-        model: testModel
+        model: MPProfile
         pressDelay: 140
 
         delegate:  Item {

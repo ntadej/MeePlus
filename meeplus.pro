@@ -82,6 +82,7 @@ CONFIG += qdeclarative-boostable
 ###########
 # Core
 SOURCES += src/main.cpp \
+    src/Application.cpp \
     src/core/Authentication.cpp \
     src/core/Common.cpp \
     src/core/Constants.cpp \
@@ -109,6 +110,7 @@ SOURCES += \
 ###########
 # Core
 HEADERS += \
+    src/Application.h \
     src/core/Authentication.h \
     src/core/Common.h \
     src/core/Config.h \
@@ -144,6 +146,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog
+
+
 
 
 

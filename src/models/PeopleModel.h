@@ -35,6 +35,9 @@ public:
     MPPerson *find(const QString &id) const;
     MPPerson *row(const int &row);
     MPPerson *takeRow(const int &row);
+
+public slots:
+    void addSinglePerson(MPPerson *person);
 };
 
 #endif // MEEPLUS_PEOPLEMODEL_H_

@@ -25,6 +25,7 @@
 #include "core/NetworkRequest.h"
 #include "core/Settings.h"
 #include "json/json.h"
+#include "models/people/Person.h"
 #include "plus/PeopleHandler.h"
 
 MPPeopleHandler::MPPeopleHandler(QObject *parent)
@@ -53,6 +54,23 @@ void MPPeopleHandler::profile(const QString &profile)
 
     qDebug() << profile;
     qDebug() << reader->result();
+
+    if(reader->result().toMap()["kind"].toString() != "plus#person")
+        return;
+
+    MPPerson *person = new MPPerson(reader->result().toMap()["id"].toString());
+    person->setName(reader->result().toMap()["displayName"].toString());
+    person->setAboutMe(reader->result().toMap()["aboutMe"].toString());
+    person->setBirthday(reader->result().toMap()["birthday"].toString());
+    person->setCurrentLocation(reader->result().toMap()["currentLocation"].toString());
+    person->setGender(reader->result().toMap()["gender"].toString());
+    person->setImage(reader->result().toMap()["image"].toMap()["url"].toString());
+    person->setNickname(reader->result().toMap()["nickname"].toString());
+    person->setRelationshipStatus(reader->result().toMap()["relationshipStatus"].toString());
+    person->setTagline(reader->result().toMap()["tagline"].toString());
+    person->setUrl(reader->result().toMap()["url"].toString());
+
+    emit currentProfile(person);
 
     delete reader;
 }

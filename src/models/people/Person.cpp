@@ -23,6 +23,8 @@ MPPerson::MPPerson(const QString &id,
     : MPListItem(parent),
       _id(id) { }
 
+MPPerson::MPPerson() { }
+
 MPPerson::~MPPerson() { }
 
 QHash<int, QByteArray> MPPerson::roleNames() const

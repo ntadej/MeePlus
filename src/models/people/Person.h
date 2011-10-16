@@ -44,8 +44,9 @@ public:
         ImageRole
     };
 
-    MPPerson(const QString &id = 0,
-           QObject *parent = 0);
+    MPPerson(const QString &id,
+             QObject *parent = 0);
+    MPPerson();
     ~MPPerson();
 
     inline QString id() const { return _id; }

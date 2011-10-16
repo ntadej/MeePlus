@@ -22,6 +22,7 @@
 #include <QtCore/QObject>
 
 class MPNetworkRequest;
+class MPPerson;
 
 class MPPeopleHandler : public QObject
 {
@@ -36,6 +37,7 @@ public slots:
     void retry();
 
 signals:
+    void currentProfile(MPPerson *);
     void requestAuthentication();
 
 private slots:

@@ -16,31 +16,34 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "models/PeopleModel.h"
-#include "models/people/Person.h"
+#ifndef MEEPLUS_APPLICATION_H_
+#define MEEPLUS_APPLICATION_H_
 
-MPPeopleModel::MPPeopleModel(QObject *parent)
-    : MPListModel(new MPPerson, parent) { }
+#include <QtCore/QObject>
 
-MPPeopleModel::~MPPeopleModel() { }
+class QmlApplicationViewer;
 
-MPPerson *MPPeopleModel::find(const QString &id) const
+class MPAuthentication;
+class MPPeopleHandler;
+class MPPeopleFilterModel;
+class MPPeopleModel;
+class MPSettings;
+
+class MPApplication : public QObject
 {
-    return qobject_cast<MPPerson *>(MPListModel::find(id));
-}
+Q_OBJECT
+public:
+    MPApplication(QObject *parent = 0);
+    ~MPApplication();
 
-MPPerson *MPPeopleModel::row(const int &row)
-{
-    return qobject_cast<MPPerson *>(MPListModel::row(row));
-}
+private:
+    QmlApplicationViewer *_viewer;
 
-MPPerson *MPPeopleModel::takeRow(const int &row)
-{
-    return qobject_cast<MPPerson *>(MPListModel::takeRow(row));
-}
+    MPAuthentication *_authentication;
+    MPPeopleHandler *_people;
+    MPPeopleFilterModel *_profileF;
+    MPPeopleModel *_profile;
+    MPSettings *_settings;
+};
 
-void MPPeopleModel::addSinglePerson(MPPerson *person)
-{
-    clear();
-    appendRow(person);
-}
+#endif // MEEPLUS_APPLICATION_H_

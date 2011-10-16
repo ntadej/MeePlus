@@ -38,12 +38,12 @@ Page {
 
     WebBrowser {
         id: login
-        url: MPAuth.requestUrl();
+        url: MPAuthentication.requestUrl();
 
         anchors.fill: parent
 
         onTitleChanged: {
-            if(MPAuth.responseCode(title)) {
+            if(MPAuthentication.responseCode(title)) {
                 login.done = true
                 pageStack.pop();
             }
