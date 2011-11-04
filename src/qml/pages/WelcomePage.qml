@@ -32,7 +32,7 @@ Page {
         id: welcomePageTools
         visible: true
         IconSettings {}
-        IconAccount {}
+        IconLogin {}
         IconMenu {}
     }
 
@@ -40,12 +40,6 @@ Page {
 
     Column {
         anchors.centerIn: parent
-
-        Button {
-            id: buttonLogin
-            text: qsTr("Login")
-            onClicked: MPJs.addPage("LoginPage.qml")
-        }
 
         Button {
             id: buttonTheme

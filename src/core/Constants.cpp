@@ -54,7 +54,6 @@ QDeclarativePropertyMap *MeePlus::Constants::ui()
     uiConstantsData->insert("FieldLabelColor", QVariant(QColor("#505050")));
     uiConstantsData->insert("HeaderColor", QVariant(QColor("#FFFFFF")));
     uiConstantsData->insert("HighlightColor", QVariant(QColor("#DD4B39")));
-    uiConstantsData->insert("HighlightColorInverted", QVariant(QColor("#2D2D2D")));
 
     // Fonts
     QFont bodyTextFont;

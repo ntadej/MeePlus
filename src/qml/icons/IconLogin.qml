@@ -19,48 +19,9 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "../common"
-import "../icons"
-
 import "../js/core.js" as MPJs
 
-CommonPage {
-    id: welcomePage
-    title: qsTr("Account")
-    tools: ToolBarLayout {
-        id: welcomePageTools
-        visible: true
-        IconBack {}
-        IconMenu {}
-    }
-
-    CommonFlickable {
-        Column {
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            Label {
-                id: labelName
-
-                text: qsTr("Account name:")
-            }
-
-            TextField {
-                id: name
-
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
-
-
-
-                text: MPSettings.name()
-                onTextChanged: {
-                    MPSettings.setName(text)
-                    MPSettings.writeSettings()
-                }
-            }
-        }
-    }
+ToolIcon {
+    iconId: "toolbar-contact"
+    onClicked: MPJs.addPage("../pages/LoginPage.qml")
 }

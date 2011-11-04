@@ -19,9 +19,28 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "../js/core.js" as MPJs
+Item {
+    property alias name: name.text
 
-ToolIcon {
-    iconId: "toolbar-contact"
-    onClicked: MPJs.addPage("../pages/AccountPage.qml")
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    anchors.margins: MPUi.DefaultMargin
+
+    height: 30
+
+    BorderImage {
+        id: background
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 2
+        source: "image://theme/meegotouch-list-background-pressed-center"
+    }
+
+    Label {
+        id: name
+        font: MPUi.SmallTitleFont
+        color: MPUi.FieldLabelColor
+    }
 }

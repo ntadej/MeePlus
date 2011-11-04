@@ -25,12 +25,12 @@ import "../js/core.js" as MPJs
 
 Page {
     id: profilePage
-    anchors.margins: MPUi.DefaultMargin
     anchors.topMargin: header.height
 
     ListView {
         id: listView
         anchors.fill: parent
+        width: parent.width
         model: MPProfile
         pressDelay: 140
 
@@ -39,41 +39,44 @@ Page {
             width: parent.width
             height: 100
 
-            BorderImage {
-                id: background
-                anchors.fill: parent
-                // Fill page borders
-                anchors.leftMargin: -profilePage.anchors.leftMargin
-                anchors.rightMargin: -profilePage.anchors.rightMargin
-                //visible: mouseArea.pressed
-                source: "image://theme/meegotouch-list-background-pressed-center"
-            }
-
-            Image {
-                id: icon
-                source: model.image
-                anchors.left: parent.left;
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.rightMargin: 32;
-            }
-
             Column {
-                anchors { left: icon.right; right: parent.right; top: parent.top; bottom: parent.bottom }
-                anchors.leftMargin: 10;
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.fill: parent
+                spacing: MPUi.DefaultMargin
+                ProfileHeader {
+                    id: profileHeader
+                    image: model.image
+                    name: model.name
+                    tagline: model.tagline
+                }
 
-                 Label {
-                     id: mainText
-                     text: model.name
-                     font: MPUi.TitleFont
-                 }
+                SectionHeader {
+                    id: basicInfo
+                    name: qsTr("Basic information")
+                }
+                InfoElement {
+                    name: qsTr("Gender")
+                    value: model.gender
+                }
+                InfoElement {
+                    name: qsTr("Birthday")
+                    value: model.birthday
+                }
+                InfoElement {
+                    name: qsTr("Current location")
+                    value: model.currentLocation
+                }
+                InfoElement {
+                    name: qsTr("Relationship status")
+                    value: model.relationshipStatus
+                }
 
-                 Label {
-                     id: numberText
-                     text: model.tagline
-                     font: MPUi.SubtitleFont
-                     color: MPUi.HighlightColor
-                 }
+                SectionHeader {
+                    id: aboutInfo
+                    name: qsTr("About me")
+                }
+                InfoElement {
+                    value: model.aboutMe
+                }
             }
         }
     }

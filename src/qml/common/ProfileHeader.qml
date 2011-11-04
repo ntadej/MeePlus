@@ -20,35 +20,45 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 Rectangle {
-    property alias title: heading.text
-    property bool orientation: screen.currentOrientation == Screen.Landscape
+    property alias image: icon.source
+    property alias name: name.text
+    property alias tagline: tagline.text
 
-    color: MPUi.HighlightColor
-    height: orientation ?
-                MPUi.HeaderDefaultHeightLandscape :
-                MPUi.HeaderDefaultHeightPortrait
-    width: parent.width
-
-    anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
-    anchors.topMargin: -parent.anchors.topMargin
-    anchors.leftMargin: -parent.anchors.leftMargin
-    anchors.rightMargin: -parent.anchors.rightMargin
 
-    Text {
-        id: heading
-        color: MPUi.HeaderColor
-        font: MPUi.HeaderFont
+    height: 100 + 2*MPUi.DefaultMargin
+
+    BorderImage {
+        id: background
         anchors.fill: parent
-        anchors.topMargin: orientation ?
-                               MPUi.HeaderDefaultTopSpacingLandscape :
-                               MPUi.HeaderDefaultTopSpacingPortrait
-        anchors.rightMargin: MPUi.DefaultMargin
-        anchors.leftMargin: MPUi.DefaultMargin
+        source: "image://theme/meegotouch-list-background-pressed-center"
     }
 
-    MouseArea {
-        anchors.fill: parent
+    Image {
+        id: icon
+        anchors.left: parent.left
+        anchors.margins: MPUi.DefaultMargin
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    Column {
+        anchors.left: icon.right
+        anchors.right: parent.right
+        anchors.margins: MPUi.DefaultMargin
+        anchors.verticalCenter: parent.verticalCenter
+
+         Label {
+             id: name
+             font: MPUi.TitleFont
+         }
+
+         Label {
+             id: tagline
+             width: parent.width
+             wrapMode: Text.WordWrap
+             font: MPUi.SubtitleFont
+             color: MPUi.HighlightColor
+         }
     }
 }

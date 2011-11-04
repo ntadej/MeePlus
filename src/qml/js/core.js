@@ -20,7 +20,7 @@ function replacePage(file) {
 }
 
 function settings() {
-    theme.inverted = MPSettings.inverted()
+
 }
 
 // Login

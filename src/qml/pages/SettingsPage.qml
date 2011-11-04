@@ -27,7 +27,7 @@ import "../js/core.js" as MPJs
 Page {
     id: settingsPage
     anchors.margins: MPUi.DefaultMargin
-    anchors.topMargin: header.height
+    anchors.topMargin: header.height + MPUi.DefaultMargin
     tools: ToolBarLayout {
         id: settingsPageTools
         visible: true
@@ -38,16 +38,8 @@ Page {
     Column {
         anchors.fill: parent
 
-        CheckBox {
-            id: themeInverted
-
-            text: qsTr("Inverted theme")
-            checked: MPSettings.inverted()
-            onCheckedChanged: {
-                MPSettings.setInverted(checked)
-                MPSettings.writeSettings()
-                theme.inverted = checked
-            }
+        Label {
+            text: qsTr("No settings currently available")
         }
     }
 

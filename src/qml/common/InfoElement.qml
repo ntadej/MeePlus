@@ -16,37 +16,35 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDir>
+import QtQuick 1.1
+import com.nokia.meego 1.0
 
-#include "core/Common.h"
-#include "core/Settings.h"
+Item {
+    property alias name: name.text
+    property alias value: value.text
 
-MPSettings::MPSettings(QObject *parent)
-    : QSettings(QSettings::IniFormat,
-                QSettings::UserScope,
-                "MeePlus",
-                "Main",
-                parent)
-{
-    readSettings();
-}
+    visible: value.text != ""
 
-MPSettings::~MPSettings() { }
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-void MPSettings::readSettings()
-{
-    setLanguage(value("general/language").toString());
+    anchors.margins: MPUi.DefaultMargin
 
-    setAccessToken(value("auth/access-token").toString());
-    setRefreshToken(value("auth/refresh-token").toString());
-}
+    height: name.height + value.height
 
-void MPSettings::writeSettings()
-{
-    setValue("general/language", language());
+    Label {
+        id: name
+        font: MPUi.FieldLabelFont
+        color: MPUi.FieldLabelColor
 
-    setValue("auth/access-token", accessToken());
-    setValue("auth/refresh-token", refreshToken());
+        anchors.top: parent.top
 
-    sync();
+        visible: name.text != ""
+    }
+
+    Label {
+        id: value
+
+        anchors.top: name.bottom
+    }
 }
