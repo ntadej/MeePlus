@@ -21,7 +21,7 @@
 
 #include <QtCore/QStringList>
 
-#include "models/ListModel.h"
+#include "core/ListModel.h"
 
 class MPPerson;
 

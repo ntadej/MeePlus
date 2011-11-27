@@ -38,9 +38,9 @@
 INCLUDEPATH += src \
     src/core \
     src/json \
-    src/models \
-    src/models/person \
-    src/plus
+    src/people/handlers \
+    src/people/items \
+    src/people/models
 
 # Add more folders to ship with the application, here
 qml_deploy.source = src/qml
@@ -86,6 +86,7 @@ SOURCES += src/main.cpp \
     src/core/Authentication.cpp \
     src/core/Common.cpp \
     src/core/Constants.cpp \
+    src/core/ListModel.cpp \
     src/core/LocaleManager.cpp  \
     src/core/NetworkRequest.cpp \
     src/core/Settings.cpp
@@ -96,14 +97,20 @@ SOURCES += \
 
 # Models
 SOURCES += \
-    src/models/ListModel.cpp \
-    src/models/PeopleFilterModel.cpp \
-    src/models/PeopleModel.cpp \
-    src/models/people/Person.cpp
+    src/people/handlers/PeopleHandler.cpp \
+    src/people/items/Person.cpp \
+    src/people/items/PersonEmail.cpp \
+    src/people/items/PersonOrganization.cpp \
+    src/people/items/PersonUrl.cpp \
+    src/people/models/PeopleEmailsFilterModel.cpp \
+    src/people/models/PeopleEmailsModel.cpp \
+    src/people/models/PeopleFilterModel.cpp \
+    src/people/models/PeopleModel.cpp \
+    src/people/models/PeopleOrganizationsFilterModel.cpp \
+    src/people/models/PeopleOrganizationsModel.cpp \
+    src/people/models/PeopleUrlsFilterModel.cpp \
+    src/people/models/PeopleUrlsModel.cpp
 
-# Google+
-SOURCES += \
-    src/plus/PeopleHandler.cpp
 
 ###########
 # Headers #
@@ -115,21 +122,27 @@ HEADERS += \
     src/core/Common.h \
     src/core/Config.h \
     src/core/Constants.h \
+    src/core/ListItem.h \
+    src/core/ListModel.h \
     src/core/LocaleManager.h  \
     src/core/NetworkRequest.h \
     src/core/Settings.h
 
-# Models
+# People
 HEADERS += \
-    src/models/ListItem.h \
-    src/models/ListModel.h \
-    src/models/PeopleFilterModel.h \
-    src/models/PeopleModel.h \
-    src/models/people/Person.h
-
-# Google+
-HEADERS += \
-    src/plus/PeopleHandler.h
+    src/people/handlers/PeopleHandler.h \
+    src/people/items/Person.h \
+    src/people/items/PersonEmail.h \
+    src/people/items/PersonOrganization.h \
+    src/people/items/PersonUrl.h \
+    src/people/models/PeopleEmailsFilterModel.h \
+    src/people/models/PeopleEmailsModel.h \
+    src/people/models/PeopleFilterModel.h \
+    src/people/models/PeopleModel.h \
+    src/people/models/PeopleOrganizationsFilterModel.h \
+    src/people/models/PeopleOrganizationsModel.h \
+    src/people/models/PeopleUrlsFilterModel.h \
+    src/people/models/PeopleUrlsModel.h
 
 
 ##############
@@ -138,6 +151,8 @@ HEADERS += \
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
+
+OTHER_FILES += api.txt
 
 OTHER_FILES += \
     qtc_packaging/debian_harmattan/rules \

@@ -16,16 +16,32 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "models/people/Person.h"
+#include "people/items/Person.h"
+#include "people/items/PersonEmail.h"
+#include "people/items/PersonOrganization.h"
+#include "people/items/PersonUrl.h"
+#include "people/models/PeopleEmailsModel.h"
+#include "people/models/PeopleOrganizationsModel.h"
+#include "people/models/PeopleUrlsModel.h"
 
 MPPerson::MPPerson(const QString &id,
                    QObject *parent)
     : MPListItem(parent),
-      _id(id) { }
+      _id(id)
+{
+    _emailsModel = new MPPeopleEmailsModel(this);
+    _organizationsModel = new MPPeopleOrganizationsModel(this);
+    _urlsModel = new MPPeopleUrlsModel(this);
+}
 
 MPPerson::MPPerson() { }
 
-MPPerson::~MPPerson() { }
+MPPerson::~MPPerson()
+{
+    delete _emailsModel;
+    delete _organizationsModel;
+    delete _urlsModel;
+}
 
 QHash<int, QByteArray> MPPerson::roleNames() const
 {
@@ -169,4 +185,19 @@ void MPPerson::setImage(const QString &image)
         _image = image;
         emit dataChanged();
     }
+}
+
+void MPPerson::addEmail(MPPersonEmail *e)
+{
+    _emailsModel->appendRow(e);
+}
+
+void MPPerson::addOrganization(MPPersonOrganization *o)
+{
+    _organizationsModel->appendRow(o);
+}
+
+void MPPerson::addUrl(MPPersonUrl *u)
+{
+    _urlsModel->appendRow(u);
 }

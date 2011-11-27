@@ -25,9 +25,16 @@
 #include "core/Authentication.h"
 #include "core/Constants.h"
 #include "core/Settings.h"
-#include "models/PeopleFilterModel.h"
-#include "models/PeopleModel.h"
-#include "plus/PeopleHandler.h"
+#include "people/handlers/PeopleHandler.h"
+#include "people/items/Person.h"
+#include "people/models/PeopleEmailsFilterModel.h"
+#include "people/models/PeopleEmailsModel.h"
+#include "people/models/PeopleFilterModel.h"
+#include "people/models/PeopleModel.h"
+#include "people/models/PeopleOrganizationsFilterModel.h"
+#include "people/models/PeopleOrganizationsModel.h"
+#include "people/models/PeopleUrlsFilterModel.h"
+#include "people/models/PeopleUrlsModel.h"
 
 MPApplication::MPApplication(QObject *parent)
     : QObject(parent)
@@ -44,18 +51,7 @@ MPApplication::MPApplication(QObject *parent)
     _authentication = new MPAuthentication(this);
     _viewer->rootContext()->setContextProperty("MPAuthentication", _authentication);
 
-    _people = new MPPeopleHandler(this);
-    _viewer->rootContext()->setContextProperty("MPPeople", _people);
-
-    connect(_people, SIGNAL(requestAuthentication()), _authentication, SLOT(refreshToken()));
-    connect(_authentication, SIGNAL(authenticated()), _people, SLOT(retry()));
-
-    _profile = new MPPeopleModel(this);
-    _profileF = new MPPeopleFilterModel(this);
-    _profileF->setSourceModel(_profile);
-    _viewer->rootContext()->setContextProperty("MPProfile", _profileF);
-
-    connect(_people, SIGNAL(currentProfile(MPPerson *)), _profile, SLOT(addSinglePerson(MPPerson *)));
+    initPeople();
 
     _viewer->setMainQmlFile(QLatin1String("qml/main.qml"));
     _viewer->showExpanded();
@@ -67,10 +63,45 @@ MPApplication::MPApplication(QObject *parent)
 MPApplication::~MPApplication()
 {
     delete _authentication;
+    delete _currentEmails;
+    delete _currentOrganizations;
+    delete _currentUrls;
     delete _people;
-    delete _profileF;
+    delete _profileModel;
     delete _profile;
     delete _settings;
 
     delete _viewer;
+}
+
+void MPApplication::initPeople()
+{
+    _people = new MPPeopleHandler(this);
+    _viewer->rootContext()->setContextProperty("MPPeople", _people);
+
+    connect(_people, SIGNAL(requestAuthentication()), _authentication, SLOT(refreshToken()));
+    connect(_authentication, SIGNAL(authenticated()), _people, SLOT(retry()));
+
+    _profileModel = new MPPeopleModel(this);
+    _profile = new MPPeopleFilterModel(this);
+    _profile->setSourceModel(_profileModel);
+    _viewer->rootContext()->setContextProperty("MPProfile", _profile);
+
+    _currentEmails = new MPPeopleEmailsFilterModel(this);
+    _viewer->rootContext()->setContextProperty("MPProfileEmails", _currentEmails);
+    _currentOrganizations = new MPPeopleOrganizationsFilterModel(this);
+    _viewer->rootContext()->setContextProperty("MPProfileOrganizations", _currentOrganizations);
+    _currentUrls = new MPPeopleUrlsFilterModel(this);
+    _viewer->rootContext()->setContextProperty("MPProfileUrls", _currentUrls);
+
+    connect(_people, SIGNAL(currentProfile(MPPerson *)), this, SLOT(selectPerson(MPPerson *)));
+}
+
+void MPApplication::selectPerson(MPPerson *person)
+{
+    _profileModel->addSinglePerson(person);
+
+    _currentEmails->setSourceModel(person->emails());
+    _currentOrganizations->setSourceModel(person->organizations());
+    _currentUrls->setSourceModel(person->urls());
 }

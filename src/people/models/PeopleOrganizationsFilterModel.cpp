@@ -16,31 +16,20 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "models/PeopleModel.h"
-#include "models/people/Person.h"
+#include "people/items/PersonOrganization.h"
+#include "people/models/PeopleOrganizationsFilterModel.h"
 
-MPPeopleModel::MPPeopleModel(QObject *parent)
-    : MPListModel(new MPPerson, parent) { }
+MPPeopleOrganizationsFilterModel::MPPeopleOrganizationsFilterModel(QObject *parent)
+    : QSortFilterProxyModel(parent) { }
 
-MPPeopleModel::~MPPeopleModel() { }
+MPPeopleOrganizationsFilterModel::~MPPeopleOrganizationsFilterModel() { }
 
-MPPerson *MPPeopleModel::find(const QString &id) const
+bool MPPeopleOrganizationsFilterModel::filterAcceptsRow(int sourceRow,
+                                           const QModelIndex &sourceParent) const
 {
-    return qobject_cast<MPPerson *>(MPListModel::find(id));
-}
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-MPPerson *MPPeopleModel::row(const int &row)
-{
-    return qobject_cast<MPPerson *>(MPListModel::row(row));
-}
+    bool name = sourceModel()->data(index, MPPersonOrganization::NameRole).toString().contains(filterRegExp());
 
-MPPerson *MPPeopleModel::takeRow(const int &row)
-{
-    return qobject_cast<MPPerson *>(MPListModel::takeRow(row));
-}
-
-void MPPeopleModel::addSinglePerson(MPPerson *person)
-{
-    clear();
-    appendRow(person);
+    return (name);
 }

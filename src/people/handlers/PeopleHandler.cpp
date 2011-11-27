@@ -25,8 +25,11 @@
 #include "core/NetworkRequest.h"
 #include "core/Settings.h"
 #include "json/json.h"
-#include "models/people/Person.h"
-#include "plus/PeopleHandler.h"
+#include "people/handlers/PeopleHandler.h"
+#include "people/items/Person.h"
+#include "people/items/PersonEmail.h"
+#include "people/items/PersonOrganization.h"
+#include "people/items/PersonUrl.h"
 
 MPPeopleHandler::MPPeopleHandler(QObject *parent)
     : QObject(parent)
@@ -52,8 +55,8 @@ void MPPeopleHandler::profile(const QString &profile)
     JsonReader *reader = new JsonReader();
     reader->parse(profile);
 
-    qDebug() << profile;
-    qDebug() << reader->result();
+    //qDebug() << profile;
+    //qDebug() << reader->result();
 
     if(reader->result().toMap()["kind"].toString() != "plus#person")
         return;
@@ -69,6 +72,38 @@ void MPPeopleHandler::profile(const QString &profile)
     person->setRelationshipStatus(reader->result().toMap()["relationshipStatus"].toString());
     person->setTagline(reader->result().toMap()["tagline"].toString());
     person->setUrl(reader->result().toMap()["url"].toString());
+
+    foreach(QVariant v, reader->result().toMap()["emails"].toList())
+    {
+        MPPersonEmail *email = new MPPersonEmail(v.toMap()["value"].toString());
+        email->setType(v.toMap()["type"].toString());
+        email->setPrimary(v.toMap()["primary"].toBool());
+
+        person->addEmail(email);
+    }
+
+    foreach(QVariant v, reader->result().toMap()["organizations"].toList())
+    {
+        MPPersonOrganization *org = new MPPersonOrganization(v.toMap()["name"].toString());
+        org->setDepartment(v.toMap()["department"].toString());
+        org->setTitle(v.toMap()["title"].toString());
+        org->setStartDate(v.toMap()["startDate"].toString());
+        org->setEndDate(v.toMap()["endDate"].toString());
+        org->setLocation(v.toMap()["location"].toString());
+        org->setDescription(v.toMap()["description"].toString());
+        org->setPrimary(v.toMap()["primary"].toBool());
+
+        person->addOrganization(org);
+    }
+
+    foreach(QVariant v, reader->result().toMap()["urls"].toList())
+    {
+        MPPersonUrl *url = new MPPersonUrl(v.toMap()["value"].toString());
+        url->setType(v.toMap()["type"].toString());
+        url->setPrimary(v.toMap()["primary"].toBool());
+
+        person->addUrl(url);
+    }
 
     emit currentProfile(person);
 

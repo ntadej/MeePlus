@@ -17,8 +17,8 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "models/ListItem.h"
-#include "models/ListModel.h"
+#include "core/ListItem.h"
+#include "core/ListModel.h"
 
 MPListModel::MPListModel(MPListItem *prototype,
                          QObject *parent)

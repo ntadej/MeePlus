@@ -16,27 +16,20 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "models/PeopleFilterModel.h"
-#include "models/people/Person.h"
+#ifndef MEEPLUS_PEOPLEORGANIZATIONSFILTERMODEL_H_
+#define MEEPLUS_PEOPLEORGANIZATIONSFILTERMODEL_H_
 
-MPPeopleFilterModel::MPPeopleFilterModel(QObject *parent)
-    : QSortFilterProxyModel(parent) { }
+#include <QtGui/QSortFilterProxyModel>
 
-MPPeopleFilterModel::~MPPeopleFilterModel() { }
-
-void MPPeopleFilterModel::setId(const QString &id)
+class MPPeopleOrganizationsFilterModel : public QSortFilterProxyModel
 {
-    _id = id;
-    invalidateFilter();
-}
+Q_OBJECT
+public:
+    MPPeopleOrganizationsFilterModel(QObject *parent = 0);
+    ~MPPeopleOrganizationsFilterModel();
 
-bool MPPeopleFilterModel::filterAcceptsRow(int sourceRow,
-                                           const QModelIndex &sourceParent) const
-{
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+};
 
-    bool name = sourceModel()->data(index, MPPerson::NameRole).toString().contains(filterRegExp());
-    bool id = sourceModel()->data(index, MPPerson::IdRole).toString().contains(_id, Qt::CaseInsensitive);
-
-    return (name && id);
-}
+#endif // MEEPLUS_PEOPLEORGANIZATIONSFILTERMODEL_H_
