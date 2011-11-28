@@ -41,7 +41,7 @@ public:
     ~MPApplication();
 
 private slots:
-    void selectPerson(MPPerson *person);
+    void selectPerson(const QString &id);
 
 private:
     void initPeople();

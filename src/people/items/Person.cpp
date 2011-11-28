@@ -34,7 +34,12 @@ MPPerson::MPPerson(const QString &id,
     _urlsModel = new MPPeopleUrlsModel(this);
 }
 
-MPPerson::MPPerson() { }
+MPPerson::MPPerson()
+{
+    _emailsModel = new MPPeopleEmailsModel(this);
+    _organizationsModel = new MPPeopleOrganizationsModel(this);
+    _urlsModel = new MPPeopleUrlsModel(this);
+}
 
 MPPerson::~MPPerson()
 {
@@ -149,8 +154,12 @@ void MPPerson::setGender(const QString &gender)
 
 void MPPerson::setAboutMe(const QString &aboutMe)
 {
-    if(_aboutMe != aboutMe) {
-        _aboutMe = aboutMe;
+    QString about = aboutMe;
+    if(about == "<br>")
+        about = "";
+
+    if(_aboutMe != about) {
+        _aboutMe = about;
         emit dataChanged();
     }
 }

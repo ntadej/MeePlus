@@ -20,6 +20,8 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 Item {
+    id: infoElement
+
     property alias name: name.text
     property alias value: value.text
 
@@ -30,7 +32,7 @@ Item {
 
     anchors.margins: MPUi.DefaultMargin
 
-    height: name.height + value.height
+    height: name.visible ? name.height + value.height : value.height
 
     Label {
         id: name
@@ -39,12 +41,14 @@ Item {
 
         anchors.top: parent.top
 
-        visible: name.text != ""
+        visible: text != ""
     }
 
     Label {
         id: value
+        wrapMode: Text.WordWrap
+        width: parent.width
 
-        anchors.top: name.bottom
+        anchors.top: name.visible ? name.bottom : parent.top
     }
 }

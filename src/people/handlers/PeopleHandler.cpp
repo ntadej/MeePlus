@@ -56,7 +56,7 @@ void MPPeopleHandler::profile(const QString &profile)
     reader->parse(profile);
 
     //qDebug() << profile;
-    //qDebug() << reader->result();
+    qDebug() << reader->result();
 
     if(reader->result().toMap()["kind"].toString() != "plus#person")
         return;
@@ -87,6 +87,7 @@ void MPPeopleHandler::profile(const QString &profile)
         MPPersonOrganization *org = new MPPersonOrganization(v.toMap()["name"].toString());
         org->setDepartment(v.toMap()["department"].toString());
         org->setTitle(v.toMap()["title"].toString());
+        org->setType(v.toMap()["type"].toString());
         org->setStartDate(v.toMap()["startDate"].toString());
         org->setEndDate(v.toMap()["endDate"].toString());
         org->setLocation(v.toMap()["location"].toString());
@@ -105,7 +106,10 @@ void MPPeopleHandler::profile(const QString &profile)
         person->addUrl(url);
     }
 
+    QString id = person->id();
+
     emit currentProfile(person);
+    emit currentProfileId(id);
 
     delete reader;
 }

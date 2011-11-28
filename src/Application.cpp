@@ -94,14 +94,18 @@ void MPApplication::initPeople()
     _currentUrls = new MPPeopleUrlsFilterModel(this);
     _viewer->rootContext()->setContextProperty("MPProfileUrls", _currentUrls);
 
-    connect(_people, SIGNAL(currentProfile(MPPerson *)), this, SLOT(selectPerson(MPPerson *)));
+    connect(_people, SIGNAL(currentProfile(MPPerson *)), _profileModel, SLOT(addSinglePerson(MPPerson *)));
+    connect(_people, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
 }
 
-void MPApplication::selectPerson(MPPerson *person)
+void MPApplication::selectPerson(const QString &id)
 {
-    _profileModel->addSinglePerson(person);
+    _profile->setId(id);
 
-    _currentEmails->setSourceModel(person->emails());
-    _currentOrganizations->setSourceModel(person->organizations());
-    _currentUrls->setSourceModel(person->urls());
+    if(!_profileModel->find(id))
+        return;
+
+    _currentEmails->setSourceModel(_profileModel->find(id)->emails());
+    _currentOrganizations->setSourceModel(_profileModel->find(id)->organizations());
+    _currentUrls->setSourceModel(_profileModel->find(id)->urls());
 }

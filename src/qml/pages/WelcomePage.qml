@@ -38,14 +38,85 @@ Page {
 
     onStatusChanged: MPJs.settings()
 
-    Column {
-        anchors.centerIn: parent
-
-        Button {
-            id: buttonTheme
-            text: qsTr("My profile")
-            onClicked: { MPJs.addPage("PersonPage.qml") }
+    ListModel {
+        id: pagesModel
+        ListElement {
+            page: "PersonPage.qml"
+            title: "My profile"
+            subtitle: "Checkout your profile"
+            image: "image://theme/icon-m-common-drilldown-arrow"
         }
+        ListElement {
+            page: "PersonPage.qml"
+            title: "Search G+"
+            subtitle: "Search for users, pages, etc."
+            image: "image://theme/icon-m-common-drilldown-arrow"
+        }
+    }
+
+    ListView {
+        id: welcomeView
+        anchors.fill: parent
+        model: pagesModel
+
+        delegate: Item {
+            id: listItem
+            height: 88
+            width: parent.width
+
+            BorderImage {
+                id: background
+                anchors.fill: parent
+                // Fill page porders
+                anchors.leftMargin: -welcomePage.anchors.leftMargin
+                anchors.rightMargin: -welcomePage.anchors.rightMargin
+                visible: mouseArea.pressed
+                source: "image://theme/meegotouch-list-background-pressed-center"
+            }
+
+            Row {
+                anchors.fill: parent
+
+                Column {
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    Label {
+                        id: mainText
+                        text: model.title
+                        font: MPUi.TitleFont
+                    }
+
+                    Label {
+                        id: subText
+                        text: model.subtitle
+                        font: MPUi.SubtitleFont
+                        color: MPUi.HighlightColor
+
+                        visible: text != ""
+                    }
+                }
+            }
+            Image {
+                source: model.image
+                anchors.right: parent.right;
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            MouseArea {
+                id: mouseArea
+                anchors.fill: background
+                onClicked: {
+                    if(model.title == "My profile") {
+                        MPPeople.requestProfile("me");
+                    }
+                    MPJs.addPage(model.page)
+                }
+            }
+        }
+    }
+
+    ScrollDecorator {
+        flickableItem: welcomeView
     }
 
     PageHeader {

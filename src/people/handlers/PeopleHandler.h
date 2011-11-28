@@ -38,6 +38,7 @@ public slots:
 
 signals:
     void currentProfile(MPPerson *);
+    void currentProfileId(const QString &);
     void requestAuthentication();
 
 private slots:

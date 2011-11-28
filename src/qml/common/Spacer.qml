@@ -16,21 +16,12 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "people/items/PersonUrl.h"
-#include "people/models/PeopleUrlsFilterModel.h"
+import QtQuick 1.1
+import com.nokia.meego 1.0
 
-MPPeopleUrlsFilterModel::MPPeopleUrlsFilterModel(QObject *parent)
-    : QSortFilterProxyModel(parent) { }
+Item {
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-MPPeopleUrlsFilterModel::~MPPeopleUrlsFilterModel() { }
-
-bool MPPeopleUrlsFilterModel::filterAcceptsRow(int sourceRow,
-                                           const QModelIndex &sourceParent) const
-{
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-
-    bool value = sourceModel()->data(index, MPPersonUrl::ValueRole).toString().contains(filterRegExp());
-    bool type = sourceModel()->data(index, MPPersonUrl::TypeRole).toString().isEmpty();
-
-    return (value && type);
+    height: MPUi.DefaultMargin
 }

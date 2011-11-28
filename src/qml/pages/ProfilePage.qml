@@ -20,6 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 import "../common"
+import "../views"
 
 import "../js/core.js" as MPJs
 
@@ -28,60 +29,27 @@ Page {
     anchors.topMargin: header.height
 
     ListView {
-        id: listView
+        id: profileView
         anchors.fill: parent
         width: parent.width
         model: MPProfile
         pressDelay: 140
 
-        delegate:  Item {
-            id: listItem
-            width: parent.width
-            height: 100
+        delegate: ProfilePageDelegate {
+            image: model.image
+            name: model.name
+            tagline: model.tagline
 
-            Column {
-                anchors.fill: parent
-                spacing: MPUi.DefaultMargin
-                ProfileHeader {
-                    id: profileHeader
-                    image: model.image
-                    name: model.name
-                    tagline: model.tagline
-                }
-
-                SectionHeader {
-                    id: basicInfo
-                    name: qsTr("Basic information")
-                }
-                InfoElement {
-                    name: qsTr("Gender")
-                    value: model.gender
-                }
-                InfoElement {
-                    name: qsTr("Birthday")
-                    value: model.birthday
-                }
-                InfoElement {
-                    name: qsTr("Current location")
-                    value: model.currentLocation
-                }
-                InfoElement {
-                    name: qsTr("Relationship status")
-                    value: model.relationshipStatus
-                }
-
-                SectionHeader {
-                    id: aboutInfo
-                    name: qsTr("About me")
-                }
-                InfoElement {
-                    value: model.aboutMe
-                }
-            }
+            gender: model.gender
+            birthday: model.birthday
+            location: model.currentLocation
+            relationship: model.relationshipStatus
+            about: model.aboutMe
         }
     }
+
     ScrollDecorator {
-        flickableItem: listView
+        flickableItem: profileView
     }
 
     PageHeader {
