@@ -26,7 +26,9 @@ import "../views"
 import "../js/core.js" as MPJs
 
 Page {
-    id: searchPage
+    id: searchResultsPage
+    anchors.margins: MPUi.DefaultMargin
+    anchors.topMargin: header.height
     tools: ToolBarLayout {
         id: searchPageTools
         visible: true
@@ -35,28 +37,44 @@ Page {
 
     ListView {
         id: searchView
-        anchors {left: parent.left; right: parent.right; top: header.bottom; bottom: parent.bottom}
+        anchors.fill: parent
         width: parent.width
         model: MPSearch
         pressDelay: 140
 
         delegate: Item {
             id: searchItem
-            height: 88
+            height: 50 + 2 * MPUi.DefaultMargin
             width: parent.width
 
             ItemBackground {
                 id: itemBackground
+                anchors.leftMargin: -searchResultsPage.anchors.leftMargin
+                anchors.rightMargin: -searchResultsPage.anchors.rightMargin
                 visible: mouseAreaItem.pressed
             }
 
-            ProfileHeader {
-                id: profileHeader
-                item: true
-                name: model.name
-                image: model.image
+            Separator {
+                anchors.leftMargin: -searchResultsPage.anchors.leftMargin
+                anchors.rightMargin: -searchResultsPage.anchors.rightMargin
+            }
 
-                anchors.fill: parent
+            Row {
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: MPUi.DefaultMargin
+
+                Image {
+                    id: icon
+                    source: model.image
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Label {
+                    id: name
+                    font: MPUi.TitleFont
+                    text: model.name
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
 
             IconListArrow { }
@@ -74,15 +92,15 @@ Page {
 
             ItemBackground {
                 id: footerBackground
+                anchors.leftMargin: -searchResultsPage.anchors.leftMargin
+                anchors.rightMargin: -searchResultsPage.anchors.rightMargin
                 visible: mouseAreaFooter.pressed
             }
 
-            ProfileHeader {
-                id: loadMore
-                item: true
-                name: qsTr("Load more")
-
-                anchors.fill: parent
+            Label {
+                id: footerLabel
+                font: MPUi.TitleFont
+                text: qsTr("Load more")
             }
 
             MouseArea {

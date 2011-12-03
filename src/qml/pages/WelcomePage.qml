@@ -71,14 +71,16 @@ Page {
             height: 88
             width: parent.width
 
-            BorderImage {
+            ItemBackground {
                 id: background
-                anchors.fill: parent
-                // Fill page porders
                 anchors.leftMargin: -welcomePage.anchors.leftMargin
                 anchors.rightMargin: -welcomePage.anchors.rightMargin
                 visible: mouseArea.pressed
-                source: "../images/background-pressed.png"
+            }
+
+            Separator {
+                anchors.leftMargin: -welcomePage.anchors.leftMargin
+                anchors.rightMargin: -welcomePage.anchors.rightMargin
             }
 
             Row {

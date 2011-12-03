@@ -23,28 +23,15 @@ Item {
     property alias image: icon.source
     property alias name: name.text
     property alias tagline: tagline.text
-    property bool item: false
 
     anchors.left: parent.left
     anchors.right: parent.right
 
     height: 100 + 2*MPUi.DefaultMargin
 
-    BorderImage {
-        id: background
-        anchors.fill: parent
-        source: "../images/background-pressed.png"
-        visible: !item
-    }
+    ItemBackground { }
 
-    BorderImage {
-        id: spacer
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 2
-        source: "image://theme/meegotouch-separator-background-horizontal"
-    }
+    Separator { }
 
     Image {
         id: icon

@@ -28,6 +28,7 @@ import "../js/core.js" as MPJs
 Page {
     id: searchPage
     anchors.margins: MPUi.DefaultMargin
+    anchors.topMargin: header.height
     tools: ToolBarLayout {
         id: searchPageTools
         visible: true

@@ -27,13 +27,14 @@ Item {
 
     anchors.margins: MPUi.DefaultMargin
 
-    height: 30
+    height: 30 + 2 * MPUi.DefaultMargin / 4
 
     BorderImage {
         id: background
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.bottomMargin: MPUi.DefaultMargin / 4
         height: 2
         source: "image://theme/meegotouch-separator-background-horizontal"
     }
