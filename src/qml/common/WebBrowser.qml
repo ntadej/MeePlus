@@ -20,6 +20,8 @@ import QtQuick 1.0
 import QtWebKit 1.0
 import com.nokia.meego 1.0
 
+import "../icons"
+
 Rectangle {
     property bool done: false;
 
@@ -49,11 +51,8 @@ Rectangle {
         color: "white"
         opacity: 0
 
-        BusyIndicator {
-            id: indicator
+        IconLoading {
             anchors.centerIn: parent
-            platformStyle: BusyIndicatorStyle { size: "large" }
-            running: true
         }
 
         anchors.fill: parent

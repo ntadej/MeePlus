@@ -35,6 +35,7 @@ public:
     ~MPPeopleHandler();
 
     Q_INVOKABLE void requestProfile(const QString &profile);
+    Q_INVOKABLE void search(const QString &string);
 
 public slots:
     void retry();
@@ -42,10 +43,14 @@ public slots:
 signals:
     void currentProfile(MPPerson *);
     void currentProfileId(const QString &);
+    void finishedProfile();
+    void finishedSearch();
     void newEmail(MPPersonEmail *);
     void newOrganization(MPPersonOrganization *);
     void newUrl(MPPersonUrl *);
     void requestAuthentication();
+    void searchPerson(MPPerson *);
+    void searchReset();
 
 private slots:
     void error(const int &err);
@@ -55,6 +60,7 @@ private:
     MPNetworkRequest *_nr;
 
     QString _currentProfile;
+    QString _currentSearchString;
 };
 
 #endif // MEEPLUS_PROFILEHANDLER_H_

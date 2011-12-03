@@ -56,8 +56,9 @@ MPApplication::MPApplication(QObject *parent)
     _viewer->setMainQmlFile(QLatin1String("qml/main.qml"));
     _viewer->showExpanded();
 
-    // Tests
-    _peopleHandler->requestProfile("me");
+    // Tests - only one active at a time!
+    //_peopleHandler->requestProfile("me");
+    //_peopleHandler->search("Larry Page");
 }
 
 MPApplication::~MPApplication()
@@ -89,10 +90,13 @@ void MPApplication::initPeople()
     connect(_authentication, SIGNAL(authenticated()), _peopleHandler, SLOT(retry()));
 
     _peopleMain = new MPPeopleModel(this);
-    _peopleSearch = new MPPeopleModel(this);
     _profile = new MPPeopleFilterModel(this);
     _profile->setSourceModel(_peopleMain);
     _viewer->rootContext()->setContextProperty("MPProfile", _profile);
+    _peopleSearch = new MPPeopleModel(this);
+    _search = new MPPeopleFilterModel(this);
+    _search->setSourceModel(_peopleSearch);
+    _viewer->rootContext()->setContextProperty("MPSearch", _search);
 
     _emails = new MPPeopleEmailsModel(this);
     _organizations = new MPPeopleOrganizationsModel(this);
@@ -113,6 +117,9 @@ void MPApplication::initPeople()
 
     connect(_peopleHandler, SIGNAL(currentProfile(MPPerson *)), _peopleMain, SLOT(appendPerson(MPPerson *)));
     connect(_peopleHandler, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
+
+    connect(_peopleHandler, SIGNAL(searchPerson(MPPerson *)), _peopleSearch, SLOT(appendPerson(MPPerson *)));
+    connect(_peopleHandler, SIGNAL(searchReset()), _peopleSearch, SLOT(reset()));
 }
 
 void MPApplication::selectPerson(const QString &id)

@@ -30,7 +30,7 @@ bool MPPeopleFilterModel::filterAcceptsRow(int sourceRow,
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     bool name = sourceModel()->data(index, MPPerson::NameRole).toString().contains(filterRegExp());
-    bool id = sourceModel()->data(index, MPPerson::IdRole).toString() == _id;
+    bool id = sourceModel()->data(index, MPPerson::IdRole).toString().contains(_id, Qt::CaseInsensitive);
 
     return (name && id);
 }

@@ -22,8 +22,6 @@ import com.nokia.meego 1.0
 import "../common"
 import "../icons"
 
-import "../js/core.js" as MPJs
-
 Page {
     id: settingsPage
     anchors.margins: MPUi.DefaultMargin

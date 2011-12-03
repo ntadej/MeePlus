@@ -22,8 +22,6 @@ import com.nokia.meego 1.0
 import "../common"
 import "../views"
 
-import "../js/core.js" as MPJs
-
 Page {
     id: profilePage
     anchors.topMargin: header.height

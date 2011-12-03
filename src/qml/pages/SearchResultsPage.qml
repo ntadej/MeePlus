@@ -21,50 +21,24 @@ import com.nokia.meego 1.0
 
 import "../common"
 import "../icons"
+import "../views"
 
 import "../js/core.js" as MPJs
 
 Page {
-    id: welcomePage
-    anchors.margins: MPUi.DefaultMargin
-    anchors.topMargin: header.height
+    id: searchPage
     tools: ToolBarLayout {
-        id: welcomePageTools
+        id: searchPageTools
         visible: true
-        IconSettings {}
-        IconLogin {}
-        IconMenu {}
-    }
-
-    onStatusChanged: MPJs.settings()
-
-    Connections {
-        target: MPPeople
-        onFinishedProfile: {
-            MPJs.addPage("PersonPage.qml")
-        }
-    }
-
-    ListModel {
-        id: pagesModel
-        ListElement {
-            page: ""
-            title: "My profile"
-            subtitle: "Checkout your profile"
-            image: "image://theme/icon-m-common-drilldown-arrow"
-        }
-        ListElement {
-            page: "SearchPage.qml"
-            title: "Search G+"
-            subtitle: "Search for users, pages, etc."
-            image: "image://theme/icon-m-common-drilldown-arrow"
-        }
+        IconBack {}
     }
 
     ListView {
-        id: welcomeView
-        anchors.fill: parent
-        model: pagesModel
+        id: searchView
+        anchors {left: parent.left; right: parent.right; top: header.bottom; bottom: parent.bottom}
+        width: parent.width
+        model: MPSearch
+        pressDelay: 140
 
         delegate: Item {
             id: listItem
@@ -81,30 +55,17 @@ Page {
                 source: "image://theme/meegotouch-list-background-pressed-center"
             }
 
-            Row {
+            ProfileHeader {
+                id: profileHeader
+                item: true
+                name: model.name
+                image: model.image
+
                 anchors.fill: parent
-
-                Column {
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    Label {
-                        id: mainText
-                        text: model.title
-                        font: MPUi.TitleFont
-                    }
-
-                    Label {
-                        id: subText
-                        text: model.subtitle
-                        font: MPUi.SubtitleFont
-                        color: MPUi.HighlightColor
-
-                        visible: text != ""
-                    }
-                }
             }
+
             Image {
-                source: model.image
+                source: "image://theme/icon-m-common-drilldown-arrow"
                 anchors.right: parent.right;
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -112,23 +73,17 @@ Page {
             MouseArea {
                 id: mouseArea
                 anchors.fill: background
-                onClicked: {
-                    if(model.title == "My profile") {
-                        MPPeople.requestProfile("me");
-                    }
-                    if(model.page !== "")
-                        MPJs.addPage(model.page)
-                }
+                //onClicked:
             }
         }
     }
 
     ScrollDecorator {
-        flickableItem: welcomeView
+        flickableItem: searchView
     }
 
     PageHeader {
         id: header
-        title: "MeePlus"
+        title: qsTr("Search results")
     }
 }

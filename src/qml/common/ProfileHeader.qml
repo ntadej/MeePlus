@@ -19,10 +19,11 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Rectangle {
+Item {
     property alias image: icon.source
     property alias name: name.text
     property alias tagline: tagline.text
+    property bool item: false
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -33,6 +34,7 @@ Rectangle {
         id: background
         anchors.fill: parent
         source: "image://theme/meegotouch-list-background-pressed-center"
+        visible: !item
     }
 
     Image {
@@ -56,9 +58,11 @@ Rectangle {
          Label {
              id: tagline
              width: parent.width
+             text: ""
              wrapMode: Text.WordWrap
              font: MPUi.SubtitleFont
              color: MPUi.HighlightColor
+             visible: text != ""
          }
     }
 }

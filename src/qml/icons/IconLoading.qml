@@ -19,31 +19,9 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-import "../common"
-
-Page {
-    id: activitiesPage
-    anchors.topMargin: header.height
-
-    ListView {
-        id: listView
-        anchors.fill: parent
-        width: parent.width
-        model: MPProfile
-        pressDelay: 140
-
-        delegate:  Item {
-            id: listItem
-            width: parent.width
-
-        }
-    }
-    ScrollDecorator {
-        flickableItem: listView
-    }
-
-    PageHeader {
-        id: header
-        title: qsTr("Activities")
-    }
+BusyIndicator {
+    id: indicator
+    anchors.centerIn: parent
+    platformStyle: BusyIndicatorStyle { size: "large" }
+    running: true
 }

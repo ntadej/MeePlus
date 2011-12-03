@@ -43,3 +43,8 @@ void MPPeopleModel::appendPerson(MPPerson *person)
 {
     appendSingleRow(person);
 }
+
+void MPPeopleModel::reset()
+{
+    clear();
+}

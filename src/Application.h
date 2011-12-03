@@ -58,6 +58,7 @@ private:
     MPPeopleHandler *_peopleHandler;
 
     MPPeopleFilterModel *_profile;
+    MPPeopleFilterModel *_search;
     MPPeopleModel *_peopleMain;
     MPPeopleModel *_peopleSearch;
 
