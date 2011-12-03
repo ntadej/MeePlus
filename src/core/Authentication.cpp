@@ -48,23 +48,21 @@ void MPAuthentication::error(const int &err)
 
 void MPAuthentication::refreshToken()
 {
+    MPSettings *settings = new MPSettings(this);
     QNetworkRequest request(QUrl("https://accounts.google.com/o/oauth2/token"));
     request.setRawHeader("Host", "accounts.google.com");
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
     request.setRawHeader("User-Agent", QString("MeePlus " + MeePlus::version()).toUtf8());
 
-    MPSettings *settings = new MPSettings(this);
-    QString refresh = settings->refreshToken();
-    delete settings;
-
     QString data = "client_id=" + MeePlus::clientId() + "&"
             "client_secret=" + MeePlus::clientSecret() + "&"
-            "refresh_token=" + refresh + "&"
+            "refresh_token=" + settings->refreshToken() + "&"
             "grant_type=refresh_token";
 
     qDebug() << data.toUtf8();
 
     _nr->postRequest(request, data.toUtf8());
+    delete settings;
 }
 
 void MPAuthentication::requestToken(const QString &code)

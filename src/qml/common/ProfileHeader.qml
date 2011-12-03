@@ -33,8 +33,17 @@ Item {
     BorderImage {
         id: background
         anchors.fill: parent
-        source: "image://theme/meegotouch-list-background-pressed-center"
+        source: "../images/background-pressed.png"
         visible: !item
+    }
+
+    BorderImage {
+        id: spacer
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 2
+        source: "image://theme/meegotouch-separator-background-horizontal"
     }
 
     Image {

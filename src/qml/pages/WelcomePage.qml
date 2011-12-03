@@ -78,7 +78,7 @@ Page {
                 anchors.leftMargin: -welcomePage.anchors.leftMargin
                 anchors.rightMargin: -welcomePage.anchors.rightMargin
                 visible: mouseArea.pressed
-                source: "image://theme/meegotouch-list-background-pressed-center"
+                source: "../images/background-pressed.png"
             }
 
             Row {

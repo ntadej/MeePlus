@@ -18,21 +18,8 @@
 
 import QtQuick 1.1
 
-import "../common"
-
-Column {
-    id: column
-    width: parent.width
-
-    property alias name: info.name
-    property alias value: info.value
-
-    InfoElement {
-        id: info
-        width: parent.width
-    }
-
-    Component.onCompleted: {
-        organizationsList.height += column.height
-    }
+Image {
+    source: "image://theme/icon-m-common-drilldown-arrow"
+    anchors.right: parent.right;
+    anchors.verticalCenter: parent.verticalCenter
 }

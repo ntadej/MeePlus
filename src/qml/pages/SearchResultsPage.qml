@@ -41,18 +41,13 @@ Page {
         pressDelay: 140
 
         delegate: Item {
-            id: listItem
+            id: searchItem
             height: 88
             width: parent.width
 
-            BorderImage {
-                id: background
-                anchors.fill: parent
-                // Fill page porders
-                anchors.leftMargin: -welcomePage.anchors.leftMargin
-                anchors.rightMargin: -welcomePage.anchors.rightMargin
-                visible: mouseArea.pressed
-                source: "image://theme/meegotouch-list-background-pressed-center"
+            ItemBackground {
+                id: itemBackground
+                visible: mouseAreaItem.pressed
             }
 
             ProfileHeader {
@@ -64,15 +59,35 @@ Page {
                 anchors.fill: parent
             }
 
-            Image {
-                source: "image://theme/icon-m-common-drilldown-arrow"
-                anchors.right: parent.right;
-                anchors.verticalCenter: parent.verticalCenter
+            IconListArrow { }
+
+            MouseArea {
+                id: mouseAreaItem
+                anchors.fill: itemBackground
+                //onClicked:
+            }
+        }
+        footer: Item {
+            id: searchFooter
+            height: 44
+            width: parent.width
+
+            ItemBackground {
+                id: footerBackground
+                visible: mouseAreaFooter.pressed
+            }
+
+            ProfileHeader {
+                id: loadMore
+                item: true
+                name: qsTr("Load more")
+
+                anchors.fill: parent
             }
 
             MouseArea {
-                id: mouseArea
-                anchors.fill: background
+                id: mouseAreaFooter
+                anchors.fill: footerBackground
                 //onClicked:
             }
         }

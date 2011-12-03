@@ -51,4 +51,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
     }
+
+    Separator { }
 }
