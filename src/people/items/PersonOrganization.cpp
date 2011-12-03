@@ -18,10 +18,12 @@
 
 #include "people/items/PersonOrganization.h"
 
-MPPersonOrganization::MPPersonOrganization(const QString &name,
+MPPersonOrganization::MPPersonOrganization(const QString &person,
+                                           const QString &name,
                                            QObject *parent)
     : MPListItem(parent)
 {
+    setPerson(person);
     setName(name);
 }
 
@@ -32,6 +34,7 @@ MPPersonOrganization::~MPPersonOrganization() { }
 QHash<int, QByteArray> MPPersonOrganization::roleNames() const
 {
     QHash<int, QByteArray> names;
+    names[PersonRole] = "person";
     names[DisplayRole] = "display";
     names[DisplayIconRole] = "displayIcon";
     names[NameRole] = "name";
@@ -50,6 +53,8 @@ QVariant MPPersonOrganization::data(int role) const
 {
     switch (role)
     {
+    case PersonRole:
+        return person();
     case DisplayRole:
         return display();
     case DisplayIconRole:
@@ -85,6 +90,14 @@ QString MPPersonOrganization::display() const
 QIcon MPPersonOrganization::displayIcon() const
 {
     return QIcon();
+}
+
+void MPPersonOrganization::setPerson(const QString &person)
+{
+    if(_person != person) {
+        _person = person;
+        emit dataChanged();
+    }
 }
 
 void MPPersonOrganization::setName(const QString &name)

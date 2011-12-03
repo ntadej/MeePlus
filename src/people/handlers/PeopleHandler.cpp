@@ -75,16 +75,16 @@ void MPPeopleHandler::profile(const QString &profile)
 
     foreach(QVariant v, reader->result().toMap()["emails"].toList())
     {
-        MPPersonEmail *email = new MPPersonEmail(v.toMap()["value"].toString());
+        MPPersonEmail *email = new MPPersonEmail(person->id(), v.toMap()["value"].toString());
         email->setType(v.toMap()["type"].toString());
         email->setPrimary(v.toMap()["primary"].toBool());
 
-        person->addEmail(email);
+        emit newEmail(email);
     }
 
     foreach(QVariant v, reader->result().toMap()["organizations"].toList())
     {
-        MPPersonOrganization *org = new MPPersonOrganization(v.toMap()["name"].toString());
+        MPPersonOrganization *org = new MPPersonOrganization(person->id(), v.toMap()["name"].toString());
         org->setDepartment(v.toMap()["department"].toString());
         org->setTitle(v.toMap()["title"].toString());
         org->setType(v.toMap()["type"].toString());
@@ -94,16 +94,16 @@ void MPPeopleHandler::profile(const QString &profile)
         org->setDescription(v.toMap()["description"].toString());
         org->setPrimary(v.toMap()["primary"].toBool());
 
-        person->addOrganization(org);
+        emit newOrganization(org);
     }
 
     foreach(QVariant v, reader->result().toMap()["urls"].toList())
     {
-        MPPersonUrl *url = new MPPersonUrl(v.toMap()["value"].toString());
+        MPPersonUrl *url = new MPPersonUrl(person->id(), v.toMap()["value"].toString());
         url->setType(v.toMap()["type"].toString());
         url->setPrimary(v.toMap()["primary"].toBool());
 
-        person->addUrl(url);
+        emit newUrl(url);
     }
 
     QString id = person->id();

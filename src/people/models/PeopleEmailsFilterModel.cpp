@@ -25,11 +25,20 @@ MPPeopleEmailsFilterModel::MPPeopleEmailsFilterModel(QObject *parent)
 MPPeopleEmailsFilterModel::~MPPeopleEmailsFilterModel() { }
 
 bool MPPeopleEmailsFilterModel::filterAcceptsRow(int sourceRow,
-                                           const QModelIndex &sourceParent) const
+                                                 const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    bool value = sourceModel()->data(index, MPPersonEmail::ValueRole).toString().contains(filterRegExp());
+    bool v = sourceModel()->data(index, MPPersonEmail::ValueRole).toString().contains(filterRegExp());
+    bool p = sourceModel()->data(index, MPPersonEmail::PersonRole).toString() == _person;
 
-    return (value);
+    return (p && v);
+}
+
+void MPPeopleEmailsFilterModel::setPerson(const QString &person)
+{
+    if (_person != person) {
+        _person = person;
+        invalidateFilter();
+    }
 }

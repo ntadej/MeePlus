@@ -35,6 +35,9 @@ public:
     MPPersonEmail *find(const QString &id) const;
     MPPersonEmail *row(const int &row);
     MPPersonEmail *takeRow(const int &row);
+
+public slots:
+    void appendEmail(MPPersonEmail *email);
 };
 
 #endif // MEEPLUS_PEOPLEEMAILSMODEL_H_

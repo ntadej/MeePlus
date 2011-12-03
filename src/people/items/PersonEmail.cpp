@@ -18,10 +18,12 @@
 
 #include "people/items/PersonEmail.h"
 
-MPPersonEmail::MPPersonEmail(const QString &value,
+MPPersonEmail::MPPersonEmail(const QString &person,
+                             const QString &value,
                              QObject *parent)
     : MPListItem(parent)
 {
+    setPerson(person);
     setValue(value);
 }
 
@@ -32,6 +34,7 @@ MPPersonEmail::~MPPersonEmail() { }
 QHash<int, QByteArray> MPPersonEmail::roleNames() const
 {
     QHash<int, QByteArray> names;
+    names[PersonRole] = "person";
     names[DisplayRole] = "display";
     names[DisplayIconRole] = "displayIcon";
     names[ValueRole] = "value";
@@ -44,6 +47,8 @@ QVariant MPPersonEmail::data(int role) const
 {
     switch (role)
     {
+    case PersonRole:
+        return person();
     case DisplayRole:
         return display();
     case DisplayIconRole:
@@ -67,6 +72,14 @@ QString MPPersonEmail::display() const
 QIcon MPPersonEmail::displayIcon() const
 {
     return QIcon();
+}
+
+void MPPersonEmail::setPerson(const QString &person)
+{
+    if(_person != person) {
+        _person = person;
+        emit dataChanged();
+    }
 }
 
 void MPPersonEmail::setValue(const QString &value)

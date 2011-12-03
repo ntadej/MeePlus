@@ -24,19 +24,21 @@ MPPeopleFilterModel::MPPeopleFilterModel(QObject *parent)
 
 MPPeopleFilterModel::~MPPeopleFilterModel() { }
 
-void MPPeopleFilterModel::setId(const QString &id)
-{
-    _id = id;
-    invalidateFilter();
-}
-
 bool MPPeopleFilterModel::filterAcceptsRow(int sourceRow,
                                            const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     bool name = sourceModel()->data(index, MPPerson::NameRole).toString().contains(filterRegExp());
-    bool id = sourceModel()->data(index, MPPerson::IdRole).toString().contains(_id, Qt::CaseInsensitive);
+    bool id = sourceModel()->data(index, MPPerson::IdRole).toString() == _id;
 
     return (name && id);
+}
+
+void MPPeopleFilterModel::setId(const QString &id)
+{
+    if(_id != id) {
+        _id = id;
+        invalidateFilter();
+    }
 }

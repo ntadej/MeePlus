@@ -25,12 +25,20 @@ MPPeopleUrlsFilterModel::MPPeopleUrlsFilterModel(QObject *parent)
 MPPeopleUrlsFilterModel::~MPPeopleUrlsFilterModel() { }
 
 bool MPPeopleUrlsFilterModel::filterAcceptsRow(int sourceRow,
-                                           const QModelIndex &sourceParent) const
+                                               const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    bool value = sourceModel()->data(index, MPPersonUrl::ValueRole).toString().contains(filterRegExp());
-    bool type = sourceModel()->data(index, MPPersonUrl::TypeRole).toString().isEmpty();
+    bool v = sourceModel()->data(index, MPPersonUrl::ValueRole).toString().contains(filterRegExp());
+    bool p = sourceModel()->data(index, MPPersonUrl::PersonRole).toString() == _person;
 
-    return (value && type);
+    return (p && v);
+}
+
+void MPPeopleUrlsFilterModel::setPerson(const QString &person)
+{
+    if (_person != person) {
+        _person = person;
+        invalidateFilter();
+    }
 }

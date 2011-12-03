@@ -38,3 +38,8 @@ MPPersonUrl *MPPeopleUrlsModel::takeRow(const int &row)
 {
     return qobject_cast<MPPersonUrl *>(MPListModel::takeRow(row));
 }
+
+void MPPeopleUrlsModel::appendUrl(MPPersonUrl *url)
+{
+    appendSingleRow(url);
+}

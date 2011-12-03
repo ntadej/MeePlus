@@ -38,3 +38,8 @@ MPPersonOrganization *MPPeopleOrganizationsModel::takeRow(const int &row)
 {
     return qobject_cast<MPPersonOrganization *>(MPListModel::takeRow(row));
 }
+
+void MPPeopleOrganizationsModel::appendOrganization(MPPersonOrganization *organization)
+{
+    appendSingleRow(organization);
+}

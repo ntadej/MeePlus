@@ -16,8 +16,6 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
-
 #include "people/items/Person.h"
 #include "people/models/PeopleModel.h"
 
@@ -41,13 +39,7 @@ MPPerson *MPPeopleModel::takeRow(const int &row)
     return qobject_cast<MPPerson *>(MPListModel::takeRow(row));
 }
 
-void MPPeopleModel::addSinglePerson(MPPerson *person)
+void MPPeopleModel::appendPerson(MPPerson *person)
 {
-    if(find(person->id())) {
-        delete person;
-        return;
-    }
-
-    appendRow(person);
-    qDebug() << rowCount();
+    appendSingleRow(person);
 }

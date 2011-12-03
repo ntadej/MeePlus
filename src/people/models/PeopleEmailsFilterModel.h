@@ -28,8 +28,14 @@ public:
     MPPeopleEmailsFilterModel(QObject *parent = 0);
     ~MPPeopleEmailsFilterModel();
 
+    inline QString person() const { return _person; }
+    void setPerson(const QString &person);
+
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+
+private:
+    QString _person;
 };
 
 #endif // MEEPLUS_PEOPLEEMAILSFILTERMODEL_H_

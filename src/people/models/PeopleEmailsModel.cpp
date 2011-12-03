@@ -38,3 +38,8 @@ MPPersonEmail *MPPeopleEmailsModel::takeRow(const int &row)
 {
     return qobject_cast<MPPersonEmail *>(MPListModel::takeRow(row));
 }
+
+void MPPeopleEmailsModel::appendEmail(MPPersonEmail *email)
+{
+    appendSingleRow(email);
+}

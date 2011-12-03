@@ -28,8 +28,14 @@ public:
     MPPeopleUrlsFilterModel(QObject *parent = 0);
     ~MPPeopleUrlsFilterModel();
 
+    inline QString person() const { return _person; }
+    void setPerson(const QString &person);
+
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+
+private:
+    QString _person;
 };
 
 #endif // MEEPLUS_PEOPLEURLSFILTERMODEL_H_

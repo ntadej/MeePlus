@@ -57,55 +57,72 @@ MPApplication::MPApplication(QObject *parent)
     _viewer->showExpanded();
 
     // Tests
-    _people->requestProfile("me");
+    _peopleHandler->requestProfile("me");
 }
 
 MPApplication::~MPApplication()
 {
     delete _authentication;
-    delete _currentEmails;
-    delete _currentOrganizations;
-    delete _currentUrls;
-    delete _people;
-    delete _profileModel;
-    delete _profile;
     delete _settings;
+
+    // People
+    delete _emails;
+    delete _organizations;
+    delete _urls;
+    delete _peopleHandler;
+    delete _peopleMain;
+    delete _peopleSearch;
+    delete _profileEmails;
+    delete _profileOrganizations;
+    delete _profileUrls;
+    delete _profile;
 
     delete _viewer;
 }
 
 void MPApplication::initPeople()
 {
-    _people = new MPPeopleHandler(this);
-    _viewer->rootContext()->setContextProperty("MPPeople", _people);
+    _peopleHandler = new MPPeopleHandler(this);
+    _viewer->rootContext()->setContextProperty("MPPeople", _peopleHandler);
 
-    connect(_people, SIGNAL(requestAuthentication()), _authentication, SLOT(refreshToken()));
-    connect(_authentication, SIGNAL(authenticated()), _people, SLOT(retry()));
+    connect(_peopleHandler, SIGNAL(requestAuthentication()), _authentication, SLOT(refreshToken()));
+    connect(_authentication, SIGNAL(authenticated()), _peopleHandler, SLOT(retry()));
 
-    _profileModel = new MPPeopleModel(this);
+    _peopleMain = new MPPeopleModel(this);
+    _peopleSearch = new MPPeopleModel(this);
     _profile = new MPPeopleFilterModel(this);
-    _profile->setSourceModel(_profileModel);
+    _profile->setSourceModel(_peopleMain);
     _viewer->rootContext()->setContextProperty("MPProfile", _profile);
 
-    _currentEmails = new MPPeopleEmailsFilterModel(this);
-    _viewer->rootContext()->setContextProperty("MPProfileEmails", _currentEmails);
-    _currentOrganizations = new MPPeopleOrganizationsFilterModel(this);
-    _viewer->rootContext()->setContextProperty("MPProfileOrganizations", _currentOrganizations);
-    _currentUrls = new MPPeopleUrlsFilterModel(this);
-    _viewer->rootContext()->setContextProperty("MPProfileUrls", _currentUrls);
+    _emails = new MPPeopleEmailsModel(this);
+    _organizations = new MPPeopleOrganizationsModel(this);
+    _urls = new MPPeopleUrlsModel(this);
+    _profileEmails = new MPPeopleEmailsFilterModel(this);
+    _profileEmails->setSourceModel(_emails);
+    _viewer->rootContext()->setContextProperty("MPProfileEmails", _profileEmails);
+    _profileOrganizations = new MPPeopleOrganizationsFilterModel(this);
+    _profileOrganizations->setSourceModel(_organizations);
+    _viewer->rootContext()->setContextProperty("MPProfileOrganizations", _profileOrganizations);
+    _profileUrls = new MPPeopleUrlsFilterModel(this);
+    _profileUrls->setSourceModel(_urls);
+    _viewer->rootContext()->setContextProperty("MPProfileUrls", _profileUrls);
 
-    connect(_people, SIGNAL(currentProfile(MPPerson *)), _profileModel, SLOT(addSinglePerson(MPPerson *)));
-    connect(_people, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
+    connect(_peopleHandler, SIGNAL(newEmail(MPPersonEmail *)), _emails, SLOT(appendEmail(MPPersonEmail *)));
+    connect(_peopleHandler, SIGNAL(newOrganization(MPPersonOrganization *)), _organizations, SLOT(appendOrganization(MPPersonOrganization *)));
+    connect(_peopleHandler, SIGNAL(newUrl(MPPersonUrl *)), _urls, SLOT(appendUrl(MPPersonUrl *)));
+
+    connect(_peopleHandler, SIGNAL(currentProfile(MPPerson *)), _peopleMain, SLOT(appendPerson(MPPerson *)));
+    connect(_peopleHandler, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
 }
 
 void MPApplication::selectPerson(const QString &id)
 {
     _profile->setId(id);
 
-    if(!_profileModel->find(id))
+    if(!_peopleMain->find(id))
         return;
 
-    _currentEmails->setSourceModel(_profileModel->find(id)->emails());
-    _currentOrganizations->setSourceModel(_profileModel->find(id)->organizations());
-    _currentUrls->setSourceModel(_profileModel->find(id)->urls());
+    _profileEmails->setPerson(id);
+    _profileOrganizations->setPerson(id);
+    _profileUrls->setPerson(id);
 }

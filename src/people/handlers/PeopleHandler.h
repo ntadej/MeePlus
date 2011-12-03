@@ -23,6 +23,9 @@
 
 class MPNetworkRequest;
 class MPPerson;
+class MPPersonEmail;
+class MPPersonOrganization;
+class MPPersonUrl;
 
 class MPPeopleHandler : public QObject
 {
@@ -39,6 +42,9 @@ public slots:
 signals:
     void currentProfile(MPPerson *);
     void currentProfileId(const QString &);
+    void newEmail(MPPersonEmail *);
+    void newOrganization(MPPersonOrganization *);
+    void newUrl(MPPersonUrl *);
     void requestAuthentication();
 
 private slots:

@@ -31,7 +31,8 @@ public:
     enum Roles {
         DisplayRole = Qt::DisplayRole,
         DisplayIconRole = Qt::DecorationRole,
-        NameRole = Qt::UserRole + 1,
+        PersonRole = Qt::UserRole + 1,
+        NameRole,
         DepartmentRole,
         TitleRole,
         TypeRole,
@@ -42,8 +43,9 @@ public:
         PrimaryRole
     };
 
-    MPPersonOrganization(const QString &name,
-             QObject *parent = 0);
+    MPPersonOrganization(const QString &person,
+                         const QString &name,
+                         QObject *parent = 0);
     MPPersonOrganization();
     ~MPPersonOrganization();
 
@@ -53,6 +55,8 @@ public:
     QIcon displayIcon() const;
     QHash<int, QByteArray> roleNames() const;
 
+    inline QString person() const { return _person; }
+    void setPerson(const QString &person);
     inline QString name() const { return _name; }
     void setName(const QString &name);
     inline QString department() const { return _department; }
@@ -73,6 +77,7 @@ public:
     void setPrimary(const bool &primary);
 
 private:
+    QString _person;
     QString _name;
     QString _department;
     QString _title;

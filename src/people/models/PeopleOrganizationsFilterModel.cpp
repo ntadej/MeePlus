@@ -25,11 +25,20 @@ MPPeopleOrganizationsFilterModel::MPPeopleOrganizationsFilterModel(QObject *pare
 MPPeopleOrganizationsFilterModel::~MPPeopleOrganizationsFilterModel() { }
 
 bool MPPeopleOrganizationsFilterModel::filterAcceptsRow(int sourceRow,
-                                           const QModelIndex &sourceParent) const
+                                                        const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    bool name = sourceModel()->data(index, MPPersonOrganization::NameRole).toString().contains(filterRegExp());
+    bool v = sourceModel()->data(index, MPPersonOrganization::NameRole).toString().contains(filterRegExp());
+    bool p = sourceModel()->data(index, MPPersonOrganization::PersonRole).toString() == _person;
 
-    return (name);
+    return (p && v);
+}
+
+void MPPeopleOrganizationsFilterModel::setPerson(const QString &person)
+{
+    if (_person != person) {
+        _person = person;
+        invalidateFilter();
+    }
 }

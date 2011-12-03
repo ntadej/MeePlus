@@ -18,10 +18,12 @@
 
 #include "people/items/PersonUrl.h"
 
-MPPersonUrl::MPPersonUrl(const QString &value,
+MPPersonUrl::MPPersonUrl(const QString &person,
+                         const QString &value,
                          QObject *parent)
     : MPListItem(parent)
 {
+    setPerson(person);
     setValue(value);
 }
 
@@ -32,6 +34,7 @@ MPPersonUrl::~MPPersonUrl() { }
 QHash<int, QByteArray> MPPersonUrl::roleNames() const
 {
     QHash<int, QByteArray> names;
+    names[PersonRole] = "person";
     names[DisplayRole] = "display";
     names[DisplayIconRole] = "displayIcon";
     names[ValueRole] = "value";
@@ -44,6 +47,8 @@ QVariant MPPersonUrl::data(int role) const
 {
     switch (role)
     {
+    case PersonRole:
+        return person();
     case DisplayRole:
         return display();
     case DisplayIconRole:
@@ -67,6 +72,14 @@ QString MPPersonUrl::display() const
 QIcon MPPersonUrl::displayIcon() const
 {
     return QIcon();
+}
+
+void MPPersonUrl::setPerson(const QString &person)
+{
+    if(_person != person) {
+        _person = person;
+        emit dataChanged();
+    }
 }
 
 void MPPersonUrl::setValue(const QString &value)

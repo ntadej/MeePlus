@@ -35,6 +35,9 @@ public:
     MPPersonUrl *find(const QString &id) const;
     MPPersonUrl *row(const int &row);
     MPPersonUrl *takeRow(const int &row);
+
+public slots:
+    void appendUrl(MPPersonUrl *url);
 };
 
 #endif // MEEPLUS_PEOPLEURLSMODEL_H_

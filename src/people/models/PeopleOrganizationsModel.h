@@ -35,6 +35,9 @@ public:
     MPPersonOrganization *find(const QString &id) const;
     MPPersonOrganization *row(const int &row);
     MPPersonOrganization *takeRow(const int &row);
+
+public slots:
+    void appendOrganization(MPPersonOrganization *organization);
 };
 
 #endif // MEEPLUS_PEOPLEORGANIZATIONSMODEL_H_

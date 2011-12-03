@@ -31,12 +31,14 @@ public:
     enum Roles {
         DisplayRole = Qt::DisplayRole,
         DisplayIconRole = Qt::DecorationRole,
-        ValueRole = Qt::UserRole + 1,
+        PersonRole = Qt::UserRole + 1,
+        ValueRole,
         TypeRole,
         PrimaryRole
     };
 
-    MPPersonEmail(const QString &value,
+    MPPersonEmail(const QString &person,
+                  const QString &value,
                   QObject *parent = 0);
     MPPersonEmail();
     ~MPPersonEmail();
@@ -47,6 +49,8 @@ public:
     QIcon displayIcon() const;
     QHash<int, QByteArray> roleNames() const;
 
+    inline QString person() const { return _person; }
+    void setPerson(const QString &person);
     inline QString value() const { return _value; }
     void setValue(const QString &value);
     inline QString type() const { return _type; }
@@ -55,6 +59,7 @@ public:
     void setPrimary(const bool &primary);
 
 private:
+    QString _person;
     QString _value;
     QString _type;
     bool _primary;

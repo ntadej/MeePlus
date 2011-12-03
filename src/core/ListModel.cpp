@@ -62,6 +62,16 @@ void MPListModel::appendRows(const QList<MPListItem *> &items)
     endInsertRows();
 }
 
+void MPListModel::appendSingleRow(MPListItem *item)
+{
+    if(find(item->id())) {
+        delete item;
+        return;
+    }
+
+    appendRow(item);
+}
+
 void MPListModel::insertRow(const int &row, MPListItem *item)
 {
     beginInsertRows(QModelIndex(), row, row);

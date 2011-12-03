@@ -36,6 +36,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     void appendRow(MPListItem *item);
     void appendRows(const QList<MPListItem *> &items);
+    void appendSingleRow(MPListItem *item);
     void insertRow(const int &row, MPListItem *item);
     bool moveRow(const int &oldRow, const int &newRow, const QModelIndex &parent = QModelIndex());
     bool removeRow(const int &row, const QModelIndex &parent = QModelIndex());

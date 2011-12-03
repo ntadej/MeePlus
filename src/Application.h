@@ -26,10 +26,13 @@ class QmlApplicationViewer;
 class MPAuthentication;
 class MPPeopleHandler;
 class MPPeopleEmailsFilterModel;
+class MPPeopleEmailsModel;
 class MPPeopleFilterModel;
 class MPPeopleModel;
 class MPPeopleOrganizationsFilterModel;
+class MPPeopleOrganizationsModel;
 class MPPeopleUrlsFilterModel;
+class MPPeopleUrlsModel;
 class MPPerson;
 class MPSettings;
 
@@ -49,13 +52,22 @@ private:
     QmlApplicationViewer *_viewer;
 
     MPAuthentication *_authentication;
-    MPPeopleHandler *_people;
-    MPPeopleEmailsFilterModel *_currentEmails;
-    MPPeopleFilterModel *_profile;
-    MPPeopleModel *_profileModel;
-    MPPeopleOrganizationsFilterModel *_currentOrganizations;
-    MPPeopleUrlsFilterModel *_currentUrls;
     MPSettings *_settings;
+
+    // People
+    MPPeopleHandler *_peopleHandler;
+
+    MPPeopleFilterModel *_profile;
+    MPPeopleModel *_peopleMain;
+    MPPeopleModel *_peopleSearch;
+
+    MPPeopleEmailsModel *_emails;
+    MPPeopleOrganizationsModel *_organizations;
+    MPPeopleUrlsModel *_urls;
+
+    MPPeopleEmailsFilterModel *_profileEmails;
+    MPPeopleOrganizationsFilterModel *_profileOrganizations;
+    MPPeopleUrlsFilterModel *_profileUrls;
 };
 
 #endif // MEEPLUS_APPLICATION_H_

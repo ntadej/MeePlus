@@ -37,7 +37,7 @@ public:
     MPPerson *takeRow(const int &row);
 
 public slots:
-    void addSinglePerson(MPPerson *person);
+    void appendPerson(MPPerson *person);
 };
 
 #endif // MEEPLUS_PEOPLEMODEL_H_
