@@ -41,7 +41,7 @@ QString MPLocaleManager::language(const QString &locale)
 {
     QString language = QLocale::languageToString(QLocale(locale).language());
 
-    if(language == "C")
+    if (language == "C")
         return "English";
     else
         return language;
@@ -55,7 +55,7 @@ QStringList MPLocaleManager::loadTranslations()
     list << QLocale::languageToString(locale.language());
 
     foreach (QString fileName, dir.entryList(QDir::Files)) {
-        if(fileName.contains(".qm") && !fileName.contains("empty")) {
+        if (fileName.contains(".qm") && !fileName.contains("empty")) {
             locale = QLocale(fileName);
             list << locale.name();
         }
@@ -68,7 +68,7 @@ void MPLocaleManager::setLocale()
 {
     QString locale;
     MPSettings *settings = new MPSettings();
-    if(settings->language().isEmpty())
+    if (settings->language().isEmpty())
         locale = QLocale::system().name();
     else
         locale = QLocale(settings->language()).name();

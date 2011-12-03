@@ -45,8 +45,7 @@ QHash<int, QByteArray> MPPersonUrl::roleNames() const
 
 QVariant MPPersonUrl::data(int role) const
 {
-    switch (role)
-    {
+    switch (role) {
     case PersonRole:
         return person();
     case DisplayRole:
@@ -76,7 +75,7 @@ QIcon MPPersonUrl::displayIcon() const
 
 void MPPersonUrl::setPerson(const QString &person)
 {
-    if(_person != person) {
+    if (_person != person) {
         _person = person;
         emit dataChanged();
     }
@@ -84,7 +83,7 @@ void MPPersonUrl::setPerson(const QString &person)
 
 void MPPersonUrl::setValue(const QString &value)
 {
-    if(_value != value) {
+    if (_value != value) {
         _value = value;
         emit dataChanged();
     }
@@ -92,7 +91,7 @@ void MPPersonUrl::setValue(const QString &value)
 
 void MPPersonUrl::setType(const QString &type)
 {
-    if(_type != type) {
+    if (_type != type) {
         _type = type;
         emit dataChanged();
     }
@@ -100,7 +99,7 @@ void MPPersonUrl::setType(const QString &type)
 
 void MPPersonUrl::setPrimary(const bool &primary)
 {
-    if(_primary != primary) {
+    if (_primary != primary) {
         _primary = primary;
         emit dataChanged();
     }

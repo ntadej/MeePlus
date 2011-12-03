@@ -42,7 +42,7 @@ MPAuthentication::~MPAuthentication()
 
 void MPAuthentication::error(const int &err)
 {
-    if(err == 204)
+    if (err == 204)
         refreshToken();
 }
 
@@ -97,7 +97,7 @@ QString MPAuthentication::requestUrl() const
 
 bool MPAuthentication::responseCode(const QString &title)
 {
-    if(!title.contains("code"))
+    if (!title.contains("code"))
         return false;
 
     QRegExp exp(".*=(.*)");

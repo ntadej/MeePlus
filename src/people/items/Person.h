@@ -24,13 +24,6 @@
 
 #include "core/ListItem.h"
 
-class MPPeopleEmailsModel;
-class MPPeopleOrganizationsModel;
-class MPPeopleUrlsModel;
-class MPPersonEmail;
-class MPPersonOrganization;
-class MPPersonUrl;
-
 class MPPerson : public MPListItem
 {
 Q_OBJECT
@@ -83,13 +76,6 @@ public:
     inline QString image() const { return _image; }
     void setImage(const QString &image);
 
-    MPPeopleEmailsModel *emails() { return _emailsModel; }
-    void addEmail(MPPersonEmail *e);
-    MPPeopleOrganizationsModel *organizations() { return _organizationsModel; }
-    void addOrganization(MPPersonOrganization *o);
-    MPPeopleUrlsModel *urls() { return _urlsModel; }
-    void addUrl(MPPersonUrl *u);
-
 private:
     QString _id;
     QString _name;
@@ -102,10 +88,6 @@ private:
     QString _relationshipStatus;
     QString _url;
     QString _image;
-
-    MPPeopleEmailsModel *_emailsModel;
-    MPPeopleOrganizationsModel *_organizationsModel;
-    MPPeopleUrlsModel *_urlsModel;
 };
 
 #endif // MEEPLUS_PERSON_H_

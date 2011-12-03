@@ -27,26 +27,11 @@
 MPPerson::MPPerson(const QString &id,
                    QObject *parent)
     : MPListItem(parent),
-      _id(id)
-{
-    _emailsModel = new MPPeopleEmailsModel(this);
-    _organizationsModel = new MPPeopleOrganizationsModel(this);
-    _urlsModel = new MPPeopleUrlsModel(this);
-}
+      _id(id) { }
 
-MPPerson::MPPerson()
-{
-    _emailsModel = new MPPeopleEmailsModel(this);
-    _organizationsModel = new MPPeopleOrganizationsModel(this);
-    _urlsModel = new MPPeopleUrlsModel(this);
-}
+MPPerson::MPPerson() { }
 
-MPPerson::~MPPerson()
-{
-    delete _emailsModel;
-    delete _organizationsModel;
-    delete _urlsModel;
-}
+MPPerson::~MPPerson() { }
 
 QHash<int, QByteArray> MPPerson::roleNames() const
 {
@@ -69,8 +54,7 @@ QHash<int, QByteArray> MPPerson::roleNames() const
 
 QVariant MPPerson::data(int role) const
 {
-    switch (role)
-    {
+    switch (role) {
     case DisplayRole:
         return display();
     case DisplayIconRole:
@@ -114,7 +98,7 @@ QIcon MPPerson::displayIcon() const
 
 void MPPerson::setName(const QString &name)
 {
-    if(_name != name) {
+    if (_name != name) {
         _name = name;
         emit dataChanged();
     }
@@ -122,7 +106,7 @@ void MPPerson::setName(const QString &name)
 
 void MPPerson::setNickname(const QString &nickname)
 {
-    if(_nickname != nickname) {
+    if (_nickname != nickname) {
         _nickname = nickname;
         emit dataChanged();
     }
@@ -130,7 +114,7 @@ void MPPerson::setNickname(const QString &nickname)
 
 void MPPerson::setTagline(const QString &tagline)
 {
-    if(_tagline != tagline) {
+    if (_tagline != tagline) {
         _tagline = tagline;
         emit dataChanged();
     }
@@ -138,7 +122,7 @@ void MPPerson::setTagline(const QString &tagline)
 
 void MPPerson::setBirthday(const QString &birthday)
 {
-    if(_birthday != birthday) {
+    if (_birthday != birthday) {
         _birthday = birthday;
         emit dataChanged();
     }
@@ -146,7 +130,7 @@ void MPPerson::setBirthday(const QString &birthday)
 
 void MPPerson::setGender(const QString &gender)
 {
-    if(_gender != gender) {
+    if (_gender != gender) {
         _gender = gender;
         emit dataChanged();
     }
@@ -155,10 +139,10 @@ void MPPerson::setGender(const QString &gender)
 void MPPerson::setAboutMe(const QString &aboutMe)
 {
     QString about = aboutMe;
-    if(about == "<br>")
+    if (about == "<br>")
         about = "";
 
-    if(_aboutMe != about) {
+    if (_aboutMe != about) {
         _aboutMe = about;
         emit dataChanged();
     }
@@ -166,7 +150,7 @@ void MPPerson::setAboutMe(const QString &aboutMe)
 
 void MPPerson::setCurrentLocation(const QString &currentLocation)
 {
-    if(_currentLocation != currentLocation) {
+    if (_currentLocation != currentLocation) {
         _currentLocation = currentLocation;
         emit dataChanged();
     }
@@ -174,7 +158,7 @@ void MPPerson::setCurrentLocation(const QString &currentLocation)
 
 void MPPerson::setRelationshipStatus(const QString &relationshipStatus)
 {
-    if(_relationshipStatus != relationshipStatus) {
+    if (_relationshipStatus != relationshipStatus) {
         _relationshipStatus = relationshipStatus;
         emit dataChanged();
     }
@@ -182,7 +166,7 @@ void MPPerson::setRelationshipStatus(const QString &relationshipStatus)
 
 void MPPerson::setUrl(const QString &url)
 {
-    if(_url != url) {
+    if (_url != url) {
         _url = url;
         emit dataChanged();
     }
@@ -190,23 +174,8 @@ void MPPerson::setUrl(const QString &url)
 
 void MPPerson::setImage(const QString &image)
 {
-    if(_image != image) {
+    if (_image != image) {
         _image = image;
         emit dataChanged();
     }
-}
-
-void MPPerson::addEmail(MPPersonEmail *e)
-{
-    _emailsModel->appendRow(e);
-}
-
-void MPPerson::addOrganization(MPPersonOrganization *o)
-{
-    _organizationsModel->appendRow(o);
-}
-
-void MPPerson::addUrl(MPPersonUrl *u)
-{
-    _urlsModel->appendRow(u);
 }

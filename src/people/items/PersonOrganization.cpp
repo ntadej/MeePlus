@@ -51,8 +51,7 @@ QHash<int, QByteArray> MPPersonOrganization::roleNames() const
 
 QVariant MPPersonOrganization::data(int role) const
 {
-    switch (role)
-    {
+    switch (role) {
     case PersonRole:
         return person();
     case DisplayRole:
@@ -94,7 +93,7 @@ QIcon MPPersonOrganization::displayIcon() const
 
 void MPPersonOrganization::setPerson(const QString &person)
 {
-    if(_person != person) {
+    if (_person != person) {
         _person = person;
         emit dataChanged();
     }
@@ -102,7 +101,7 @@ void MPPersonOrganization::setPerson(const QString &person)
 
 void MPPersonOrganization::setName(const QString &name)
 {
-    if(_name != name) {
+    if (_name != name) {
         _name = name;
         emit dataChanged();
     }
@@ -110,7 +109,7 @@ void MPPersonOrganization::setName(const QString &name)
 
 void MPPersonOrganization::setDepartment(const QString &department)
 {
-    if(_department != department) {
+    if (_department != department) {
         _department = department;
         emit dataChanged();
     }
@@ -118,7 +117,7 @@ void MPPersonOrganization::setDepartment(const QString &department)
 
 void MPPersonOrganization::setTitle(const QString &title)
 {
-    if(_title != title) {
+    if (_title != title) {
         _title = title;
         emit dataChanged();
     }
@@ -126,7 +125,7 @@ void MPPersonOrganization::setTitle(const QString &title)
 
 void MPPersonOrganization::setType(const QString &type)
 {
-    if(_type != type) {
+    if (_type != type) {
         _type = type;
         emit dataChanged();
     }
@@ -134,7 +133,7 @@ void MPPersonOrganization::setType(const QString &type)
 
 void MPPersonOrganization::setStartDate(const QString &startDate)
 {
-    if(_startDate != startDate) {
+    if (_startDate != startDate) {
         _startDate = startDate;
         emit dataChanged();
     }
@@ -142,7 +141,7 @@ void MPPersonOrganization::setStartDate(const QString &startDate)
 
 void MPPersonOrganization::setEndDate(const QString &endDate)
 {
-    if(_endDate != endDate) {
+    if (_endDate != endDate) {
         _endDate = endDate;
         emit dataChanged();
     }
@@ -150,7 +149,7 @@ void MPPersonOrganization::setEndDate(const QString &endDate)
 
 void MPPersonOrganization::setLocation(const QString &location)
 {
-    if(_location != location) {
+    if (_location != location) {
         _location = location;
         emit dataChanged();
     }
@@ -158,7 +157,7 @@ void MPPersonOrganization::setLocation(const QString &location)
 
 void MPPersonOrganization::setDescription(const QString &description)
 {
-    if(_description != description) {
+    if (_description != description) {
         _description = description;
         emit dataChanged();
     }
@@ -166,7 +165,7 @@ void MPPersonOrganization::setDescription(const QString &description)
 
 void MPPersonOrganization::setPrimary(const bool &primary)
 {
-    if(_primary != primary) {
+    if (_primary != primary) {
         _primary = primary;
         emit dataChanged();
     }

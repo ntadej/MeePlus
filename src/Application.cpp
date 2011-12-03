@@ -119,7 +119,7 @@ void MPApplication::selectPerson(const QString &id)
 {
     _profile->setId(id);
 
-    if(!_peopleMain->find(id))
+    if (!_peopleMain->find(id))
         return;
 
     _profileEmails->setPerson(id);

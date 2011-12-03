@@ -46,7 +46,7 @@ MPPeopleHandler::~MPPeopleHandler()
 
 void MPPeopleHandler::error(const int &err)
 {
-    if(err == 204)
+    if (err == 204)
         emit requestAuthentication();
 }
 
@@ -58,7 +58,7 @@ void MPPeopleHandler::profile(const QString &profile)
     //qDebug() << profile;
     qDebug() << reader->result();
 
-    if(reader->result().toMap()["kind"].toString() != "plus#person")
+    if (reader->result().toMap()["kind"].toString() != "plus#person")
         return;
 
     MPPerson *person = new MPPerson(reader->result().toMap()["id"].toString());
@@ -73,8 +73,7 @@ void MPPeopleHandler::profile(const QString &profile)
     person->setTagline(reader->result().toMap()["tagline"].toString());
     person->setUrl(reader->result().toMap()["url"].toString());
 
-    foreach(QVariant v, reader->result().toMap()["emails"].toList())
-    {
+    foreach (QVariant v, reader->result().toMap()["emails"].toList()) {
         MPPersonEmail *email = new MPPersonEmail(person->id(), v.toMap()["value"].toString());
         email->setType(v.toMap()["type"].toString());
         email->setPrimary(v.toMap()["primary"].toBool());
@@ -82,8 +81,7 @@ void MPPeopleHandler::profile(const QString &profile)
         emit newEmail(email);
     }
 
-    foreach(QVariant v, reader->result().toMap()["organizations"].toList())
-    {
+    foreach (QVariant v, reader->result().toMap()["organizations"].toList()) {
         MPPersonOrganization *org = new MPPersonOrganization(person->id(), v.toMap()["name"].toString());
         org->setDepartment(v.toMap()["department"].toString());
         org->setTitle(v.toMap()["title"].toString());
@@ -97,8 +95,7 @@ void MPPeopleHandler::profile(const QString &profile)
         emit newOrganization(org);
     }
 
-    foreach(QVariant v, reader->result().toMap()["urls"].toList())
-    {
+    foreach (QVariant v, reader->result().toMap()["urls"].toList()) {
         MPPersonUrl *url = new MPPersonUrl(person->id(), v.toMap()["value"].toString());
         url->setType(v.toMap()["type"].toString());
         url->setPrimary(v.toMap()["primary"].toBool());

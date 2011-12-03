@@ -55,7 +55,7 @@ void MPListModel::appendRow(MPListItem *item)
 void MPListModel::appendRows(const QList<MPListItem *> &items)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount()+items.size()-1);
-    foreach(MPListItem *item, items) {
+    foreach (MPListItem *item, items) {
         connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
         _list.append(item);
     }
@@ -64,7 +64,7 @@ void MPListModel::appendRows(const QList<MPListItem *> &items)
 
 void MPListModel::appendSingleRow(MPListItem *item)
 {
-    if(find(item->id())) {
+    if (find(item->id())) {
         delete item;
         return;
     }
@@ -84,14 +84,14 @@ void MPListModel::handleItemChange()
 {
     MPListItem* item = static_cast<MPListItem*>(sender());
     QModelIndex index = indexFromItem(item);
-    if(index.isValid())
+    if (index.isValid())
         emit dataChanged(index, index);
 }
 
 MPListItem * MPListModel::find(const QString &id) const
 {
-    foreach(MPListItem* item, _list) {
-        if(item->id() == id) return item;
+    foreach (MPListItem* item, _list) {
+        if (item->id() == id) return item;
     }
     return 0;
 }
@@ -99,8 +99,8 @@ MPListItem * MPListModel::find(const QString &id) const
 QModelIndex MPListModel::indexFromItem(const MPListItem *item) const
 {
     Q_ASSERT(item);
-    for(int row = 0; row < _list.size(); ++row) {
-        if(_list[row] == item) return index(row);
+    for (int row = 0; row < _list.size(); ++row) {
+        if (_list[row] == item) return index(row);
     }
     return QModelIndex();
 }
@@ -114,7 +114,7 @@ void MPListModel::clear()
 bool MPListModel::moveRow(const int &oldRow, const int &newRow, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
-    if(oldRow < 0 || oldRow >= _list.size() || newRow < 0 || newRow >= _list.size()) return false;
+    if (oldRow < 0 || oldRow >= _list.size() || newRow < 0 || newRow >= _list.size()) return false;
     beginMoveRows(QModelIndex(), oldRow, oldRow, QModelIndex(), newRow);
     _list.move(oldRow, newRow);
     endMoveRows();
@@ -124,7 +124,7 @@ bool MPListModel::moveRow(const int &oldRow, const int &newRow, const QModelInde
 bool MPListModel::removeRow(const int &row, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
-    if(row < 0 || row >= _list.size()) return false;
+    if (row < 0 || row >= _list.size()) return false;
     beginRemoveRows(QModelIndex(), row, row);
     delete _list.takeAt(row);
     endRemoveRows();
@@ -134,9 +134,9 @@ bool MPListModel::removeRow(const int &row, const QModelIndex &parent)
 bool MPListModel::removeRows(const int &row, const int &count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
-    if(row < 0 || (row+count) >= _list.size()) return false;
+    if (row < 0 || (row+count) >= _list.size()) return false;
     beginRemoveRows(QModelIndex(), row, row+count-1);
-    for(int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; ++i) {
         delete _list.takeAt(row);
     }
     endRemoveRows();
