@@ -20,6 +20,7 @@
 #define MEEPLUS_COMMON_H_
 
 #include <QtCore/QString>
+#include <QtCore/QTextCodec>
 
 namespace MeePlus
 {
@@ -31,6 +32,9 @@ namespace MeePlus
     // Authentication
     QString clientId();
     QString clientSecret();
+
+    // Common
+    QTextCodec *codec();
 }
 
 #endif // MEEPLUS_COMMON_H_

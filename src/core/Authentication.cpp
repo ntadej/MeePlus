@@ -114,7 +114,8 @@ void MPAuthentication::token(const QString &token)
     reader->parse(token);
 
     MPSettings *settings = new MPSettings(this);
-    settings->setRefreshToken(reader->result().toMap()["refresh_token"].toString());
+    if (!reader->result().toMap()["refresh_token"].toString().isEmpty())
+        settings->setRefreshToken(reader->result().toMap()["refresh_token"].toString());
     settings->setAccessToken(reader->result().toMap()["access_token"].toString());
     settings->writeSettings();
 

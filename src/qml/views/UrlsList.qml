@@ -33,7 +33,7 @@ ListView
         name: model.type
         value: model.value
     }
-    height: 30
+    height: 30 + count * 29 + (count-1) * MPUi.DefaultMargin/2
     cacheBuffer: 1
     interactive:false
     spacing: MPUi.DefaultMargin/2

@@ -36,6 +36,7 @@ public:
 
     Q_INVOKABLE void requestProfile(const QString &profile);
     Q_INVOKABLE void search(const QString &string);
+    Q_INVOKABLE void searchNext();
 
 public slots:
     void retry();
@@ -55,12 +56,15 @@ signals:
 private slots:
     void error(const int &err);
     void profile(const QString &profile);
+    void searchPrivate();
 
 private:
     MPNetworkRequest *_nr;
 
     QString _currentProfile;
     QString _currentSearchString;
+    QString _nextSearchPage;
+    bool _primarySearch;
 };
 
 #endif // MEEPLUS_PROFILEHANDLER_H_

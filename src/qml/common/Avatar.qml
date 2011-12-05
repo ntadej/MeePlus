@@ -17,22 +17,25 @@
 *****************************************************************************/
 
 import QtQuick 1.1
+import com.nokia.meego 1.0
 
-import "../common"
+Image {
+    id: avatar
 
-Column {
-    id: column
-    width: parent.width
+    property bool active: false
 
-    property alias name: info.name
-    property alias value: info.value
+    width: 50
+    height: 50
 
-    InfoElement {
-        id: info
-        width: parent.width
+    BorderImage {
+        id: mask
+        anchors.fill: parent
+        source: active ? "../images/avatar-mask-active.png" : "../images/avatar-mask.png"
     }
 
-    Component.onCompleted: {
-        organizationsList.height += info.height
+    BorderImage {
+        id: frame
+        anchors.fill: parent
+        source: "../images/avatar-frame.png"
     }
 }

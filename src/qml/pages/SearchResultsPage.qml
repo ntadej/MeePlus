@@ -63,8 +63,9 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: MPUi.DefaultMargin
 
-                Image {
+                Avatar {
                     id: icon
+                    active: mouseAreaItem.pressed
                     source: model.image
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -82,7 +83,7 @@ Page {
             MouseArea {
                 id: mouseAreaItem
                 anchors.fill: itemBackground
-                //onClicked:
+                onClicked: MPPeople.requestProfile(model.id);
             }
         }
         footer: Item {
@@ -106,7 +107,7 @@ Page {
             MouseArea {
                 id: mouseAreaFooter
                 anchors.fill: footerBackground
-                //onClicked:
+                onClicked: MPPeople.searchNext()
             }
         }
     }

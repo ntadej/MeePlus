@@ -44,6 +44,11 @@ QString MeePlus::clientSecret()
     return clientSecret;
 }
 
+QTextCodec *MeePlus::codec()
+{
+    return QTextCodec::codecForName("UTF-8");
+}
+
 QString MeePlus::locateResource(const QString &file)
 {
     QString path;

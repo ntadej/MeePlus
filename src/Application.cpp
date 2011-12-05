@@ -93,9 +93,8 @@ void MPApplication::initPeople()
     _profile = new MPPeopleFilterModel(this);
     _profile->setSourceModel(_peopleMain);
     _viewer->rootContext()->setContextProperty("MPProfile", _profile);
-    _peopleSearch = new MPPeopleModel(this);
+    _peopleSearch = 0;
     _search = new MPPeopleFilterModel(this);
-    _search->setSourceModel(_peopleSearch);
     _viewer->rootContext()->setContextProperty("MPSearch", _search);
 
     _emails = new MPPeopleEmailsModel(this);
@@ -118,8 +117,19 @@ void MPApplication::initPeople()
     connect(_peopleHandler, SIGNAL(currentProfile(MPPerson *)), _peopleMain, SLOT(appendPerson(MPPerson *)));
     connect(_peopleHandler, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
 
+    connect(_peopleHandler, SIGNAL(searchReset()), this, SLOT(initPeopleSearch()));
+}
+
+void MPApplication::initPeopleSearch()
+{
+    if (_peopleSearch) {
+        disconnect(_peopleHandler, SIGNAL(searchPerson(MPPerson *)), _peopleSearch, SLOT(appendPerson(MPPerson *)));
+        delete _peopleSearch;
+    }
+
+    _peopleSearch = new MPPeopleModel(this);
+    _search->setSourceModel(_peopleSearch);
     connect(_peopleHandler, SIGNAL(searchPerson(MPPerson *)), _peopleSearch, SLOT(appendPerson(MPPerson *)));
-    connect(_peopleHandler, SIGNAL(searchReset()), _peopleSearch, SLOT(reset()));
 }
 
 void MPApplication::selectPerson(const QString &id)

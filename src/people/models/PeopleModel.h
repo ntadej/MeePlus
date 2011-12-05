@@ -38,7 +38,6 @@ public:
 
 public slots:
     void appendPerson(MPPerson *person);
-    void reset();
 };
 
 #endif // MEEPLUS_PEOPLEMODEL_H_

@@ -23,6 +23,7 @@ import "../common"
 Column {
     id: column
     width: parent.width
+    height: 29
 
     property alias name: info.name
     property alias value: info.value
@@ -30,9 +31,6 @@ Column {
     InfoElement {
         id: info
         width: parent.width
-    }
-
-    Component.onCompleted: {
-        urlsList.height += column.height
+        value: "url"
     }
 }

@@ -31,8 +31,9 @@ bool MPPeopleUrlsFilterModel::filterAcceptsRow(int sourceRow,
 
     bool v = sourceModel()->data(index, MPPersonUrl::ValueRole).toString().contains(filterRegExp());
     bool p = sourceModel()->data(index, MPPersonUrl::PersonRole).toString() == _person;
+    bool o = sourceModel()->data(index, MPPersonUrl::TypeRole).toString().isEmpty();
 
-    return (p && v);
+    return (p && v && o);
 }
 
 void MPPeopleUrlsFilterModel::setPerson(const QString &person)

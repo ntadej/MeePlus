@@ -58,44 +58,44 @@ void MPPeopleHandler::profile(const QString &profile)
     //qDebug() << profile;
     qDebug() << reader->result();
 
-    if (reader->result().toMap()["kind"].toString() == "plus#person") {
-        MPPerson *person = new MPPerson(reader->result().toMap()["id"].toString());
-        person->setName(reader->result().toMap()["displayName"].toString());
-        person->setAboutMe(reader->result().toMap()["aboutMe"].toString());
-        person->setBirthday(reader->result().toMap()["birthday"].toString());
-        person->setCurrentLocation(reader->result().toMap()["currentLocation"].toString());
-        person->setGender(reader->result().toMap()["gender"].toString());
-        person->setImage(reader->result().toMap()["image"].toMap()["url"].toString());
-        person->setNickname(reader->result().toMap()["nickname"].toString());
-        person->setRelationshipStatus(reader->result().toMap()["relationshipStatus"].toString());
-        person->setTagline(reader->result().toMap()["tagline"].toString());
-        person->setUrl(reader->result().toMap()["url"].toString());
+    if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#person") {
+        MPPerson *person = new MPPerson(MeePlus::codec()->toUnicode(reader->result().toMap()["id"].toByteArray()));
+        person->setName(MeePlus::codec()->toUnicode(reader->result().toMap()["displayName"].toByteArray()));
+        person->setAboutMe(MeePlus::codec()->toUnicode(reader->result().toMap()["aboutMe"].toByteArray()));
+        person->setBirthday(MeePlus::codec()->toUnicode(reader->result().toMap()["birthday"].toByteArray()));
+        person->setCurrentLocation(MeePlus::codec()->toUnicode(reader->result().toMap()["currentLocation"].toByteArray()));
+        person->setGender(MeePlus::codec()->toUnicode(reader->result().toMap()["gender"].toByteArray()));
+        person->setImage(MeePlus::codec()->toUnicode(reader->result().toMap()["image"].toMap()["url"].toByteArray()));
+        person->setNickname(MeePlus::codec()->toUnicode(reader->result().toMap()["nickname"].toByteArray()));
+        person->setRelationshipStatus(MeePlus::codec()->toUnicode(reader->result().toMap()["relationshipStatus"].toByteArray()));
+        person->setTagline(MeePlus::codec()->toUnicode(reader->result().toMap()["tagline"].toByteArray()));
+        person->setUrl(MeePlus::codec()->toUnicode(reader->result().toMap()["url"].toByteArray()));
 
         foreach (QVariant v, reader->result().toMap()["emails"].toList()) {
-            MPPersonEmail *email = new MPPersonEmail(person->id(), v.toMap()["value"].toString());
-            email->setType(v.toMap()["type"].toString());
+            MPPersonEmail *email = new MPPersonEmail(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
+            email->setType(MeePlus::codec()->toUnicode(v.toMap()["type"].toByteArray()));
             email->setPrimary(v.toMap()["primary"].toBool());
 
             emit newEmail(email);
         }
 
         foreach (QVariant v, reader->result().toMap()["organizations"].toList()) {
-            MPPersonOrganization *org = new MPPersonOrganization(person->id(), v.toMap()["name"].toString());
-            org->setDepartment(v.toMap()["department"].toString());
-            org->setTitle(v.toMap()["title"].toString());
-            org->setType(v.toMap()["type"].toString());
-            org->setStartDate(v.toMap()["startDate"].toString());
-            org->setEndDate(v.toMap()["endDate"].toString());
-            org->setLocation(v.toMap()["location"].toString());
-            org->setDescription(v.toMap()["description"].toString());
+            MPPersonOrganization *org = new MPPersonOrganization(person->id(), MeePlus::codec()->toUnicode(v.toMap()["name"].toByteArray()));
+            org->setDepartment(MeePlus::codec()->toUnicode(v.toMap()["department"].toByteArray()));
+            org->setTitle(MeePlus::codec()->toUnicode(v.toMap()["title"].toByteArray()));
+            org->setType(MeePlus::codec()->toUnicode(v.toMap()["type"].toByteArray()));
+            org->setStartDate(MeePlus::codec()->toUnicode(v.toMap()["startDate"].toByteArray()));
+            org->setEndDate(MeePlus::codec()->toUnicode(v.toMap()["endDate"].toByteArray()));
+            org->setLocation(MeePlus::codec()->toUnicode(v.toMap()["location"].toByteArray()));
+            org->setDescription(MeePlus::codec()->toUnicode(v.toMap()["description"].toByteArray()));
             org->setPrimary(v.toMap()["primary"].toBool());
 
             emit newOrganization(org);
         }
 
         foreach (QVariant v, reader->result().toMap()["urls"].toList()) {
-            MPPersonUrl *url = new MPPersonUrl(person->id(), v.toMap()["value"].toString());
-            url->setType(v.toMap()["type"].toString());
+            MPPersonUrl *url = new MPPersonUrl(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
+            url->setType(MeePlus::codec()->toUnicode(v.toMap()["type"].toByteArray()));
             url->setPrimary(v.toMap()["primary"].toBool());
 
             emit newUrl(url);
@@ -107,18 +107,22 @@ void MPPeopleHandler::profile(const QString &profile)
         emit currentProfileId(id);
 
         emit finishedProfile();
-    } else if (reader->result().toMap()["kind"].toString() == "plus#peopleFeed") {
+    } else if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#peopleFeed") {
         foreach (QVariant item, reader->result().toMap()["items"].toList()) {
-            if (item.toMap()["kind"].toString() == "plus#person") {
-                MPPerson *person = new MPPerson(item.toMap()["id"].toString());
-                person->setName(item.toMap()["displayName"].toString());
-                person->setImage(item.toMap()["image"].toMap()["url"].toString());
+            if (MeePlus::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#person") {
+                MPPerson *person = new MPPerson(MeePlus::codec()->toUnicode(item.toMap()["id"].toByteArray()));
+                person->setName(MeePlus::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
+                person->setImage(MeePlus::codec()->toUnicode(item.toMap()["image"].toMap()["url"].toByteArray()));
 
                 emit searchPerson(person);
             }
         }
 
-        emit finishedSearch();
+        _nextSearchPage = MeePlus::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
+        qDebug() << "Next page:" << MeePlus::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
+
+        if (_primarySearch)
+            emit finishedSearch();
     }
 
     delete reader;
@@ -149,9 +153,30 @@ void MPPeopleHandler::search(const QString &string)
     emit searchReset();
 
     _currentSearchString = string;
+    _primarySearch = true;
+    _nextSearchPage = "";
 
+    searchPrivate();
+}
+
+void MPPeopleHandler::searchNext()
+{
+    _primarySearch = false;
+    searchPrivate();
+}
+
+void MPPeopleHandler::searchPrivate()
+{
+    if (_currentSearchString.isEmpty())
+        return;
+
+    QNetworkRequest request;
     MPSettings *settings = new MPSettings(this);
-    QNetworkRequest request(QUrl("https://www.googleapis.com/plus/v1/people?query=" + string + "&access_token=" + settings->accessToken()));
+    if (_nextSearchPage.isEmpty()) {
+        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people?query=" + _currentSearchString + "&maxResults=20" + "&access_token=" + settings->accessToken()));
+    } else {
+        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people?query=" + _currentSearchString + "&pageToken=" + _nextSearchPage + "&maxResults=20" + "&access_token=" + settings->accessToken()));
+    }
     delete settings;
 
     request.setRawHeader("Host", "www.googleapis.com");

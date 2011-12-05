@@ -33,8 +33,9 @@ Item {
 
     Separator { }
 
-    Image {
+    Avatar {
         id: icon
+        active: true
         anchors.left: parent.left
         anchors.margins: MPUi.DefaultMargin
         anchors.verticalCenter: parent.verticalCenter
