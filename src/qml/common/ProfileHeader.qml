@@ -20,14 +20,14 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 Item {
-    property alias image: icon.source
+    property alias image: icon.image
     property alias name: name.text
     property alias tagline: tagline.text
 
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: 100 + 2*MPUi.DefaultMargin
+    height: 80 + 2*MPUi.DefaultMargin
 
     ItemBackground { }
 
@@ -36,6 +36,7 @@ Item {
     Avatar {
         id: icon
         active: true
+        large: true
         anchors.left: parent.left
         anchors.margins: MPUi.DefaultMargin
         anchors.verticalCenter: parent.verticalCenter

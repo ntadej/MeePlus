@@ -21,6 +21,7 @@ import com.nokia.meego 1.0
 
 Item {
     property alias name: name.text
+    property bool simple: false
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -37,6 +38,7 @@ Item {
         anchors.bottomMargin: MPUi.DefaultMargin / 4
         height: 2
         source: "image://theme/meegotouch-separator-background-horizontal"
+        visible: !simple
     }
 
     Label {

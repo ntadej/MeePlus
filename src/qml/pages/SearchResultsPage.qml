@@ -66,7 +66,7 @@ Page {
                 Avatar {
                     id: icon
                     active: mouseAreaItem.pressed
-                    source: model.image
+                    image: model.image
                     anchors.verticalCenter: parent.verticalCenter
                 }
 

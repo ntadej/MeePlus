@@ -22,20 +22,43 @@ import com.nokia.meego 1.0
 Image {
     id: avatar
 
+    property string image: ""
     property bool active: false
+    property bool large: false
 
-    width: 50
-    height: 50
+    source: large ? image + "80" : image + "50"
+
+    width: large ? 80 : 50
+    height: large ? 80 : 50
 
     BorderImage {
         id: mask
         anchors.fill: parent
-        source: active ? "../images/avatar-mask-active.png" : "../images/avatar-mask.png"
+        source: large ? (active ? "../images/avatar-mask-large-active.png" : "../images/avatar-mask-large.png") : (active ? "../images/avatar-mask-active.png" : "../images/avatar-mask.png")
     }
 
     BorderImage {
         id: frame
         anchors.fill: parent
-        source: "../images/avatar-frame.png"
+        source: large ? "../images/avatar-frame-large.png" : "../images/avatar-frame.png"
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        onClicked: avatarDialog.open()
+    }
+
+    Dialog {
+        id: avatarDialog
+        width: 480
+        height: 480
+        anchors.margins: 0
+        content: Image {
+            id: avatarLarge
+            height: 480
+            width: 480
+            source: image + "480"
+        }
     }
 }

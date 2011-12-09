@@ -25,12 +25,11 @@ Column {
     width: parent.width
     height: 29
 
-    property alias name: info.name
     property alias value: info.value
 
-    InfoElement {
+    InfoElementSimple {
         id: info
         width: parent.width
-        value: "url"
+        url: true
     }
 }

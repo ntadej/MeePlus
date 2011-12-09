@@ -65,6 +65,13 @@ Column {
         name: qsTr("Relationship status")
     }
     Spacer { height: MPUi.DefaultMargin/2; visible: iRelationship.visible }
+    InfoElementMore {
+        id: iOrganizations
+        name: qsTr("Work and education")
+        visible: organizationsSheet.count
+        onClicked: organizationsSheet.open()
+    }
+    Spacer { height: MPUi.DefaultMargin/2; visible: iOrganizations.visible }
     Spacer { height: MPUi.DefaultMargin/2}
 
     SectionHeader {
@@ -87,11 +94,8 @@ Column {
         visible: count
     }
     Spacer { visible: urlsList.visible }
-    OrganizationsList {
-        id: organizationsList
-        visible: count
-    }
-    Spacer { visible: organizationsList.visible }
+
+    OrganizationsSheet { id: organizationsSheet }
 
     Component.onCompleted: {
         profileView.height += column.height

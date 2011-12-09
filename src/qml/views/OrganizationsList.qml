@@ -25,15 +25,11 @@ ListView
     width: parent.width
     id: organizationsList
     model: MPProfileOrganizations
-    header: SectionHeader {
-        id: organizationsInfo
-        name: qsTr("Organizations")
-    }
     delegate: OrganizationsListDelegate {
         name: model.type
         value: model.name
     }
-    height: 30
+    height: count * 100 + (count-1) * spacing
     cacheBuffer: 1
     interactive:false
     spacing: MPUi.DefaultMargin/2

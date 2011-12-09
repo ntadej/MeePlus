@@ -105,12 +105,7 @@ Page {
                     }
                 }
             }
-            Image {
-                source: model.image
-                anchors.right: parent.right;
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
+            IconListArrow { }
             MouseArea {
                 id: mouseArea
                 anchors.fill: background

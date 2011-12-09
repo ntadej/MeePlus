@@ -65,7 +65,7 @@ void MPPeopleHandler::profile(const QString &profile)
         person->setBirthday(MeePlus::codec()->toUnicode(reader->result().toMap()["birthday"].toByteArray()));
         person->setCurrentLocation(MeePlus::codec()->toUnicode(reader->result().toMap()["currentLocation"].toByteArray()));
         person->setGender(MeePlus::codec()->toUnicode(reader->result().toMap()["gender"].toByteArray()));
-        person->setImage(MeePlus::codec()->toUnicode(reader->result().toMap()["image"].toMap()["url"].toByteArray()));
+        person->setImage(MeePlus::codec()->toUnicode(reader->result().toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
         person->setNickname(MeePlus::codec()->toUnicode(reader->result().toMap()["nickname"].toByteArray()));
         person->setRelationshipStatus(MeePlus::codec()->toUnicode(reader->result().toMap()["relationshipStatus"].toByteArray()));
         person->setTagline(MeePlus::codec()->toUnicode(reader->result().toMap()["tagline"].toByteArray()));
@@ -112,7 +112,7 @@ void MPPeopleHandler::profile(const QString &profile)
             if (MeePlus::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#person") {
                 MPPerson *person = new MPPerson(MeePlus::codec()->toUnicode(item.toMap()["id"].toByteArray()));
                 person->setName(MeePlus::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
-                person->setImage(MeePlus::codec()->toUnicode(item.toMap()["image"].toMap()["url"].toByteArray()));
+                person->setImage(MeePlus::codec()->toUnicode(item.toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
 
                 emit searchPerson(person);
             }

@@ -17,19 +17,39 @@
 *****************************************************************************/
 
 import QtQuick 1.1
+import com.nokia.meego 1.0
 
-import "../common"
+Item {
+    id: infoElement
 
-Column {
-    id: column
-    height: 100
+    property alias value: value.text
+    property bool url: false
+
+    visible: value.text != ""
+
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    anchors.margins: MPUi.DefaultMargin
+
+    height: value.height
     width: parent.width
 
-    property alias name: info.name
-    property alias value: info.value
-
-    InfoElement {
-        id: info
+    Label {
+        id: value
+        elide: Text.ElideMiddle
+        textFormat: Text.PlainText
         width: parent.width
+
+        anchors.top: parent.top
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: value
+        onClicked: {
+            if(url)
+                Qt.openUrlExternally(value.text)
+        }
     }
 }

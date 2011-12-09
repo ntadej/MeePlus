@@ -19,7 +19,7 @@
 import QtQuick 1.1
 
 Image {
-    source: "image://theme/icon-m-common-drilldown-arrow"
+    source: "image://theme/icon-m-common-drilldown-arrow-disabled"
     anchors.right: parent.right;
     anchors.verticalCenter: parent.verticalCenter
 }

@@ -17,19 +17,32 @@
 *****************************************************************************/
 
 import QtQuick 1.1
+import com.nokia.meego 1.0
 
 import "../common"
 
-Column {
-    id: column
-    height: 100
-    width: parent.width
+Sheet {
+    id: organizationsSheet
 
-    property alias name: info.name
-    property alias value: info.value
+    property alias count: organizationsList.count
 
-    InfoElement {
-        id: info
-        width: parent.width
+    acceptButtonText: qsTr("Close")
+
+    title: SectionHeader {
+        id: organizationsInfo
+        name: qsTr("Work and education")
+        simple: true
+        anchors.fill: parent
+    }
+
+    content: Item {
+        anchors.topMargin: MPUi.DefaultMargin
+        anchors.bottomMargin: MPUi.DefaultMargin
+        anchors.fill: parent
+
+        OrganizationsList {
+            id: organizationsList
+            anchors.fill: parent
+        }
     }
 }

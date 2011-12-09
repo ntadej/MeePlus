@@ -30,10 +30,9 @@ ListView
         name: qsTr("Urls")
     }
     delegate: UrlsListDelegate {
-        name: model.type
         value: model.value
     }
-    height: 30 + count * 29 + (count-1) * MPUi.DefaultMargin/2
+    height: 30 + count * 29 + (count-1) * spacing
     cacheBuffer: 1
     interactive:false
     spacing: MPUi.DefaultMargin/2

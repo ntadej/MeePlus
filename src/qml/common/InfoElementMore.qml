@@ -17,19 +17,47 @@
 *****************************************************************************/
 
 import QtQuick 1.1
+import com.nokia.meego 1.0
 
-import "../common"
+Item {
+    id: infoElementMore
 
-Column {
-    id: column
-    height: 100
-    width: parent.width
+    property alias name: name.text
+    signal clicked
 
-    property alias name: info.name
-    property alias value: info.value
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-    InfoElement {
-        id: info
+    anchors.margins: MPUi.DefaultMargin
+
+    height: name.height + value.height
+
+    Label {
+        id: name
+        font: MPUi.FieldLabelFont
+        color: MPUi.FieldLabelColor
+
+        anchors.top: parent.top
+    }
+
+    Label {
+        id: value
+        wrapMode: Text.WordWrap
         width: parent.width
+        text: qsTr("Read more")
+
+        anchors.top: name.bottom
+    }
+
+    Image {
+        source: mouseArea.pressed ? "image://theme/icon-s-description-inverse" : "image://theme/icon-s-description"
+        anchors.right: parent.right;
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        onClicked: infoElementMore.clicked()
     }
 }
