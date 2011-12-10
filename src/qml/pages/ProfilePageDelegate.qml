@@ -94,6 +94,16 @@ Column {
         visible: count
     }
     Spacer { visible: urlsList.visible }
+    LanguagesList {
+        id: languagesList
+        visible: count
+    }
+    Spacer { visible: languagesList.visible }
+    PlacesList {
+        id: placesList
+        visible: count
+    }
+    Spacer { visible: placesList.visible }
 
     OrganizationsSheet { id: organizationsSheet }
 

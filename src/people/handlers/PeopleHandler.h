@@ -23,9 +23,8 @@
 
 class MPNetworkRequest;
 class MPPerson;
-class MPPersonEmail;
+class MPPersonInformation;
 class MPPersonOrganization;
-class MPPersonUrl;
 
 class MPPeopleHandler : public QObject
 {
@@ -46,9 +45,11 @@ signals:
     void currentProfileId(const QString &);
     void finishedProfile();
     void finishedSearch();
-    void newEmail(MPPersonEmail *);
+    void newEmail(MPPersonInformation *);
+    void newLanguage(MPPersonInformation *);
     void newOrganization(MPPersonOrganization *);
-    void newUrl(MPPersonUrl *);
+    void newPlace(MPPersonInformation *);
+    void newUrl(MPPersonInformation *);
     void requestAuthentication();
     void searchPerson(MPPerson *);
     void searchReset();

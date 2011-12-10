@@ -16,7 +16,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "people/items/PersonEmail.h"
+#include "people/items/PersonInformation.h"
 #include "people/models/PeopleEmailsFilterModel.h"
 
 MPPeopleEmailsFilterModel::MPPeopleEmailsFilterModel(QObject *parent)
@@ -29,8 +29,8 @@ bool MPPeopleEmailsFilterModel::filterAcceptsRow(int sourceRow,
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    bool v = sourceModel()->data(index, MPPersonEmail::ValueRole).toString().contains(filterRegExp());
-    bool p = sourceModel()->data(index, MPPersonEmail::PersonRole).toString() == _person;
+    bool v = sourceModel()->data(index, MPPersonInformation::ValueRole).toString().contains(filterRegExp());
+    bool p = sourceModel()->data(index, MPPersonInformation::PersonRole).toString() == _person;
 
     return (p && v);
 }

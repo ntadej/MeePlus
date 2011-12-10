@@ -16,28 +16,30 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_PEOPLEEMAILSMODEL_H_
-#define MEEPLUS_PEOPLEEMAILSMODEL_H_
+#include "people/items/PersonInformation.h"
+#include "people/models/PeopleInformationModel.h"
 
-#include <QtCore/QStringList>
+MPPeopleInformationModel::MPPeopleInformationModel(QObject *parent)
+    : MPListModel(new MPPersonInformation, parent) { }
 
-#include "core/ListModel.h"
+MPPeopleInformationModel::~MPPeopleInformationModel() { }
 
-class MPPersonEmail;
-
-class MPPeopleEmailsModel : public MPListModel
+MPPersonInformation *MPPeopleInformationModel::find(const QString &id) const
 {
-Q_OBJECT
-public:
-    MPPeopleEmailsModel(QObject *parent = 0);
-    ~MPPeopleEmailsModel();
+    return qobject_cast<MPPersonInformation *>(MPListModel::find(id));
+}
 
-    MPPersonEmail *find(const QString &id) const;
-    MPPersonEmail *row(const int &row);
-    MPPersonEmail *takeRow(const int &row);
+MPPersonInformation *MPPeopleInformationModel::row(const int &row)
+{
+    return qobject_cast<MPPersonInformation *>(MPListModel::row(row));
+}
 
-public slots:
-    void appendEmail(MPPersonEmail *email);
-};
+MPPersonInformation *MPPeopleInformationModel::takeRow(const int &row)
+{
+    return qobject_cast<MPPersonInformation *>(MPListModel::takeRow(row));
+}
 
-#endif // MEEPLUS_PEOPLEEMAILSMODEL_H_
+void MPPeopleInformationModel::appendInformation(MPPersonInformation *information)
+{
+    appendSingleRow(information);
+}

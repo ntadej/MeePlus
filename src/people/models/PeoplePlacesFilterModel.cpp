@@ -16,26 +16,29 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_PEOPLEORGANIZATIONSMODEL_H_
-#define MEEPLUS_PEOPLEORGANIZATIONSMODEL_H_
+#include "people/items/PersonInformation.h"
+#include "people/models/PeoplePlacesFilterModel.h"
 
-#include "core/ListModel.h"
+MPPeoplePlacesFilterModel::MPPeoplePlacesFilterModel(QObject *parent)
+    : QSortFilterProxyModel(parent) { }
 
-class MPPersonOrganization;
+MPPeoplePlacesFilterModel::~MPPeoplePlacesFilterModel() { }
 
-class MPPeopleOrganizationsModel : public MPListModel
+bool MPPeoplePlacesFilterModel::filterAcceptsRow(int sourceRow,
+                                                 const QModelIndex &sourceParent) const
 {
-Q_OBJECT
-public:
-    MPPeopleOrganizationsModel(QObject *parent = 0);
-    ~MPPeopleOrganizationsModel();
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    MPPersonOrganization *find(const QString &id) const;
-    MPPersonOrganization *row(const int &row);
-    MPPersonOrganization *takeRow(const int &row);
+    bool v = sourceModel()->data(index, MPPersonInformation::ValueRole).toString().contains(filterRegExp());
+    bool p = sourceModel()->data(index, MPPersonInformation::PersonRole).toString() == _person;
 
-public slots:
-    void appendOrganization(MPPersonOrganization *organization);
-};
+    return (p && v);
+}
 
-#endif // MEEPLUS_PEOPLEORGANIZATIONSMODEL_H_
+void MPPeoplePlacesFilterModel::setPerson(const QString &person)
+{
+    if (_person != person) {
+        _person = person;
+        invalidateFilter();
+    }
+}

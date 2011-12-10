@@ -49,7 +49,7 @@ public:
     MPPersonOrganization();
     ~MPPersonOrganization();
 
-    inline QString id() const { return _name; }
+    inline QString id() const { return _person+_name; }
     QVariant data(int role) const;
     QString display() const;
     QIcon displayIcon() const;

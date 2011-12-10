@@ -16,22 +16,22 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "people/items/PersonUrl.h"
+#include "people/items/PersonInformation.h"
 
-MPPersonUrl::MPPersonUrl(const QString &person,
-                         const QString &value,
-                         QObject *parent)
+MPPersonInformation::MPPersonInformation(const QString &person,
+                                         const QString &value,
+                                         QObject *parent)
     : MPListItem(parent)
 {
     setPerson(person);
     setValue(value);
 }
 
-MPPersonUrl::MPPersonUrl() { }
+MPPersonInformation::MPPersonInformation() { }
 
-MPPersonUrl::~MPPersonUrl() { }
+MPPersonInformation::~MPPersonInformation() { }
 
-QHash<int, QByteArray> MPPersonUrl::roleNames() const
+QHash<int, QByteArray> MPPersonInformation::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[PersonRole] = "person";
@@ -43,7 +43,7 @@ QHash<int, QByteArray> MPPersonUrl::roleNames() const
     return names;
 }
 
-QVariant MPPersonUrl::data(int role) const
+QVariant MPPersonInformation::data(int role) const
 {
     switch (role) {
     case PersonRole:
@@ -63,17 +63,17 @@ QVariant MPPersonUrl::data(int role) const
     }
 }
 
-QString MPPersonUrl::display() const
+QString MPPersonInformation::display() const
 {
     return value();
 }
 
-QIcon MPPersonUrl::displayIcon() const
+QIcon MPPersonInformation::displayIcon() const
 {
     return QIcon();
 }
 
-void MPPersonUrl::setPerson(const QString &person)
+void MPPersonInformation::setPerson(const QString &person)
 {
     if (_person != person) {
         _person = person;
@@ -81,7 +81,7 @@ void MPPersonUrl::setPerson(const QString &person)
     }
 }
 
-void MPPersonUrl::setValue(const QString &value)
+void MPPersonInformation::setValue(const QString &value)
 {
     if (_value != value) {
         _value = value;
@@ -89,7 +89,7 @@ void MPPersonUrl::setValue(const QString &value)
     }
 }
 
-void MPPersonUrl::setType(const QString &type)
+void MPPersonInformation::setType(const QString &type)
 {
     if (_type != type) {
         _type = type;
@@ -97,7 +97,7 @@ void MPPersonUrl::setType(const QString &type)
     }
 }
 
-void MPPersonUrl::setPrimary(const bool &primary)
+void MPPersonInformation::setPrimary(const bool &primary)
 {
     if (_primary != primary) {
         _primary = primary;

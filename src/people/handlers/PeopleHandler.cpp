@@ -27,9 +27,8 @@
 #include "json/json.h"
 #include "people/handlers/PeopleHandler.h"
 #include "people/items/Person.h"
-#include "people/items/PersonEmail.h"
+#include "people/items/PersonInformation.h"
 #include "people/items/PersonOrganization.h"
-#include "people/items/PersonUrl.h"
 
 MPPeopleHandler::MPPeopleHandler(QObject *parent)
     : QObject(parent)
@@ -72,7 +71,7 @@ void MPPeopleHandler::profile(const QString &profile)
         person->setUrl(MeePlus::codec()->toUnicode(reader->result().toMap()["url"].toByteArray()));
 
         foreach (QVariant v, reader->result().toMap()["emails"].toList()) {
-            MPPersonEmail *email = new MPPersonEmail(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
+            MPPersonInformation *email = new MPPersonInformation(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
             email->setType(MeePlus::codec()->toUnicode(v.toMap()["type"].toByteArray()));
             email->setPrimary(v.toMap()["primary"].toBool());
 
@@ -93,8 +92,16 @@ void MPPeopleHandler::profile(const QString &profile)
             emit newOrganization(org);
         }
 
+        foreach (QVariant v, reader->result().toMap()["placesLived"].toList()) {
+            MPPersonInformation *place = new MPPersonInformation(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
+            place->setPrimary(v.toMap()["primary"].toBool());
+            qDebug() << place->primary();
+
+            emit newPlace(place);
+        }
+
         foreach (QVariant v, reader->result().toMap()["urls"].toList()) {
-            MPPersonUrl *url = new MPPersonUrl(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
+            MPPersonInformation *url = new MPPersonInformation(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
             url->setType(MeePlus::codec()->toUnicode(v.toMap()["type"].toByteArray()));
             url->setPrimary(v.toMap()["primary"].toBool());
 

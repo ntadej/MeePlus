@@ -16,15 +16,15 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_PERSONEMAIL_H_
-#define MEEPLUS_PERSONEMAIL_H_
+#ifndef MEEPLUS_PERSONINFORMATION_H_
+#define MEEPLUS_PERSONINFORMATION_H_
 
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
 #include "core/ListItem.h"
 
-class MPPersonEmail : public MPListItem
+class MPPersonInformation : public MPListItem
 {
 Q_OBJECT
 public:
@@ -37,13 +37,13 @@ public:
         PrimaryRole
     };
 
-    MPPersonEmail(const QString &person,
-                  const QString &value,
-                  QObject *parent = 0);
-    MPPersonEmail();
-    ~MPPersonEmail();
+    MPPersonInformation(const QString &person,
+                        const QString &value,
+                        QObject *parent = 0);
+    MPPersonInformation();
+    ~MPPersonInformation();
 
-    inline QString id() const { return _value; }
+    inline QString id() const { return _person+_value; }
     QVariant data(int role) const;
     QString display() const;
     QIcon displayIcon() const;
@@ -65,4 +65,4 @@ private:
     bool _primary;
 };
 
-#endif // MEEPLUS_PERSONEMAIL_H_
+#endif // MEEPLUS_PERSONINFORMATION_H_

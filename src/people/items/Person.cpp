@@ -17,12 +17,6 @@
 *****************************************************************************/
 
 #include "people/items/Person.h"
-#include "people/items/PersonEmail.h"
-#include "people/items/PersonOrganization.h"
-#include "people/items/PersonUrl.h"
-#include "people/models/PeopleEmailsModel.h"
-#include "people/models/PeopleOrganizationsModel.h"
-#include "people/models/PeopleUrlsModel.h"
 
 MPPerson::MPPerson(const QString &id,
                    QObject *parent)

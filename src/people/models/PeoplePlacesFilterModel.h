@@ -16,30 +16,26 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "people/items/PersonUrl.h"
-#include "people/models/PeopleUrlsModel.h"
+#ifndef MEEPLUS_PEOPLEPLACESFILTERMODEL_H_
+#define MEEPLUS_PEOPLEPLACESFILTERMODEL_H_
 
-MPPeopleUrlsModel::MPPeopleUrlsModel(QObject *parent)
-    : MPListModel(new MPPersonUrl, parent) { }
+#include <QtGui/QSortFilterProxyModel>
 
-MPPeopleUrlsModel::~MPPeopleUrlsModel() { }
-
-MPPersonUrl *MPPeopleUrlsModel::find(const QString &id) const
+class MPPeoplePlacesFilterModel : public QSortFilterProxyModel
 {
-    return qobject_cast<MPPersonUrl *>(MPListModel::find(id));
-}
+Q_OBJECT
+public:
+    MPPeoplePlacesFilterModel(QObject *parent = 0);
+    ~MPPeoplePlacesFilterModel();
 
-MPPersonUrl *MPPeopleUrlsModel::row(const int &row)
-{
-    return qobject_cast<MPPersonUrl *>(MPListModel::row(row));
-}
+    inline QString person() const { return _person; }
+    void setPerson(const QString &person);
 
-MPPersonUrl *MPPeopleUrlsModel::takeRow(const int &row)
-{
-    return qobject_cast<MPPersonUrl *>(MPListModel::takeRow(row));
-}
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
-void MPPeopleUrlsModel::appendUrl(MPPersonUrl *url)
-{
-    appendSingleRow(url);
-}
+private:
+    QString _person;
+};
+
+#endif // MEEPLUS_PEOPLEPLACESFILTERMODEL_H_

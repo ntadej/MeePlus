@@ -27,7 +27,7 @@ Item {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: 80 + 2*MPUi.DefaultMargin
+    height: column.height < 80 ? 80 + 2*MPUi.DefaultMargin : column.height + 2*MPUi.DefaultMargin
 
     ItemBackground { }
 
@@ -43,9 +43,10 @@ Item {
     }
 
     Column {
+        id: column
         anchors.left: icon.right
         anchors.right: parent.right
-        anchors.margins: MPUi.DefaultMargin
+        anchors.leftMargin: MPUi.DefaultMargin
         anchors.verticalCenter: parent.verticalCenter
 
          Label {

@@ -16,24 +16,29 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-import QtQuick 1.1
+#include "people/items/PersonInformation.h"
+#include "people/models/PeopleLanguagesFilterModel.h"
 
-import "../common"
+MPPeopleLanguagesFilterModel::MPPeopleLanguagesFilterModel(QObject *parent)
+    : QSortFilterProxyModel(parent) { }
 
-ListView
+MPPeopleLanguagesFilterModel::~MPPeopleLanguagesFilterModel() { }
+
+bool MPPeopleLanguagesFilterModel::filterAcceptsRow(int sourceRow,
+                                                 const QModelIndex &sourceParent) const
 {
-    width: parent.width
-    id: emailsList
-    model: MPProfileEmails
-    header: SectionHeader {
-        id: emailsInfo
-        name: qsTr("Emails")
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+
+    bool v = sourceModel()->data(index, MPPersonInformation::ValueRole).toString().contains(filterRegExp());
+    bool p = sourceModel()->data(index, MPPersonInformation::PersonRole).toString() == _person;
+
+    return (p && v);
+}
+
+void MPPeopleLanguagesFilterModel::setPerson(const QString &person)
+{
+    if (_person != person) {
+        _person = person;
+        invalidateFilter();
     }
-    delegate: EmailsListDelegate {
-        value: model.value
-    }
-    height: 30 + count * 29 + (count-1) * spacing
-    cacheBuffer: 1
-    interactive: false
-    spacing: MPUi.DefaultMargin/2
 }

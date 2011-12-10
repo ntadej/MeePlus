@@ -16,30 +16,26 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "people/items/PersonEmail.h"
-#include "people/models/PeopleEmailsModel.h"
+#ifndef MEEPLUS_PEOPLELANGUAGESFILTERMODEL_H_
+#define MEEPLUS_PEOPLELANGUAGESFILTERMODEL_H_
 
-MPPeopleEmailsModel::MPPeopleEmailsModel(QObject *parent)
-    : MPListModel(new MPPersonEmail, parent) { }
+#include <QtGui/QSortFilterProxyModel>
 
-MPPeopleEmailsModel::~MPPeopleEmailsModel() { }
-
-MPPersonEmail *MPPeopleEmailsModel::find(const QString &id) const
+class MPPeopleLanguagesFilterModel : public QSortFilterProxyModel
 {
-    return qobject_cast<MPPersonEmail *>(MPListModel::find(id));
-}
+Q_OBJECT
+public:
+    MPPeopleLanguagesFilterModel(QObject *parent = 0);
+    ~MPPeopleLanguagesFilterModel();
 
-MPPersonEmail *MPPeopleEmailsModel::row(const int &row)
-{
-    return qobject_cast<MPPersonEmail *>(MPListModel::row(row));
-}
+    inline QString person() const { return _person; }
+    void setPerson(const QString &person);
 
-MPPersonEmail *MPPeopleEmailsModel::takeRow(const int &row)
-{
-    return qobject_cast<MPPersonEmail *>(MPListModel::takeRow(row));
-}
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
-void MPPeopleEmailsModel::appendEmail(MPPersonEmail *email)
-{
-    appendSingleRow(email);
-}
+private:
+    QString _person;
+};
+
+#endif // MEEPLUS_PEOPLELANGUAGESFILTERMODEL_H_

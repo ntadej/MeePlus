@@ -16,28 +16,26 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_PEOPLEURLSMODEL_H_
-#define MEEPLUS_PEOPLEURLSMODEL_H_
-
-#include <QtCore/QStringList>
+#ifndef MEEPLUS_PEOPLEINFORMATIONMODEL_H_
+#define MEEPLUS_PEOPLEINFORMATIONMODEL_H_
 
 #include "core/ListModel.h"
 
-class MPPersonUrl;
+class MPPersonInformation;
 
-class MPPeopleUrlsModel : public MPListModel
+class MPPeopleInformationModel : public MPListModel
 {
 Q_OBJECT
 public:
-    MPPeopleUrlsModel(QObject *parent = 0);
-    ~MPPeopleUrlsModel();
+    MPPeopleInformationModel(QObject *parent = 0);
+    ~MPPeopleInformationModel();
 
-    MPPersonUrl *find(const QString &id) const;
-    MPPersonUrl *row(const int &row);
-    MPPersonUrl *takeRow(const int &row);
+    MPPersonInformation *find(const QString &id) const;
+    MPPersonInformation *row(const int &row);
+    MPPersonInformation *takeRow(const int &row);
 
 public slots:
-    void appendUrl(MPPersonUrl *url);
+    void appendInformation(MPPersonInformation *information);
 };
 
-#endif // MEEPLUS_PEOPLEURLSMODEL_H_
+#endif // MEEPLUS_PEOPLEINFORMATIONMODEL_H_

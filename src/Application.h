@@ -26,13 +26,14 @@ class QmlApplicationViewer;
 class MPAuthentication;
 class MPPeopleHandler;
 class MPPeopleEmailsFilterModel;
-class MPPeopleEmailsModel;
 class MPPeopleFilterModel;
+class MPPeopleInformationModel;
+class MPPeopleLanguagesFilterModel;
 class MPPeopleModel;
 class MPPeopleOrganizationsFilterModel;
 class MPPeopleOrganizationsModel;
+class MPPeoplePlacesFilterModel;
 class MPPeopleUrlsFilterModel;
-class MPPeopleUrlsModel;
 class MPPerson;
 class MPSettings;
 
@@ -63,12 +64,16 @@ private:
     MPPeopleModel *_peopleMain;
     MPPeopleModel *_peopleSearch;
 
-    MPPeopleEmailsModel *_emails;
+    MPPeopleInformationModel *_emails;
+    MPPeopleInformationModel *_languages;
     MPPeopleOrganizationsModel *_organizations;
-    MPPeopleUrlsModel *_urls;
+    MPPeopleInformationModel *_places;
+    MPPeopleInformationModel *_urls;
 
     MPPeopleEmailsFilterModel *_profileEmails;
+    MPPeopleLanguagesFilterModel *_profileLanguages;
     MPPeopleOrganizationsFilterModel *_profileOrganizations;
+    MPPeoplePlacesFilterModel *_profilePlaces;
     MPPeopleUrlsFilterModel *_profileUrls;
 };
 

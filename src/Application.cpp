@@ -28,13 +28,14 @@
 #include "people/handlers/PeopleHandler.h"
 #include "people/items/Person.h"
 #include "people/models/PeopleEmailsFilterModel.h"
-#include "people/models/PeopleEmailsModel.h"
 #include "people/models/PeopleFilterModel.h"
+#include "people/models/PeopleInformationModel.h"
+#include "people/models/PeopleLanguagesFilterModel.h"
 #include "people/models/PeopleModel.h"
 #include "people/models/PeopleOrganizationsFilterModel.h"
 #include "people/models/PeopleOrganizationsModel.h"
+#include "people/models/PeoplePlacesFilterModel.h"
 #include "people/models/PeopleUrlsFilterModel.h"
-#include "people/models/PeopleUrlsModel.h"
 
 MPApplication::MPApplication(QObject *parent)
     : QObject(parent)
@@ -97,22 +98,32 @@ void MPApplication::initPeople()
     _search = new MPPeopleFilterModel(this);
     _viewer->rootContext()->setContextProperty("MPSearch", _search);
 
-    _emails = new MPPeopleEmailsModel(this);
+    _emails = new MPPeopleInformationModel(this);
+    _languages = new MPPeopleInformationModel(this);
     _organizations = new MPPeopleOrganizationsModel(this);
-    _urls = new MPPeopleUrlsModel(this);
+    _places = new MPPeopleInformationModel(this);
+    _urls = new MPPeopleInformationModel(this);
     _profileEmails = new MPPeopleEmailsFilterModel(this);
     _profileEmails->setSourceModel(_emails);
     _viewer->rootContext()->setContextProperty("MPProfileEmails", _profileEmails);
+    _profileLanguages = new MPPeopleLanguagesFilterModel(this);
+    _profileLanguages->setSourceModel(_languages);
+    _viewer->rootContext()->setContextProperty("MPProfileLanguages", _profileLanguages);
     _profileOrganizations = new MPPeopleOrganizationsFilterModel(this);
     _profileOrganizations->setSourceModel(_organizations);
     _viewer->rootContext()->setContextProperty("MPProfileOrganizations", _profileOrganizations);
+    _profilePlaces = new MPPeoplePlacesFilterModel(this);
+    _profilePlaces->setSourceModel(_places);
+    _viewer->rootContext()->setContextProperty("MPProfilePlaces", _profilePlaces);
     _profileUrls = new MPPeopleUrlsFilterModel(this);
     _profileUrls->setSourceModel(_urls);
     _viewer->rootContext()->setContextProperty("MPProfileUrls", _profileUrls);
 
-    connect(_peopleHandler, SIGNAL(newEmail(MPPersonEmail *)), _emails, SLOT(appendEmail(MPPersonEmail *)));
+    connect(_peopleHandler, SIGNAL(newEmail(MPPersonInformation *)), _emails, SLOT(appendInformation(MPPersonInformation *)));
+    connect(_peopleHandler, SIGNAL(newLanguage(MPPersonInformation *)), _languages, SLOT(appendInformation(MPPersonInformation *)));
     connect(_peopleHandler, SIGNAL(newOrganization(MPPersonOrganization *)), _organizations, SLOT(appendOrganization(MPPersonOrganization *)));
-    connect(_peopleHandler, SIGNAL(newUrl(MPPersonUrl *)), _urls, SLOT(appendUrl(MPPersonUrl *)));
+    connect(_peopleHandler, SIGNAL(newPlace(MPPersonInformation *)), _places, SLOT(appendInformation(MPPersonInformation *)));
+    connect(_peopleHandler, SIGNAL(newUrl(MPPersonInformation *)), _urls, SLOT(appendInformation(MPPersonInformation *)));
 
     connect(_peopleHandler, SIGNAL(currentProfile(MPPerson *)), _peopleMain, SLOT(appendPerson(MPPerson *)));
     connect(_peopleHandler, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
@@ -140,6 +151,8 @@ void MPApplication::selectPerson(const QString &id)
         return;
 
     _profileEmails->setPerson(id);
+    _profileLanguages->setPerson(id);
     _profileOrganizations->setPerson(id);
+    _profilePlaces->setPerson(id);
     _profileUrls->setPerson(id);
 }

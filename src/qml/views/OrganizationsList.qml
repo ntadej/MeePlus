@@ -31,6 +31,6 @@ ListView
     }
     height: count * 100 + (count-1) * spacing
     cacheBuffer: 1
-    interactive:false
+    //interactive: false
     spacing: MPUi.DefaultMargin/2
 }

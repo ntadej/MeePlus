@@ -16,26 +16,24 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_PEOPLEORGANIZATIONSMODEL_H_
-#define MEEPLUS_PEOPLEORGANIZATIONSMODEL_H_
+import QtQuick 1.1
 
-#include "core/ListModel.h"
+import "../common"
 
-class MPPersonOrganization;
-
-class MPPeopleOrganizationsModel : public MPListModel
+ListView
 {
-Q_OBJECT
-public:
-    MPPeopleOrganizationsModel(QObject *parent = 0);
-    ~MPPeopleOrganizationsModel();
-
-    MPPersonOrganization *find(const QString &id) const;
-    MPPersonOrganization *row(const int &row);
-    MPPersonOrganization *takeRow(const int &row);
-
-public slots:
-    void appendOrganization(MPPersonOrganization *organization);
-};
-
-#endif // MEEPLUS_PEOPLEORGANIZATIONSMODEL_H_
+    width: parent.width
+    id: placesList
+    model: MPProfilePlaces
+    header: SectionHeader {
+        id: placesInfo
+        name: qsTr("Places lived")
+    }
+    delegate: PlacesListDelegate {
+        value: model.value
+    }
+    height: 30 + count * 29 + (count-1) * spacing
+    cacheBuffer: 1
+    interactive: false
+    spacing: MPUi.DefaultMargin/2
+}

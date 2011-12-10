@@ -95,21 +95,21 @@ SOURCES += src/main.cpp \
 SOURCES += \
     src/json/json.cpp
 
-# Models
+# People
 SOURCES += \
     src/people/handlers/PeopleHandler.cpp \
     src/people/items/Person.cpp \
-    src/people/items/PersonEmail.cpp \
+    src/people/items/PersonInformation.cpp \
     src/people/items/PersonOrganization.cpp \
-    src/people/items/PersonUrl.cpp \
     src/people/models/PeopleEmailsFilterModel.cpp \
-    src/people/models/PeopleEmailsModel.cpp \
     src/people/models/PeopleFilterModel.cpp \
+    src/people/models/PeopleInformationModel.cpp \
+    src/people/models/PeopleLanguagesFilterModel.cpp \
     src/people/models/PeopleModel.cpp \
     src/people/models/PeopleOrganizationsFilterModel.cpp \
     src/people/models/PeopleOrganizationsModel.cpp \
-    src/people/models/PeopleUrlsFilterModel.cpp \
-    src/people/models/PeopleUrlsModel.cpp
+    src/people/models/PeoplePlacesFilterModel.cpp \
+    src/people/models/PeopleUrlsFilterModel.cpp
 
 
 ###########
@@ -132,17 +132,17 @@ HEADERS += \
 HEADERS += \
     src/people/handlers/PeopleHandler.h \
     src/people/items/Person.h \
-    src/people/items/PersonEmail.h \
+    src/people/items/PersonInformation.h \
     src/people/items/PersonOrganization.h \
-    src/people/items/PersonUrl.h \
     src/people/models/PeopleEmailsFilterModel.h \
-    src/people/models/PeopleEmailsModel.h \
     src/people/models/PeopleFilterModel.h \
+    src/people/models/PeopleInformationModel.h \
+    src/people/models/PeopleLanguagesFilterModel.h \
     src/people/models/PeopleModel.h \
     src/people/models/PeopleOrganizationsFilterModel.h \
     src/people/models/PeopleOrganizationsModel.h \
-    src/people/models/PeopleUrlsFilterModel.h \
-    src/people/models/PeopleUrlsModel.h
+    src/people/models/PeoplePlacesFilterModel.h \
+    src/people/models/PeopleUrlsFilterModel.h
 
 
 ##############

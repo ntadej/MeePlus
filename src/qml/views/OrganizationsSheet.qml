@@ -44,5 +44,9 @@ Sheet {
             id: organizationsList
             anchors.fill: parent
         }
+
+        ScrollDecorator {
+            flickableItem: organizationsList
+        }
     }
 }

@@ -19,8 +19,6 @@
 #ifndef MEEPLUS_PEOPLEMODEL_H_
 #define MEEPLUS_PEOPLEMODEL_H_
 
-#include <QtCore/QStringList>
-
 #include "core/ListModel.h"
 
 class MPPerson;
