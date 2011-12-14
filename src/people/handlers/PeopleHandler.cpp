@@ -95,7 +95,9 @@ void MPPeopleHandler::profile(const QString &profile)
         foreach (QVariant v, reader->result().toMap()["placesLived"].toList()) {
             MPPersonInformation *place = new MPPersonInformation(person->id(), MeePlus::codec()->toUnicode(v.toMap()["value"].toByteArray()));
             place->setPrimary(v.toMap()["primary"].toBool());
-            qDebug() << place->primary();
+
+            if(place->primary())
+                place->setValue(place->value() + " " + tr("(Current)"));
 
             emit newPlace(place);
         }
