@@ -123,21 +123,21 @@ void MPPeopleHandler::profile(const QString &profile)
                 person->setName(MeePlus::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
                 person->setImage(MeePlus::codec()->toUnicode(item.toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
 
-                emit searchPerson(person);
+                emit newPerson(person);
             }
         }
 
-        _nextSearchPage = MeePlus::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
+        _nextPage = MeePlus::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
         qDebug() << "Next page:" << MeePlus::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
 
-        if (_primarySearch)
+        if (_primary)
             emit finishedSearch();
     }
 
     delete reader;
 }
 
-void MPPeopleHandler::requestProfile(const QString &profile)
+void MPPeopleHandler::request(const QString &profile)
 {
     _currentProfile = profile;
 
@@ -154,23 +154,23 @@ void MPPeopleHandler::requestProfile(const QString &profile)
 
 void MPPeopleHandler::retry()
 {
-    requestProfile(_currentProfile);
+    request(_currentProfile);
 }
 
 void MPPeopleHandler::search(const QString &string)
 {
-    emit searchReset();
+    emit reset();
 
     _currentSearchString = string;
-    _primarySearch = true;
-    _nextSearchPage = "";
+    _primary = true;
+    _nextPage = "";
 
     searchPrivate();
 }
 
 void MPPeopleHandler::searchNext()
 {
-    _primarySearch = false;
+    _primary = false;
     searchPrivate();
 }
 
@@ -181,10 +181,10 @@ void MPPeopleHandler::searchPrivate()
 
     QNetworkRequest request;
     MPSettings *settings = new MPSettings(this);
-    if (_nextSearchPage.isEmpty()) {
+    if (_nextPage.isEmpty()) {
         request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people?query=" + _currentSearchString + "&maxResults=20" + "&access_token=" + settings->accessToken()));
     } else {
-        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people?query=" + _currentSearchString + "&pageToken=" + _nextSearchPage + "&maxResults=20" + "&access_token=" + settings->accessToken()));
+        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people?query=" + _currentSearchString + "&pageToken=" + _nextPage + "&maxResults=20" + "&access_token=" + settings->accessToken()));
     }
     delete settings;
 

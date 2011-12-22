@@ -3,7 +3,7 @@ person:
 GET https://www.googleapis.com/plus/v1/people/userId
 
 Parameters
-userId 	string
+userId  string
 
 {
   "kind": "plus#person",
@@ -73,8 +73,8 @@ people search:
 GET https://www.googleapis.com/plus/v1/people
 
 Parameters
-query 	string
-language 	string (Optional)
+query       string
+language    string (Optional)
 maxResults 	unsigned integer (Default: 10) (Optional)
 pageToken 	string (Optional)
 
@@ -85,5 +85,152 @@ pageToken 	string (Optional)
   "nextPageToken": string,
   "items": [
     people Resource
+  ]
+}
+
+
+activity:
+=========
+GET https://www.googleapis.com/plus/v1/activities/activityId
+
+Parameters
+activityId 	string
+
+{
+  "kind": "plus#activity",
+  "placeholder": boolean,
+  "title": string,
+  "published": datetime,
+  "updated": datetime,
+  "id": string,
+  "url": string,
+  "actor": {
+    "id": string,
+    "displayName": string,
+    "url": string,
+    "image": {
+      "url": string
+    }
+  },
+  "verb": string,
+  "object": {
+    "objectType": string,
+    "id": string,
+    "actor": {
+      "id": string,
+      "displayName": string,
+      "url": string,
+      "image": {
+        "url": string
+      }
+    },
+    "content": string,
+    "originalContent": string,
+    "url": string,
+    "replies": {
+      "totalItems": unsigned integer,
+      "selfLink": string
+    },
+    "plusoners": {
+      "totalItems": unsigned integer,
+      "selfLink": string
+    },
+    "resharers": {
+      "totalItems": unsigned integer,
+      "selfLink": string
+    },
+    "attachments": [
+      {
+        "objectType": string,
+        "displayName": string,
+        "id": string,
+        "content": string,
+        "url": string,
+        "image": {
+          "url": string,
+          "type": string,
+          "height": unsigned integer,
+          "width": unsigned integer
+        },
+        "fullImage": {
+          "url": string,
+          "type": string,
+          "height": unsigned integer,
+          "width": unsigned integer
+        },
+        "embed": {
+          "url": string,
+          "type": string
+        }
+      }
+    ]
+  },
+  "annotation": string,
+  "crosspostSource": string,
+  "provider": {
+    "title": string
+  },
+  "access": {
+    "kind": "plus#acl",
+    "description": string,
+    "items": [
+      {
+        "type": string,
+        "id": string
+      }
+    ]
+  },
+  "geocode": string,
+  "address": string,
+  "radius": string,
+  "placeId": string,
+  "placeName": string
+}
+
+Activities list:
+================
+GET https://www.googleapis.com/plus/v1/people/userId/activities/collection
+
+Parameters
+collection  string (Acceptable values are: "public")
+userId      string
+alt         string (Optional) (Acceptable values are: "json" (default))
+maxResults 	unsigned integer (Default: 20) (Optional)
+pageToken 	string (Optional)
+
+{
+  "kind": "plus#activityFeed",
+  "nextPageToken": string,
+  "selfLink": string,
+  "nextLink": string,
+  "title": string,
+  "updated": datetime,
+  "id": string,
+  "items": [
+    activities Resource
+  ]
+}
+
+Activities search:
+==================
+GET https://www.googleapis.com/plus/v1/activities
+
+Parameters
+query       string
+language    string (Optional)
+maxResults 	unsigned integer (Optional) (Default: 10)
+orderBy 	string (Optional) (Acceptable values are: "best", "recent" (default)
+pageToken 	string (Optional)
+
+{
+  "kind": "plus#activityFeed",
+  "nextPageToken": string,
+  "selfLink": string,
+  "nextLink": string,
+  "title": string,
+  "updated": datetime,
+  "id": string,
+  "items": [
+    activities Resource
   ]
 }

@@ -128,19 +128,19 @@ void MPApplication::initPeople()
     connect(_peopleHandler, SIGNAL(currentProfile(MPPerson *)), _peopleMain, SLOT(appendPerson(MPPerson *)));
     connect(_peopleHandler, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
 
-    connect(_peopleHandler, SIGNAL(searchReset()), this, SLOT(initPeopleSearch()));
+    connect(_peopleHandler, SIGNAL(reset()), this, SLOT(initPeopleSearch()));
 }
 
 void MPApplication::initPeopleSearch()
 {
     if (_peopleSearch) {
-        disconnect(_peopleHandler, SIGNAL(searchPerson(MPPerson *)), _peopleSearch, SLOT(appendPerson(MPPerson *)));
+        disconnect(_peopleHandler, SIGNAL(newPerson(MPPerson *)), _peopleSearch, SLOT(appendPerson(MPPerson *)));
         delete _peopleSearch;
     }
 
     _peopleSearch = new MPPeopleModel(this);
     _search->setSourceModel(_peopleSearch);
-    connect(_peopleHandler, SIGNAL(searchPerson(MPPerson *)), _peopleSearch, SLOT(appendPerson(MPPerson *)));
+    connect(_peopleHandler, SIGNAL(newPerson(MPPerson *)), _peopleSearch, SLOT(appendPerson(MPPerson *)));
 }
 
 void MPApplication::selectPerson(const QString &id)

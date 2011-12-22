@@ -111,7 +111,7 @@ Page {
                 anchors.fill: background
                 onClicked: {
                     if(model.title == "My profile") {
-                        MPPeople.requestProfile("me");
+                        MPPeople.request("me");
                     }
                     if(model.page !== "")
                         MPJs.addPage(model.page)

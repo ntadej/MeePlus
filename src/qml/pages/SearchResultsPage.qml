@@ -83,7 +83,7 @@ Page {
             MouseArea {
                 id: mouseAreaItem
                 anchors.fill: itemBackground
-                onClicked: MPPeople.requestProfile(model.id);
+                onClicked: MPPeople.request(model.id);
             }
         }
         footer: Item {

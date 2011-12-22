@@ -16,24 +16,24 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef MEEPLUS_PROFILEHANDLER_H_
-#define MEEPLUS_PROFILEHANDLER_H_
+#ifndef MEEPLUS_ACTIVITIESHANDLER_H_
+#define MEEPLUS_ACTIVITIESHANDLER_H_
 
 #include <QtCore/QObject>
 
 class MPNetworkRequest;
-class MPPerson;
-class MPPersonInformation;
-class MPPersonOrganization;
+class MPActivity;
 
-class MPPeopleHandler : public QObject
+class MPActivitiesHandler : public QObject
 {
 Q_OBJECT
 public:
-    MPPeopleHandler(QObject *parent = 0);
-    ~MPPeopleHandler();
+    MPActivitiesHandler(QObject *parent = 0);
+    ~MPActivitiesHandler();
 
-    Q_INVOKABLE void request(const QString &profile);
+    Q_INVOKABLE void list(const QString &person);
+    Q_INVOKABLE void listNext();
+    Q_INVOKABLE void request(const QString &activity);
     Q_INVOKABLE void search(const QString &string);
     Q_INVOKABLE void searchNext();
 
@@ -41,31 +41,27 @@ public slots:
     void retry();
 
 signals:
-    void currentProfile(MPPerson *);
-    void currentProfileId(const QString &);
-    void finishedProfile();
-    void finishedSearch();
-    void newEmail(MPPersonInformation *);
-    void newLanguage(MPPersonInformation *);
-    void newOrganization(MPPersonOrganization *);
-    void newPerson(MPPerson *);
-    void newPlace(MPPersonInformation *);
-    void newUrl(MPPersonInformation *);
+    void currentActivity(MPActivity *);
+    void finishedActivity();
+    void finishedList();
+    void newActivity(MPActivity *);
     void requestAuthentication();
     void reset();
 
 private slots:
+    void activity(const QString &activity);
     void error(const int &err);
-    void profile(const QString &profile);
+    void listPrivate();
     void searchPrivate();
 
 private:
     MPNetworkRequest *_nr;
 
-    QString _currentProfile;
+    QString _currentActivity;
+    QString _currentPerson;
     QString _currentSearchString;
     QString _nextPage;
     bool _primary;
 };
 
-#endif // MEEPLUS_PROFILEHANDLER_H_
+#endif // MEEPLUS_ACTIVITIESHANDLER_H_

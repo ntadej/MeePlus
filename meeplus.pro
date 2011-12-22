@@ -95,6 +95,13 @@ SOURCES += src/main.cpp \
 SOURCES += \
     src/json/json.cpp
 
+# Activities
+SOURCES += \
+    src/activities/handlers/ActivitiesHandler.cpp \
+    src/activities/items/Activity.cpp \
+    src/activities/models/ActivitiesFilterModel.cpp \
+    src/activities/models/ActivitiesModel.cpp
+
 # People
 SOURCES += \
     src/people/handlers/PeopleHandler.cpp \
@@ -127,6 +134,13 @@ HEADERS += \
     src/core/LocaleManager.h  \
     src/core/NetworkRequest.h \
     src/core/Settings.h
+
+# Activities
+HEADERS += \
+    src/activities/handlers/ActivitiesHandler.h \
+    src/activities/items/Activity.h \
+    src/activities/models/ActivitiesFilterModel.h \
+    src/activities/models/ActivitiesModel.h
 
 # People
 HEADERS += \
