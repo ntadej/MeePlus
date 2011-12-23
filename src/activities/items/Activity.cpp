@@ -22,14 +22,20 @@
 MPActivity::MPActivity(const QString &id,
                        QObject *parent)
     : MPListItem(parent),
-      _id(id),
-      _actor(0) { }
+      _id(id)
+{
+    _actor = 0;
+}
 
-MPActivity::MPActivity() { }
+MPActivity::MPActivity()
+{
+    _actor = 0;
+}
 
 MPActivity::~MPActivity()
 {
-    delete _actor;
+    if (_actor)
+        delete _actor;
 }
 
 QHash<int, QByteArray> MPActivity::roleNames() const
@@ -67,11 +73,14 @@ QVariant MPActivity::data(int role) const
     case UrlRole:
         return url();
     case ActorIdRole:
-        return actor()->id();
+        if (_actor)
+            return actor()->id();
     case ActorNameRole:
-        return actor()->name();
+        if (_actor)
+            return actor()->name();
     case ActorImageRole:
-        return actor()->image();
+        if (_actor)
+            return actor()->image();
     case VerbRole:
         return verb();
     default:

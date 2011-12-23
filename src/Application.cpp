@@ -25,6 +25,12 @@
 #include "core/Authentication.h"
 #include "core/Constants.h"
 #include "core/Settings.h"
+
+#include "activities/handlers/ActivitiesHandler.h"
+#include "activities/items/Activity.h"
+#include "activities/models/ActivitiesFilterModel.h"
+#include "activities/models/ActivitiesModel.h"
+
 #include "people/handlers/PeopleHandler.h"
 #include "people/items/Person.h"
 #include "people/models/PeopleEmailsFilterModel.h"
@@ -53,6 +59,7 @@ MPApplication::MPApplication(QObject *parent)
     _viewer->rootContext()->setContextProperty("MPAuthentication", _authentication);
 
     initPeople();
+    initActivities();
 
     _viewer->setMainQmlFile(QLatin1String("qml/main.qml"));
     _viewer->showExpanded();
@@ -60,12 +67,18 @@ MPApplication::MPApplication(QObject *parent)
     // Tests - only one active at a time!
     //_peopleHandler->requestProfile("me");
     //_peopleHandler->search("Larry Page");
+    //_activitiesHandler->list("me");
 }
 
 MPApplication::~MPApplication()
 {
     delete _authentication;
     delete _settings;
+
+    // Activities
+    delete _activities;
+    delete _activitiesList;
+    delete _activitiesHandler;
 
     // People
     delete _emails;
@@ -80,6 +93,33 @@ MPApplication::~MPApplication()
     delete _profile;
 
     delete _viewer;
+}
+
+void MPApplication::initActivities()
+{
+    _activitiesHandler = new MPActivitiesHandler(this);
+    _viewer->rootContext()->setContextProperty("MPActivities", _activitiesHandler);
+
+    connect(_activitiesHandler, SIGNAL(requestAuthentication()), _authentication, SLOT(refreshToken()));
+    connect(_authentication, SIGNAL(authenticated()), _activitiesHandler, SLOT(retry()));
+
+    _activities = new MPActivitiesFilterModel(this);
+    _viewer->rootContext()->setContextProperty("MPActivitiesList", _activities);
+    _activitiesList = 0;
+
+    connect(_activitiesHandler, SIGNAL(reset()), this, SLOT(initActivitiesList()));
+}
+
+void MPApplication::initActivitiesList()
+{
+    if (_activitiesList) {
+        disconnect(_activitiesHandler, SIGNAL(newActivity(MPActivity *)), _activitiesList, SLOT(appendActivity(MPActivity *)));
+        delete _activitiesList;
+    }
+
+    _activitiesList = new MPActivitiesModel(this);
+    _activities->setSourceModel(_activitiesList);
+    connect(_activitiesHandler, SIGNAL(newActivity(MPActivity *)), _activitiesList, SLOT(appendActivity(MPActivity *)));
 }
 
 void MPApplication::initPeople()

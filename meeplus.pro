@@ -38,6 +38,9 @@
 INCLUDEPATH += src \
     src/core \
     src/json \
+    src/activities/handlers \
+    src/activities/items \
+    src/activities/models \
     src/people/handlers \
     src/people/items \
     src/people/models

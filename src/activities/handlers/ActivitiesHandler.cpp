@@ -27,6 +27,7 @@
 #include "json/json.h"
 #include "activities/handlers/ActivitiesHandler.h"
 #include "activities/items/Activity.h"
+#include "people/items/Person.h"
 
 MPActivitiesHandler::MPActivitiesHandler(QObject *parent)
     : QObject(parent)
@@ -46,19 +47,38 @@ void MPActivitiesHandler::activity(const QString &activity)
     JsonReader *reader = new JsonReader();
     reader->parse(activity);
 
-    qDebug() << reader->result();
+    //qDebug() << reader->result();
 
     if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activity") {
         MPActivity *activity = new MPActivity(MeePlus::codec()->toUnicode(reader->result().toMap()["id"].toByteArray()));
-        // Activity parse
+        activity->setTitle(MeePlus::codec()->toUnicode(reader->result().toMap()["title"].toByteArray()));
+        activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(reader->result().toMap()["published"].toByteArray())));
+        activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(reader->result().toMap()["published"].toByteArray())));
+        activity->setVerb(MeePlus::codec()->toUnicode(reader->result().toMap()["verb"].toByteArray()));
+        // Date example "2011-12-17T11:04:51.095Z"
+
+        MPPerson *actor = new MPPerson(MeePlus::codec()->toUnicode(reader->result().toMap()["actor"].toMap()["id"].toByteArray()));
+        actor->setName(MeePlus::codec()->toUnicode(reader->result().toMap()["actor"].toMap()["displayName"].toByteArray()));
+        actor->setImage(MeePlus::codec()->toUnicode(reader->result().toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()));
+        activity->setActor(actor);
 
         emit currentActivity(activity);
         emit finishedActivity();
-    } else if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activitiesFeed") {
+    } else if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activityFeed") {
         foreach (QVariant item, reader->result().toMap()["items"].toList()) {
             if (MeePlus::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#activity") {
-                MPActivity *activity = new MPActivity(MeePlus::codec()->toUnicode(reader->result().toMap()["id"].toByteArray()));
-                // Search or list
+                MPActivity *activity = new MPActivity(MeePlus::codec()->toUnicode(item.toMap()["id"].toByteArray()));
+                activity->setTitle(MeePlus::codec()->toUnicode(item.toMap()["title"].toByteArray()));
+                activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(item.toMap()["published"].toByteArray())));
+                activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(item.toMap()["published"].toByteArray())));
+                activity->setVerb(MeePlus::codec()->toUnicode(item.toMap()["verb"].toByteArray()));
+
+                MPPerson *actor = new MPPerson(MeePlus::codec()->toUnicode(item.toMap()["actor"].toMap()["id"].toByteArray()));
+                actor->setName(MeePlus::codec()->toUnicode(item.toMap()["actor"].toMap()["displayName"].toByteArray()));
+                actor->setImage(MeePlus::codec()->toUnicode(item.toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()));
+                activity->setActor(actor);
+
+                qDebug() << activity->title();
 
                 emit newActivity(activity);
             }
@@ -105,9 +125,9 @@ void MPActivitiesHandler::listPrivate()
     QNetworkRequest request;
     MPSettings *settings = new MPSettings(this);
     if (_nextPage.isEmpty()) {
-        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people/" + _currentPerson + "/activities/" + "public" + "&maxResults=10" + "&access_token=" + settings->accessToken()));
+        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people/" + _currentPerson + "/activities/" + "public" + "?maxResults=10" + "&access_token=" + settings->accessToken()));
     } else {
-        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people/" + _currentPerson + "/activities/" + "public" + "&pageToken=" + _nextPage + "&maxResults=10" + "&access_token=" + settings->accessToken()));
+        request = QNetworkRequest(QUrl("https://www.googleapis.com/plus/v1/people/" + _currentPerson + "/activities/" + "public" + "?pageToken=" + _nextPage + "&maxResults=10" + "&access_token=" + settings->accessToken()));
     }
     delete settings;
 

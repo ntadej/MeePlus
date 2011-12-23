@@ -20,26 +20,31 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 import "../common"
+import "../views"
 
 Page {
     id: activitiesPage
+    anchors.margins: MPUi.DefaultMargin
     anchors.topMargin: header.height
 
     ListView {
-        id: listView
+        id: activitiesView
         anchors.fill: parent
         width: parent.width
-        model: MPProfile
+        model: MPActivitiesList
         pressDelay: 140
 
-        delegate:  Item {
-            id: listItem
-            width: parent.width
+        delegate: ActivityDelegate {
+            title: model.title
+            verb: model.verb
 
+            actorName: model.actorName
+            actorImage: model.actorImage
         }
     }
+
     ScrollDecorator {
-        flickableItem: listView
+        flickableItem: activitiesView
     }
 
     PageHeader {

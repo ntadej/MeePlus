@@ -55,7 +55,7 @@ void MPPeopleHandler::profile(const QString &profile)
     reader->parse(profile);
 
     //qDebug() << profile;
-    qDebug() << reader->result();
+    //qDebug() << reader->result();
 
     if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#person") {
         MPPerson *person = new MPPerson(MeePlus::codec()->toUnicode(reader->result().toMap()["id"].toByteArray()));

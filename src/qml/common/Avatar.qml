@@ -58,7 +58,7 @@ Image {
             id: avatarLarge
             height: 480
             width: 480
-            source: image + "480"
+            source: image ? image + "480" : image
         }
     }
 }

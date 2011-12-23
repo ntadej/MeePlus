@@ -110,8 +110,9 @@ Page {
                 id: mouseArea
                 anchors.fill: background
                 onClicked: {
-                    if(model.title == "My profile") {
-                        MPPeople.request("me");
+                    if(model.title === "My profile") {
+                        MPPeople.request("me")
+                        MPActivities.list("me")
                     }
                     if(model.page !== "")
                         MPJs.addPage(model.page)

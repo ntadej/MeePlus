@@ -24,6 +24,15 @@
 class QmlApplicationViewer;
 
 class MPAuthentication;
+class MPSettings;
+
+// Activities
+class MPActivitiesFilterModel;
+class MPActivitiesHandler;
+class MPActivitiesModel;
+class MPActivity;
+
+// People
 class MPPeopleHandler;
 class MPPeopleEmailsFilterModel;
 class MPPeopleFilterModel;
@@ -35,7 +44,6 @@ class MPPeopleOrganizationsModel;
 class MPPeoplePlacesFilterModel;
 class MPPeopleUrlsFilterModel;
 class MPPerson;
-class MPSettings;
 
 class MPApplication : public QObject
 {
@@ -45,16 +53,23 @@ public:
     ~MPApplication();
 
 private slots:
+    void initActivitiesList();
     void initPeopleSearch();
     void selectPerson(const QString &id);
 
 private:
+    void initActivities();
     void initPeople();
 
     QmlApplicationViewer *_viewer;
 
     MPAuthentication *_authentication;
     MPSettings *_settings;
+
+    // Activities
+    MPActivitiesHandler *_activitiesHandler;
+    MPActivitiesFilterModel *_activities;
+    MPActivitiesModel *_activitiesList;
 
     // People
     MPPeopleHandler *_peopleHandler;

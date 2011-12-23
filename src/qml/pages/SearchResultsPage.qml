@@ -83,7 +83,10 @@ Page {
             MouseArea {
                 id: mouseAreaItem
                 anchors.fill: itemBackground
-                onClicked: MPPeople.request(model.id);
+                onClicked: {
+                    MPPeople.request(model.id)
+                    MPActivities.list(model.id)
+                }
             }
         }
         footer: Item {
