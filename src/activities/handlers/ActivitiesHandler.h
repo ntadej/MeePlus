@@ -20,6 +20,7 @@
 #define MEEPLUS_ACTIVITIESHANDLER_H_
 
 #include <QtCore/QObject>
+#include <QtCore/QVariantMap>
 
 class MPNetworkRequest;
 class MPActivity;
@@ -52,6 +53,7 @@ private slots:
     void activity(const QString &activity);
     void error(const int &err);
     void listPrivate();
+    MPActivity *processActivity(const QVariantMap &map);
     void searchPrivate();
 
 private:

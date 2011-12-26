@@ -44,6 +44,6 @@ Item {
     Label {
         id: name
         font: MPUi.SmallTitleFont
-        color: MPUi.FieldLabelColor
+        color: MPUi.LightColor
     }
 }

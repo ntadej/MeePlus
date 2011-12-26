@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include "activities/items/Activity.h"
+#include "core/Common.h"
 #include "people/items/Person.h"
 
 MPActivity::MPActivity(const QString &id,
@@ -25,17 +26,21 @@ MPActivity::MPActivity(const QString &id,
       _id(id)
 {
     _actor = 0;
+    _originalActor = 0;
 }
 
 MPActivity::MPActivity()
 {
     _actor = 0;
+    _originalActor = 0;
 }
 
 MPActivity::~MPActivity()
 {
     if (_actor)
         delete _actor;
+    if (_originalActor)
+        delete _originalActor;
 }
 
 QHash<int, QByteArray> MPActivity::roleNames() const
@@ -45,13 +50,24 @@ QHash<int, QByteArray> MPActivity::roleNames() const
     titles[DisplayIconRole] = "displayIcon";
     titles[IdRole] = "id";
     titles[TitleRole] = "title";
+    titles[ContentRole] = "content";
     titles[PublishedRole] = "published";
     titles[UpdatedRole] = "updated";
     titles[UrlRole] = "url";
     titles[ActorIdRole] = "actorId";
     titles[ActorNameRole] = "actorName";
     titles[ActorImageRole] = "actorImage";
+    titles[OriginalActorIdRole] = "originalActorId";
+    titles[OriginalActorNameRole] = "originalActorName";
     titles[VerbRole] = "verb";
+    titles[CommentsRole] = "comments";
+    titles[PlusonersRole] = "plusoners";
+    titles[ResharersRole] = "resharers";
+    titles[ArticleTitleRole] = "articleTitle";
+    titles[ArticleContentRole] = "articleContent";
+    titles[ArticleUrlRole] = "articleUrl";
+    titles[PhotoRole] = "photo";
+    titles[PhotoFullRole] = "photoFull";
     return titles;
 }
 
@@ -66,23 +82,57 @@ QVariant MPActivity::data(int role) const
         return id();
     case TitleRole:
         return title();
+    case ContentRole:
+        return content();
     case PublishedRole:
-        return published();
+        return published().date().toString(Qt::DefaultLocaleShortDate) + " " + tr("at") + " " + published().time().toString(Qt::DefaultLocaleShortDate);
     case UpdatedRole:
-        return updated();
+        return updated().date().toString(Qt::DefaultLocaleShortDate) + " " + tr("at") + " " + published().time().toString(Qt::DefaultLocaleShortDate);
     case UrlRole:
         return url();
     case ActorIdRole:
         if (_actor)
             return actor()->id();
+        else
+            return "";
     case ActorNameRole:
         if (_actor)
             return actor()->name();
+        else
+            return "";
     case ActorImageRole:
         if (_actor)
             return actor()->image();
+        else
+            return "";
+    case OriginalActorIdRole:
+        if (_originalActor)
+            return originalActor()->id();
+        else
+            return "";
+    case OriginalActorNameRole:
+        if (_originalActor)
+            return originalActor()->name();
+        else
+            return "";
     case VerbRole:
         return verb();
+    case CommentsRole:
+        return comments();
+    case PlusonersRole:
+        return plusoners();
+    case ResharersRole:
+        return resharers();
+    case ArticleTitleRole:
+        return articleTitle();
+    case ArticleContentRole:
+        return articleContent();
+    case ArticleUrlRole:
+        return articleUrl();
+    case PhotoRole:
+        return photo();
+    case PhotoFullRole:
+        return photoFull();
     default:
         return QVariant();
     }
@@ -102,6 +152,14 @@ void MPActivity::setTitle(const QString &title)
 {
     if (_title != title) {
         _title = title;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setContent(const QString &content)
+{
+    if (_content != content) {
+        _content = content;
         emit dataChanged();
     }
 }
@@ -139,10 +197,83 @@ void MPActivity::setActor(MPPerson *actor)
     }
 }
 
+void MPActivity::setOriginalActor(MPPerson *originalActor)
+{
+    if (_originalActor != originalActor) {
+        delete _originalActor;
+        _originalActor = originalActor;
+        emit dataChanged();
+    }
+}
+
 void MPActivity::setVerb(const QString &verb)
 {
     if (_verb != verb) {
         _verb = verb;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setComments(const int &comments)
+{
+    if (_comments != comments) {
+        _comments = comments;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setPlusoners(const int &plusoners)
+{
+    if (_plusoners != plusoners) {
+        _plusoners = plusoners;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setResharers(const int &resharers)
+{
+    if (_resharers != resharers) {
+        _resharers = resharers;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setArticleTitle(const QString &articleTitle)
+{
+    if (_articleTitle != articleTitle) {
+        _articleTitle = articleTitle;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setArticleContent(const QString &articleContent)
+{
+    if (_articleContent != articleContent) {
+        _articleContent = articleContent;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setArticleUrl(const QString &articleUrl)
+{
+    if (_articleUrl != articleUrl) {
+        _articleUrl = articleUrl;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setPhoto(const QString &photo)
+{
+    if (_photo != photo) {
+        _photo = photo;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setPhotoFull(const QString &photoFull)
+{
+    if (_photoFull != photoFull) {
+        _photoFull = photoFull;
         emit dataChanged();
     }
 }

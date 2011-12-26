@@ -34,12 +34,47 @@ Page {
         model: MPActivitiesList
         pressDelay: 140
 
+        height: 44
+
         delegate: ActivityDelegate {
             title: model.title
             verb: model.verb
+            published: model.published
+            actorOriginal: model.originalActorName !== "" ? (qsTr("Original post by:") + " " + model.originalActorName) : ""
 
             actorName: model.actorName
             actorImage: model.actorImage
+
+            comments: qsTr("Comments:") + " " + model.comments
+            plusoners: qsTr("+1:") + " " + model.plusoners
+            resharers: qsTr("Reshares:") + " " + model.resharers
+
+            photo: model.photo
+        }
+
+        footer: Item {
+            id: activitiesFooter
+            height: 44
+            width: parent.width
+
+            ItemBackground {
+                id: footerBackground
+                anchors.leftMargin: -searchResultsPage.anchors.leftMargin
+                anchors.rightMargin: -searchResultsPage.anchors.rightMargin
+                visible: mouseAreaFooter.pressed
+            }
+
+            Label {
+                id: footerLabel
+                font: MPUi.TitleFont
+                text: qsTr("Load more")
+            }
+
+            MouseArea {
+                id: mouseAreaFooter
+                anchors.fill: footerBackground
+                onClicked: MPActivities.listNext()
+            }
         }
     }
 

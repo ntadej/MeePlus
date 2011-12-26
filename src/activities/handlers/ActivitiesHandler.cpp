@@ -47,38 +47,18 @@ void MPActivitiesHandler::activity(const QString &activity)
     JsonReader *reader = new JsonReader();
     reader->parse(activity);
 
+    qDebug() << activity;
     //qDebug() << reader->result();
 
     if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activity") {
-        MPActivity *activity = new MPActivity(MeePlus::codec()->toUnicode(reader->result().toMap()["id"].toByteArray()));
-        activity->setTitle(MeePlus::codec()->toUnicode(reader->result().toMap()["title"].toByteArray()));
-        activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(reader->result().toMap()["published"].toByteArray())));
-        activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(reader->result().toMap()["published"].toByteArray())));
-        activity->setVerb(MeePlus::codec()->toUnicode(reader->result().toMap()["verb"].toByteArray()));
-        // Date example "2011-12-17T11:04:51.095Z"
-
-        MPPerson *actor = new MPPerson(MeePlus::codec()->toUnicode(reader->result().toMap()["actor"].toMap()["id"].toByteArray()));
-        actor->setName(MeePlus::codec()->toUnicode(reader->result().toMap()["actor"].toMap()["displayName"].toByteArray()));
-        actor->setImage(MeePlus::codec()->toUnicode(reader->result().toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()));
-        activity->setActor(actor);
+        MPActivity *activity = processActivity(reader->result().toMap());
 
         emit currentActivity(activity);
         emit finishedActivity();
     } else if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activityFeed") {
         foreach (QVariant item, reader->result().toMap()["items"].toList()) {
             if (MeePlus::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#activity") {
-                MPActivity *activity = new MPActivity(MeePlus::codec()->toUnicode(item.toMap()["id"].toByteArray()));
-                activity->setTitle(MeePlus::codec()->toUnicode(item.toMap()["title"].toByteArray()));
-                activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(item.toMap()["published"].toByteArray())));
-                activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(item.toMap()["published"].toByteArray())));
-                activity->setVerb(MeePlus::codec()->toUnicode(item.toMap()["verb"].toByteArray()));
-
-                MPPerson *actor = new MPPerson(MeePlus::codec()->toUnicode(item.toMap()["actor"].toMap()["id"].toByteArray()));
-                actor->setName(MeePlus::codec()->toUnicode(item.toMap()["actor"].toMap()["displayName"].toByteArray()));
-                actor->setImage(MeePlus::codec()->toUnicode(item.toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()));
-                activity->setActor(actor);
-
-                qDebug() << activity->title();
+                MPActivity *activity = processActivity(item.toMap());
 
                 emit newActivity(activity);
             }
@@ -138,6 +118,44 @@ void MPActivitiesHandler::listPrivate()
     _nr->getRequest(request);
 }
 
+MPActivity *MPActivitiesHandler::processActivity(const QVariantMap &map)
+{
+    QRegExp reshared("(Reshared post from .*\n)");
+
+    MPActivity *activity = new MPActivity(MeePlus::codec()->toUnicode(map["id"].toByteArray()));
+    activity->setTitle(MeePlus::codec()->toUnicode(map["title"].toByteArray()).replace(reshared, ""));
+    activity->setContent(MeePlus::codec()->toUnicode(map["object"].toMap()["content"].toByteArray()));
+    activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
+    activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
+    activity->setVerb(MeePlus::codec()->toUnicode(map["verb"].toByteArray()));
+
+    MPPerson *actor = new MPPerson(MeePlus::codec()->toUnicode(map["actor"].toMap()["id"].toByteArray()));
+    actor->setName(MeePlus::codec()->toUnicode(map["actor"].toMap()["displayName"].toByteArray()));
+    actor->setImage(MeePlus::codec()->toUnicode(map["actor"].toMap()["image"].toMap()["url"].toByteArray()));
+    activity->setActor(actor);
+
+    MPPerson *originalActor = new MPPerson(MeePlus::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["id"].toByteArray()));
+    originalActor->setName(MeePlus::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["displayName"].toByteArray()));
+    originalActor->setImage(MeePlus::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()));
+    activity->setOriginalActor(originalActor);
+
+    activity->setComments((map["object"].toMap()["replies"].toMap()["totalItems"].toInt()));
+    activity->setPlusoners((map["object"].toMap()["plusoners"].toMap()["totalItems"].toInt()));
+    activity->setResharers((map["object"].toMap()["resharers"].toMap()["totalItems"].toInt()));
+
+    foreach (QVariant item, map["object"].toMap()["attachments"].toList()) {
+        if (MeePlus::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "article") {
+            activity->setArticleTitle(MeePlus::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
+            activity->setArticleContent(MeePlus::codec()->toUnicode(item.toMap()["content"].toByteArray()));
+            activity->setArticleUrl(MeePlus::codec()->toUnicode(item.toMap()["url"].toByteArray()));
+        } else if (MeePlus::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "photo") {
+            activity->setPhoto(QUrl::fromEncoded(item.toMap()["image"].toMap()["url"].toByteArray()).toString());
+            activity->setPhotoFull(QUrl::fromEncoded(item.toMap()["fullImage"].toMap()["url"].toByteArray()).toString());
+        }
+    }
+
+    return activity;
+}
 
 void MPActivitiesHandler::request(const QString &activity)
 {

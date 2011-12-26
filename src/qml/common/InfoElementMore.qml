@@ -35,7 +35,7 @@ Item {
     Label {
         id: name
         font: MPUi.FieldLabelFont
-        color: MPUi.FieldLabelColor
+        color: MPUi.LightColor
 
         anchors.top: parent.top
     }

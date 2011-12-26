@@ -51,7 +51,7 @@ QDeclarativePropertyMap *MeePlus::Constants::ui()
     uiConstantsData->insert("GroupHeaderHeight", QVariant(40));
 
     // Colors
-    uiConstantsData->insert("FieldLabelColor", QVariant(QColor("#505050")));
+    uiConstantsData->insert("LightColor", QVariant(QColor("#505050")));
     uiConstantsData->insert("HeaderColor", QVariant(QColor("#FFFFFF")));
     uiConstantsData->insert("HighlightColor", QVariant(QColor("#DD4B39")));
 

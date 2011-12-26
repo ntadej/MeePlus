@@ -36,13 +36,24 @@ public:
         DisplayIconRole = Qt::DecorationRole,
         IdRole = Qt::UserRole + 1,
         TitleRole,
+        ContentRole,
         PublishedRole,
         UpdatedRole,
         UrlRole,
         ActorIdRole,
         ActorNameRole,
         ActorImageRole,
-        VerbRole
+        OriginalActorIdRole,
+        OriginalActorNameRole,
+        VerbRole,
+        CommentsRole,
+        PlusonersRole,
+        ResharersRole,
+        ArticleTitleRole,
+        ArticleContentRole,
+        ArticleUrlRole,
+        PhotoRole,
+        PhotoFullRole
     };
 
     MPActivity(const QString &id,
@@ -58,6 +69,8 @@ public:
 
     inline QString title() const { return _title; }
     void setTitle(const QString &title);
+    inline QString content() const { return _content; }
+    void setContent(const QString &content);
     inline QDateTime published() const { return _published; }
     void setPublished(const QDateTime &published);
     inline QDateTime updated() const { return _updated; }
@@ -66,17 +79,45 @@ public:
     void setUrl(const QString &url);
     inline MPPerson *actor() const { return _actor; }
     void setActor(MPPerson *actor);
+    inline MPPerson *originalActor() const { return _originalActor; }
+    void setOriginalActor(MPPerson *originalActor);
     inline QString verb() const { return _verb; }
     void setVerb(const QString &verb);
+    inline int comments() const { return _comments; }
+    void setComments(const int &comments);
+    inline int plusoners() const { return _plusoners; }
+    void setPlusoners(const int &plusoners);
+    inline int resharers() const { return _resharers; }
+    void setResharers(const int &resharers);
+    inline QString articleTitle() const { return _articleTitle; }
+    void setArticleTitle(const QString &articleTitle);
+    inline QString articleContent() const { return _articleContent; }
+    void setArticleContent(const QString &articleContent);
+    inline QString articleUrl() const { return _articleUrl; }
+    void setArticleUrl(const QString &articleUrl);
+    inline QString photo() const { return _photo; }
+    void setPhoto(const QString &photo);
+    inline QString photoFull() const { return _photoFull; }
+    void setPhotoFull(const QString &photoFull);
 
 private:
     QString _id;
     QString _title;
+    QString _content;
     QDateTime _published;
     QDateTime _updated;
     QString _url;
     MPPerson *_actor;
+    MPPerson *_originalActor;
     QString _verb;
+    int _comments;
+    int _plusoners;
+    int _resharers;
+    QString _articleTitle;
+    QString _articleContent;
+    QString _articleUrl;
+    QString _photo;
+    QString _photoFull;
 };
 
 #endif // MEEPLUS_ACTIVITY_H_

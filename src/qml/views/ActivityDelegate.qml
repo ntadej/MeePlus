@@ -24,8 +24,17 @@ import "../common"
 Item {
     property alias title: lTitle.text
     property alias verb: lVerb.text
+    property alias published: lPublished.text
+
     property alias actorName: aName.text
     property alias actorImage: aIcon.source
+    property alias actorOriginal: aOriginal.text
+
+    property alias comments: lComments.text
+    property alias plusoners: lPlusoners.text
+    property alias resharers: lResharers.text
+
+    property alias photo: iPhoto.source
 
     width: parent.width
     height: column.height + 2 * MPUi.DefaultMargin
@@ -49,6 +58,9 @@ Item {
         anchors.right: parent.right
         anchors.bottomMargin: MPUi.DefaultMargin
         anchors.topMargin: MPUi.DefaultMargin
+        width: parent.width
+
+        spacing: MPUi.DefaultMargin / 2
 
         Row {
             spacing: MPUi.DefaultMargin
@@ -59,22 +71,71 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            Label {
-                id: aName
-                font: MPUi.SubtitleFont
-                anchors.verticalCenter: parent.verticalCenter
-            }
+            Column {
+                Label {
+                    id: aName
+                    font: MPUi.TitleFont
+                }
 
-            Label {
-                id: lVerb
-                font: MPUi.TitleFont
-                anchors.verticalCenter: parent.verticalCenter
+                Row {
+                    spacing: MPUi.DefaultMargin / 2
+
+                    Label {
+                        id: lVerb
+                        font: MPUi.InfoFont
+                        color: MPUi.LightColor
+                    }
+
+                    Label {
+                        id: lPublished
+                        font: MPUi.InfoFont
+                        color: MPUi.LightColor
+                    }
+                }
+
+                Label {
+                    id: aOriginal
+                    font: MPUi.InfoFont
+                    color: MPUi.LightColor
+                    visible: text !== ""
+                }
             }
         }
 
         Label {
             id: lTitle
             font: MPUi.SubtitleFont
+            wrapMode: Text.WordWrap
+            width: parent.width
+        }
+
+        Image {
+            id: iPhoto
+        }
+
+        Row {
+            spacing: MPUi.DefaultMargin
+
+            Label {
+                id: lPlusoners
+                font: MPUi.InfoFont
+                color: MPUi.LightColor
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Label {
+                id: lComments
+                font: MPUi.InfoFont
+                color: MPUi.LightColor
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Label {
+                id: lResharers
+                font: MPUi.InfoFont
+                color: MPUi.LightColor
+                anchors.verticalCenter: parent.verticalCenter
+            }
         }
     }
 
