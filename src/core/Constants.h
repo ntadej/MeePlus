@@ -21,13 +21,10 @@
 
 #include <QtDeclarative/QDeclarativePropertyMap>
 
-namespace MeePlus
+namespace MPConstants
 {
-    namespace Constants
-    {
-        QDeclarativePropertyMap *common();
-        QDeclarativePropertyMap *ui();
-    }
+    QDeclarativePropertyMap *common();
+    QDeclarativePropertyMap *ui();
 }
 
 #endif // MEEPLUS_CONSTANTS_H_

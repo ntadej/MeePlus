@@ -17,19 +17,83 @@
 *****************************************************************************/
 
 import QtQuick 1.1
+import com.nokia.meego 1.0
 
 import "../common"
 
-Column {
-    id: column
-    height: 100
+Item {
+    property alias name: name.text
+    property alias title: title.text
+    property alias type: type.text
+
+    property alias startDate: startDate.text
+    property alias endDate: endDate.text
+
     width: parent.width
+    height: column.height + 2 * MPUi.DefaultMargin
 
-    property alias name: info.name
-    property alias value: info.value
+    Separator {
+        anchors.leftMargin: -MPUi.DefaultMargin
+        anchors.rightMargin: -MPUi.DefaultMargin
+    }
 
-    InfoElement {
-        id: info
+    Column {
+        id: column
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottomMargin: MPUi.DefaultMargin
+        anchors.topMargin: MPUi.DefaultMargin
         width: parent.width
+
+        spacing: MPUi.DefaultMargin / 2
+
+        LabelSmall {
+            id: type
+        }
+
+        Label {
+            id: name
+            wrapMode: Text.WordWrap
+            width: parent.width
+
+            visible: text !== ""
+        }
+
+        Label {
+            id: title
+            wrapMode: Text.WordWrap
+            width: parent.width
+
+            visible: text !== ""
+        }
+
+
+        Row {
+            spacing: MPUi.DefaultMargin
+
+            LabelSmall {
+                id: startDate
+                anchors.verticalCenter: parent.verticalCenter
+                visible: text !== ""
+            }
+
+            LabelSmall {
+                id: dateSpacer
+                anchors.verticalCenter: parent.verticalCenter
+                text: "-"
+                visible: startDate.text !== ""
+            }
+
+            LabelSmall {
+                id: endDate
+                anchors.verticalCenter: parent.verticalCenter
+                visible: text !== ""
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        organizationsList.height += column.height
     }
 }

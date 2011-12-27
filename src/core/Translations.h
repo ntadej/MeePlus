@@ -16,34 +16,20 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+#ifndef MEEPLUS_TRANSLATIONS_H_
+#define MEEPLUS_TRANSLATIONS_H_
 
-Item {
-    id: infoElement
+#include <QtCore/QString>
 
-    property alias name: name.text
-    property alias value: value.text
+namespace MPTranslations
+{
+    // Activity
+    QString activityVerb(const QString &string);
 
-    visible: value.text != ""
-
-    anchors.left: parent.left
-    anchors.right: parent.right
-
-    height: name.visible ? name.height + value.height : value.height
-
-    LabelSmall {
-        id: name
-        anchors.top: parent.top
-
-        visible: text != ""
-    }
-
-    Label {
-        id: value
-        wrapMode: Text.WordWrap
-        width: parent.width
-
-        anchors.top: name.visible ? name.bottom : parent.top
-    }
+    // Person
+    QString gender(const QString &string);
+    QString organization(const QString &string);
+    QString relationshipStatus(const QString &string);
 }
+
+#endif // MEEPLUS_TRANSLATIONS_H_

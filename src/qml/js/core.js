@@ -20,7 +20,7 @@
 function addPage(file) {
     var component = Qt.createComponent(file)
 
-    if (component.status == Component.Ready) {
+    if (component.status === Component.Ready) {
         pageStack.push(component);
     } else {
         console.log("Error loading component:", component.errorString());
@@ -30,7 +30,7 @@ function addPage(file) {
 function replacePage(file) {
     var component = Qt.createComponent(file)
 
-    if (component.status == Component.Ready) {
+    if (component.status === Component.Ready) {
         pageStack.replace(component);
     } else {
         console.log("Error loading component:", component.errorString());
@@ -43,5 +43,5 @@ function settings() {
 
 // Login
 function validateLogin(title) {
-    return title.indexOf("code") != -1
+    return title.indexOf("code") !== -1
 }

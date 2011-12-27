@@ -52,10 +52,10 @@ void MPAuthentication::refreshToken()
     QNetworkRequest request(QUrl("https://accounts.google.com/o/oauth2/token"));
     request.setRawHeader("Host", "accounts.google.com");
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.setRawHeader("User-Agent", QString("MeePlus " + MeePlus::version()).toUtf8());
+    request.setRawHeader("User-Agent", QString("MeePlus " + MPCommon::version()).toUtf8());
 
-    QString data = "client_id=" + MeePlus::clientId() + "&"
-            "client_secret=" + MeePlus::clientSecret() + "&"
+    QString data = "client_id=" + MPCommon::clientId() + "&"
+            "client_secret=" + MPCommon::clientSecret() + "&"
             "refresh_token=" + settings->refreshToken() + "&"
             "grant_type=refresh_token";
 
@@ -70,10 +70,10 @@ void MPAuthentication::requestToken(const QString &code)
     QNetworkRequest request(QUrl("https://accounts.google.com/o/oauth2/token"));
     request.setRawHeader("Host", "accounts.google.com");
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.setRawHeader("User-Agent", QString("MeePlus " + MeePlus::version()).toUtf8());
+    request.setRawHeader("User-Agent", QString("MeePlus " + MPCommon::version()).toUtf8());
 
-    QString data = "client_id=" + MeePlus::clientId() + "&"
-            "client_secret=" + MeePlus::clientSecret() + "&"
+    QString data = "client_id=" + MPCommon::clientId() + "&"
+            "client_secret=" + MPCommon::clientSecret() + "&"
             "code=" + code + "&"
             "redirect_uri=urn:ietf:wg:oauth:2.0:oob&"
             "grant_type=authorization_code";
@@ -86,7 +86,7 @@ void MPAuthentication::requestToken(const QString &code)
 QString MPAuthentication::requestUrl() const
 {
     QString url = "https://accounts.google.com/o/oauth2/auth?"
-            "client_id=" + MeePlus::clientId() + "&"
+            "client_id=" + MPCommon::clientId() + "&"
             "redirect_uri=urn:ietf:wg:oauth:2.0:oob&"
             "scope=https://www.googleapis.com/auth/plus.me&"
             "response_type=code";

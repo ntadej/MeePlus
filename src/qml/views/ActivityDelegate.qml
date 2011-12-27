@@ -20,36 +20,41 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 import "../common"
+import "../icons"
 
 Item {
-    property alias title: lTitle.text
-    property alias verb: lVerb.text
-    property alias published: lPublished.text
+    property string activityId: ""
+
+    property alias title: title.text
+    property alias verb: verb.text
+    property alias published: published.text
 
     property alias actorName: aName.text
-    property alias actorImage: aIcon.source
+    property alias actorImage: aIcon.image
     property alias actorOriginal: aOriginal.text
 
-    property alias comments: lComments.text
-    property alias plusoners: lPlusoners.text
-    property alias resharers: lResharers.text
+    property alias comments: comments.text
+    property alias plusoners: plusoners.text
+    property alias resharers: resharers.text
 
-    property alias photo: iPhoto.source
+    property alias photo: photo.source
 
     width: parent.width
     height: column.height + 2 * MPUi.DefaultMargin
 
     ItemBackground {
         id: itemBackground
-        anchors.leftMargin: -activitiesPage.anchors.leftMargin
-        anchors.rightMargin: -activitiesPage.anchors.rightMargin
+        anchors.leftMargin: -MPUi.DefaultMargin
+        anchors.rightMargin: -MPUi.DefaultMargin
         visible: mouseAreaItem.pressed
     }
 
     Separator {
-        anchors.leftMargin: -activitiesPage.anchors.leftMargin
-        anchors.rightMargin: -activitiesPage.anchors.rightMargin
+        anchors.leftMargin: -MPUi.DefaultMargin
+        anchors.rightMargin: -MPUi.DefaultMargin
     }
+
+    IconListArrow { }
 
     Column {
         id: column
@@ -72,68 +77,52 @@ Item {
             }
 
             Column {
-                Label {
+                LabelTitle {
                     id: aName
-                    font: MPUi.TitleFont
                 }
 
                 Row {
                     spacing: MPUi.DefaultMargin / 2
 
-                    Label {
-                        id: lVerb
-                        font: MPUi.InfoFont
-                        color: MPUi.LightColor
+                    LabelSmall {
+                        id: verb
                     }
 
-                    Label {
-                        id: lPublished
-                        font: MPUi.InfoFont
-                        color: MPUi.LightColor
+                    LabelSmall {
+                        id: published
                     }
                 }
 
-                Label {
+                LabelSmall {
                     id: aOriginal
-                    font: MPUi.InfoFont
-                    color: MPUi.LightColor
                     visible: text !== ""
                 }
             }
         }
 
         Label {
-            id: lTitle
-            font: MPUi.SubtitleFont
-            wrapMode: Text.WordWrap
-            width: parent.width
+            id: title
         }
 
         Image {
-            id: iPhoto
+            id: photo
         }
 
         Row {
             spacing: MPUi.DefaultMargin
 
-            Label {
-                id: lPlusoners
-                font: MPUi.InfoFont
-                color: MPUi.LightColor
+            LabelSmall {
+                id: plusoners
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            Label {
-                id: lComments
-                font: MPUi.InfoFont
-                color: MPUi.LightColor
+            LabelSmall {
+                id: comments
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            Label {
-                id: lResharers
-                font: MPUi.InfoFont
-                color: MPUi.LightColor
+            LabelSmall {
+                id: resharers
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
@@ -143,7 +132,8 @@ Item {
         id: mouseAreaItem
         anchors.fill: itemBackground
         onClicked: {
-
+            MPActivity.setId(activityId)
+            personPage.showActivity()
         }
     }
 

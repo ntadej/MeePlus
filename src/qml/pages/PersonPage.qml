@@ -22,6 +22,8 @@ import com.nokia.meego 1.0
 import "../common"
 import "../icons"
 
+import "../js/core.js" as MPJs
+
 Page {
     id: personPage
     tools: ToolBarLayout {
@@ -39,6 +41,11 @@ Page {
                 tab: activities
             }
         }
+        IconMenu {}
+    }
+
+    function showActivity() {
+        MPJs.addPage("ActivityPage.qml");
     }
 
     TabGroup {

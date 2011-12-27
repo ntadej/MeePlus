@@ -49,8 +49,8 @@ MPApplication::MPApplication(QObject *parent)
     _viewer = new QmlApplicationViewer();
     _viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 
-    _viewer->rootContext()->setContextProperty("MPCommon", MeePlus::Constants::common());
-    _viewer->rootContext()->setContextProperty("MPUi", MeePlus::Constants::ui());
+    _viewer->rootContext()->setContextProperty("MPCommon", MPConstants::common());
+    _viewer->rootContext()->setContextProperty("MPUi", MPConstants::ui());
 
     _settings = new MPSettings(this);
     _viewer->rootContext()->setContextProperty("MPSettings", _settings);
@@ -68,6 +68,7 @@ MPApplication::MPApplication(QObject *parent)
     //_peopleHandler->requestProfile("me");
     //_peopleHandler->search("Larry Page");
     //_activitiesHandler->list("me");
+    //_authentication->refreshToken();
 }
 
 MPApplication::~MPApplication()
@@ -77,6 +78,7 @@ MPApplication::~MPApplication()
 
     // Activities
     delete _activities;
+    delete _activity;
     delete _activitiesList;
     delete _activitiesHandler;
 
@@ -105,6 +107,8 @@ void MPApplication::initActivities()
 
     _activities = new MPActivitiesFilterModel(this);
     _viewer->rootContext()->setContextProperty("MPActivitiesList", _activities);
+    _activity = new MPActivitiesFilterModel(this);
+    _viewer->rootContext()->setContextProperty("MPActivity", _activity);
     _activitiesList = 0;
 
     connect(_activitiesHandler, SIGNAL(reset()), this, SLOT(initActivitiesList()));
@@ -119,6 +123,7 @@ void MPApplication::initActivitiesList()
 
     _activitiesList = new MPActivitiesModel(this);
     _activities->setSourceModel(_activitiesList);
+    _activity->setSourceModel(_activitiesList);
     connect(_activitiesHandler, SIGNAL(newActivity(MPActivity *)), _activitiesList, SLOT(appendActivity(MPActivity *)));
 }
 

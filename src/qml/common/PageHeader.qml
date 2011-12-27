@@ -21,7 +21,7 @@ import com.nokia.meego 1.0
 
 Rectangle {
     property alias title: heading.text
-    property bool orientation: screen.currentOrientation == Screen.Landscape
+    property bool orientation: screen.currentOrientation === Screen.Landscape
 
     color: MPUi.HighlightColor
     height: orientation ?

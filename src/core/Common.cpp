@@ -24,7 +24,7 @@
 #include "core/Common.h"
 #include "core/Config.h"
 
-QString MeePlus::clientId()
+QString MPCommon::clientId()
 {
     QString clientId = "";
 #ifdef CLIENT_ID
@@ -34,7 +34,7 @@ QString MeePlus::clientId()
     return clientId;
 }
 
-QString MeePlus::clientSecret()
+QString MPCommon::clientSecret()
 {
     QString clientSecret = "";
 #ifdef CLIENT_SECRET
@@ -44,12 +44,12 @@ QString MeePlus::clientSecret()
     return clientSecret;
 }
 
-QTextCodec *MeePlus::codec()
+QTextCodec *MPCommon::codec()
 {
     return QTextCodec::codecForName("UTF-8");
 }
 
-QString MeePlus::locateResource(const QString &file)
+QString MPCommon::locateResource(const QString &file)
 {
     QString path;
 
@@ -71,7 +71,7 @@ QString MeePlus::locateResource(const QString &file)
     return path;
 }
 
-QString MeePlus::settingsPath()
+QString MPCommon::settingsPath()
 {
     QSettings *settings = new QSettings(QSettings::IniFormat,
                                         QSettings::UserScope,
@@ -83,7 +83,7 @@ QString MeePlus::settingsPath()
     return path;
 }
 
-QString MeePlus::version()
+QString MPCommon::version()
 {
     QString version;
 #ifdef VERSION_PATCH

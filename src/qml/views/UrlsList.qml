@@ -32,7 +32,7 @@ ListView
     delegate: UrlsListDelegate {
         value: model.value
     }
-    height: 30 + count * 29 + (count-1) * spacing
+    height: 30 + count * (29 + spacing)
     cacheBuffer: 1
     interactive:false
     spacing: MPUi.DefaultMargin/2

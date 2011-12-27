@@ -49,7 +49,7 @@ QString MPLocaleManager::language(const QString &locale)
 
 QStringList MPLocaleManager::loadTranslations()
 {
-    QDir dir(MeePlus::locateResource("/lang/sl_SI.qm").replace("/sl_SI.qm", ""));
+    QDir dir(MPCommon::locateResource("/lang/sl_SI.qm").replace("/sl_SI.qm", ""));
     QStringList list;
     QLocale locale = QLocale::English;
     list << QLocale::languageToString(locale.language());
@@ -74,6 +74,6 @@ void MPLocaleManager::setLocale()
         locale = QLocale(settings->language()).name();
     delete settings;
 
-    QString langPath = MeePlus::locateResource("/lang/" + locale + ".qm").replace("/" + locale + ".qm", "");
+    QString langPath = MPCommon::locateResource("/lang/" + locale + ".qm").replace("/" + locale + ".qm", "");
     _translator->load(QString(locale), langPath);
 }

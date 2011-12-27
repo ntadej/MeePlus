@@ -92,7 +92,8 @@ SOURCES += src/main.cpp \
     src/core/ListModel.cpp \
     src/core/LocaleManager.cpp  \
     src/core/NetworkRequest.cpp \
-    src/core/Settings.cpp
+    src/core/Settings.cpp \
+    src/core/Translations.cpp
 
 # Json
 SOURCES += \
@@ -136,7 +137,8 @@ HEADERS += \
     src/core/ListModel.h \
     src/core/LocaleManager.h  \
     src/core/NetworkRequest.h \
-    src/core/Settings.h
+    src/core/Settings.h \
+    src/core/Translations.h
 
 # Activities
 HEADERS += \
@@ -169,7 +171,8 @@ HEADERS += \
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
-OTHER_FILES += api.txt
+OTHER_FILES += api.txt \
+    api_translations.txt
 
 OTHER_FILES += \
     qtc_packaging/debian_harmattan/rules \

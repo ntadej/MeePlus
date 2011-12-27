@@ -24,6 +24,7 @@
 #include "core/Common.h"
 #include "core/NetworkRequest.h"
 #include "core/Settings.h"
+#include "core/Translations.h"
 #include "json/json.h"
 #include "activities/handlers/ActivitiesHandler.h"
 #include "activities/items/Activity.h"
@@ -50,22 +51,22 @@ void MPActivitiesHandler::activity(const QString &activity)
     qDebug() << activity;
     //qDebug() << reader->result();
 
-    if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activity") {
+    if (MPCommon::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activity") {
         MPActivity *activity = processActivity(reader->result().toMap());
 
         emit currentActivity(activity);
         emit finishedActivity();
-    } else if (MeePlus::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activityFeed") {
+    } else if (MPCommon::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activityFeed") {
         foreach (QVariant item, reader->result().toMap()["items"].toList()) {
-            if (MeePlus::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#activity") {
+            if (MPCommon::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#activity") {
                 MPActivity *activity = processActivity(item.toMap());
 
                 emit newActivity(activity);
             }
         }
 
-        _nextPage = MeePlus::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
-        qDebug() << "Next page:" << MeePlus::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
+        _nextPage = MPCommon::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
+        qDebug() << "Next page:" << MPCommon::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
 
         if (_primary)
             emit finishedList();
@@ -113,7 +114,7 @@ void MPActivitiesHandler::listPrivate()
 
     request.setRawHeader("Host", "www.googleapis.com");
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.setRawHeader("User-Agent", QString("MeePlus " + MeePlus::version()).toUtf8());
+    request.setRawHeader("User-Agent", QString("MeePlus " + MPCommon::version()).toUtf8());
 
     _nr->getRequest(request);
 }
@@ -122,21 +123,22 @@ MPActivity *MPActivitiesHandler::processActivity(const QVariantMap &map)
 {
     QRegExp reshared("(Reshared post from .*\n)");
 
-    MPActivity *activity = new MPActivity(MeePlus::codec()->toUnicode(map["id"].toByteArray()));
-    activity->setTitle(MeePlus::codec()->toUnicode(map["title"].toByteArray()).replace(reshared, ""));
-    activity->setContent(MeePlus::codec()->toUnicode(map["object"].toMap()["content"].toByteArray()));
-    activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
-    activity->setPublished(QDateTime::fromString(MeePlus::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
-    activity->setVerb(MeePlus::codec()->toUnicode(map["verb"].toByteArray()));
+    MPActivity *activity = new MPActivity(MPCommon::codec()->toUnicode(map["id"].toByteArray()));
+    activity->setTitle(MPCommon::codec()->toUnicode(map["title"].toByteArray()).replace(reshared, ""));
+    activity->setContent(MPCommon::codec()->toUnicode(map["object"].toMap()["content"].toByteArray()));
+    activity->setAnnotation(MPCommon::codec()->toUnicode(map["annotation"].toByteArray()));
+    activity->setPublished(QDateTime::fromString(MPCommon::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
+    activity->setPublished(QDateTime::fromString(MPCommon::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
+    activity->setVerb(MPTranslations::activityVerb(MPCommon::codec()->toUnicode(map["verb"].toByteArray())));
 
-    MPPerson *actor = new MPPerson(MeePlus::codec()->toUnicode(map["actor"].toMap()["id"].toByteArray()));
-    actor->setName(MeePlus::codec()->toUnicode(map["actor"].toMap()["displayName"].toByteArray()));
-    actor->setImage(MeePlus::codec()->toUnicode(map["actor"].toMap()["image"].toMap()["url"].toByteArray()));
+    MPPerson *actor = new MPPerson(MPCommon::codec()->toUnicode(map["actor"].toMap()["id"].toByteArray()));
+    actor->setName(MPCommon::codec()->toUnicode(map["actor"].toMap()["displayName"].toByteArray()));
+    actor->setImage(MPCommon::codec()->toUnicode(map["actor"].toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
     activity->setActor(actor);
 
-    MPPerson *originalActor = new MPPerson(MeePlus::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["id"].toByteArray()));
-    originalActor->setName(MeePlus::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["displayName"].toByteArray()));
-    originalActor->setImage(MeePlus::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()));
+    MPPerson *originalActor = new MPPerson(MPCommon::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["id"].toByteArray()));
+    originalActor->setName(MPCommon::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["displayName"].toByteArray()));
+    originalActor->setImage(MPCommon::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
     activity->setOriginalActor(originalActor);
 
     activity->setComments((map["object"].toMap()["replies"].toMap()["totalItems"].toInt()));
@@ -144,13 +146,15 @@ MPActivity *MPActivitiesHandler::processActivity(const QVariantMap &map)
     activity->setResharers((map["object"].toMap()["resharers"].toMap()["totalItems"].toInt()));
 
     foreach (QVariant item, map["object"].toMap()["attachments"].toList()) {
-        if (MeePlus::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "article") {
-            activity->setArticleTitle(MeePlus::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
-            activity->setArticleContent(MeePlus::codec()->toUnicode(item.toMap()["content"].toByteArray()));
-            activity->setArticleUrl(MeePlus::codec()->toUnicode(item.toMap()["url"].toByteArray()));
-        } else if (MeePlus::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "photo") {
+        if (MPCommon::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "article") {
+            activity->setArticleTitle(MPCommon::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
+            activity->setArticleContent(MPCommon::codec()->toUnicode(item.toMap()["content"].toByteArray()));
+            activity->setArticleUrl(MPCommon::codec()->toUnicode(item.toMap()["url"].toByteArray()));
+        } else if (MPCommon::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "photo") {
             activity->setPhoto(QUrl::fromEncoded(item.toMap()["image"].toMap()["url"].toByteArray()).toString());
             activity->setPhotoFull(QUrl::fromEncoded(item.toMap()["fullImage"].toMap()["url"].toByteArray()).toString());
+            activity->setPhotoHeight(item.toMap()["fullImage"].toMap()["height"].toInt());
+            activity->setPhotoWidth(item.toMap()["fullImage"].toMap()["width"].toInt());
         }
     }
 
@@ -167,7 +171,7 @@ void MPActivitiesHandler::request(const QString &activity)
 
     request.setRawHeader("Host", "www.googleapis.com");
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.setRawHeader("User-Agent", QString("MeePlus " + MeePlus::version()).toUtf8());
+    request.setRawHeader("User-Agent", QString("MeePlus " + MPCommon::version()).toUtf8());
 
     _nr->getRequest(request);
 }
@@ -175,6 +179,8 @@ void MPActivitiesHandler::request(const QString &activity)
 void MPActivitiesHandler::retry()
 {
     request(_currentActivity);
+    list(_currentPerson);
+    search(_currentSearchString);
 }
 
 void MPActivitiesHandler::search(const QString &string)
@@ -210,7 +216,7 @@ void MPActivitiesHandler::searchPrivate()
 
     request.setRawHeader("Host", "www.googleapis.com");
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.setRawHeader("User-Agent", QString("MeePlus " + MeePlus::version()).toUtf8());
+    request.setRawHeader("User-Agent", QString("MeePlus " + MPCommon::version()).toUtf8());
 
     _nr->getRequest(request);
 }

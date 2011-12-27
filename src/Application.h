@@ -69,6 +69,7 @@ private:
     // Activities
     MPActivitiesHandler *_activitiesHandler;
     MPActivitiesFilterModel *_activities;
+    MPActivitiesFilterModel *_activity;
     MPActivitiesModel *_activitiesList;
 
     // People

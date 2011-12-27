@@ -22,7 +22,7 @@
 #include <QtCore/QString>
 #include <QtCore/QTextCodec>
 
-namespace MeePlus
+namespace MPCommon
 {
     // Main
     QString locateResource(const QString &file);

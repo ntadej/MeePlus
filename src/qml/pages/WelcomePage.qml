@@ -31,7 +31,7 @@ Page {
     tools: ToolBarLayout {
         id: welcomePageTools
         visible: true
-        IconSettings {}
+        //IconSettings {}
         IconLogin {}
         IconMenu {}
     }
@@ -73,14 +73,14 @@ Page {
 
             ItemBackground {
                 id: background
-                anchors.leftMargin: -welcomePage.anchors.leftMargin
-                anchors.rightMargin: -welcomePage.anchors.rightMargin
+                anchors.leftMargin: -MPUi.DefaultMargin
+                anchors.rightMargin: -MPUi.DefaultMargin
                 visible: mouseArea.pressed
             }
 
             Separator {
-                anchors.leftMargin: -welcomePage.anchors.leftMargin
-                anchors.rightMargin: -welcomePage.anchors.rightMargin
+                anchors.leftMargin: -MPUi.DefaultMargin
+                anchors.rightMargin: -MPUi.DefaultMargin
             }
 
             Row {
@@ -88,18 +88,16 @@ Page {
 
                 Column {
                     anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width
 
-                    Label {
+                    LabelTitle {
                         id: mainText
                         text: model.title
-                        font: MPUi.TitleFont
                     }
 
-                    Label {
+                    LabelSubtitle {
                         id: subText
                         text: model.subtitle
-                        font: MPUi.SubtitleFont
-                        color: MPUi.HighlightColor
 
                         visible: text != ""
                     }

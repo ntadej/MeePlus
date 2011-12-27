@@ -59,7 +59,9 @@ QHash<int, QByteArray> MPActivity::roleNames() const
     titles[ActorImageRole] = "actorImage";
     titles[OriginalActorIdRole] = "originalActorId";
     titles[OriginalActorNameRole] = "originalActorName";
+    titles[OriginalActorImageRole] = "originalActorImage";
     titles[VerbRole] = "verb";
+    titles[AnnotationRole] = "annotation";
     titles[CommentsRole] = "comments";
     titles[PlusonersRole] = "plusoners";
     titles[ResharersRole] = "resharers";
@@ -68,6 +70,8 @@ QHash<int, QByteArray> MPActivity::roleNames() const
     titles[ArticleUrlRole] = "articleUrl";
     titles[PhotoRole] = "photo";
     titles[PhotoFullRole] = "photoFull";
+    titles[PhotoHeightRole] = "photoHeight";
+    titles[PhotoWidthRole] = "photoWidth";
     return titles;
 }
 
@@ -85,9 +89,9 @@ QVariant MPActivity::data(int role) const
     case ContentRole:
         return content();
     case PublishedRole:
-        return published().date().toString(Qt::DefaultLocaleShortDate) + " " + tr("at") + " " + published().time().toString(Qt::DefaultLocaleShortDate);
+        return dateOutput(published());
     case UpdatedRole:
-        return updated().date().toString(Qt::DefaultLocaleShortDate) + " " + tr("at") + " " + published().time().toString(Qt::DefaultLocaleShortDate);
+        return dateOutput(updated());
     case UrlRole:
         return url();
     case ActorIdRole:
@@ -115,8 +119,15 @@ QVariant MPActivity::data(int role) const
             return originalActor()->name();
         else
             return "";
+    case OriginalActorImageRole:
+        if (_originalActor)
+            return originalActor()->image();
+        else
+            return "";
     case VerbRole:
         return verb();
+    case AnnotationRole:
+        return annotation();
     case CommentsRole:
         return comments();
     case PlusonersRole:
@@ -133,9 +144,18 @@ QVariant MPActivity::data(int role) const
         return photo();
     case PhotoFullRole:
         return photoFull();
+    case PhotoHeightRole:
+        return photoHeight();
+    case PhotoWidthRole:
+        return photoWidth();
     default:
         return QVariant();
     }
+}
+
+QString MPActivity::dateOutput(const QDateTime &date) const
+{
+    return QString("%1 %2 %3 %4").arg(tr("on"), date.date().toString(Qt::DefaultLocaleShortDate), tr("at"), date.time().toString(Qt::DefaultLocaleShortDate));
 }
 
 QString MPActivity::display() const
@@ -214,6 +234,14 @@ void MPActivity::setVerb(const QString &verb)
     }
 }
 
+void MPActivity::setAnnotation(const QString &annotation)
+{
+    if (_annotation != annotation) {
+        _annotation = annotation;
+        emit dataChanged();
+    }
+}
+
 void MPActivity::setComments(const int &comments)
 {
     if (_comments != comments) {
@@ -274,6 +302,22 @@ void MPActivity::setPhotoFull(const QString &photoFull)
 {
     if (_photoFull != photoFull) {
         _photoFull = photoFull;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setPhotoHeight(const int &photoHeight)
+{
+    if (_photoHeight != photoHeight) {
+        _photoHeight = photoHeight;
+        emit dataChanged();
+    }
+}
+
+void MPActivity::setPhotoWidth(const int &photoWidth)
+{
+    if (_photoWidth != photoWidth) {
+        _photoWidth = photoWidth;
         emit dataChanged();
     }
 }

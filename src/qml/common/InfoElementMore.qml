@@ -28,14 +28,10 @@ Item {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    anchors.margins: MPUi.DefaultMargin
-
     height: name.height + value.height
 
-    Label {
+    LabelSmall {
         id: name
-        font: MPUi.FieldLabelFont
-        color: MPUi.LightColor
 
         anchors.top: parent.top
     }

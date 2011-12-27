@@ -24,13 +24,12 @@ Item {
 
     property alias value: value.text
     property bool url: false
+    property bool small: false
 
     visible: value.text != ""
 
     anchors.left: parent.left
     anchors.right: parent.right
-
-    anchors.margins: MPUi.DefaultMargin
 
     height: value.height
     width: parent.width
@@ -40,6 +39,9 @@ Item {
         elide: Text.ElideMiddle
         textFormat: Text.PlainText
         width: parent.width
+
+        font: small ? MPUi.InfoFont : MPUi.BodyTextFont
+        color: small ? MPUi.LightColor : black
 
         anchors.top: parent.top
     }

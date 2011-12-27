@@ -20,7 +20,10 @@
 #include "activities/models/ActivitiesFilterModel.h"
 
 MPActivitiesFilterModel::MPActivitiesFilterModel(QObject *parent)
-    : QSortFilterProxyModel(parent) { }
+    : QSortFilterProxyModel(parent)
+{
+    _id = "";
+}
 
 MPActivitiesFilterModel::~MPActivitiesFilterModel() { }
 
@@ -30,8 +33,7 @@ bool MPActivitiesFilterModel::filterAcceptsRow(int sourceRow,
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     bool name = sourceModel()->data(index, MPActivity::TitleRole).toString().contains(filterRegExp());
-    //bool id = sourceModel()->data(index, MPActivity::IdRole).toString().contains(_id, Qt::CaseInsensitive);
-    bool id = true;
+    bool id = sourceModel()->data(index, MPActivity::IdRole).toString().contains(_id, Qt::CaseInsensitive);
     return (name && id);
 }
 

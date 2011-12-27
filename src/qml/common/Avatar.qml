@@ -26,7 +26,7 @@ Image {
     property bool active: false
     property bool large: false
 
-    source: large ? image + "80" : image + "50"
+    source: image !== "" ? (large ? image + "80" : image + "50") : ""
 
     width: large ? 80 : 50
     height: large ? 80 : 50

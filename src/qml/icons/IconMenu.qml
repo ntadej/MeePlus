@@ -21,6 +21,6 @@ import com.nokia.meego 1.0
 
 ToolIcon {
     iconId: "toolbar-view-menu"
-    onClicked: menu.status == DialogStatus.Closed ? menu.open() : menu.close()
+    onClicked: menu.status === DialogStatus.Closed ? menu.open() : menu.close()
     anchors.right: parent.right
 }

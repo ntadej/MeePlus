@@ -26,8 +26,6 @@ Item {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    anchors.margins: MPUi.DefaultMargin
-
     height: 30 + 2 * MPUi.DefaultMargin / 4
 
     BorderImage {

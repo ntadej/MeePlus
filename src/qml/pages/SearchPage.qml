@@ -33,6 +33,7 @@ Page {
         id: searchPageTools
         visible: true
         IconBack {}
+        IconMenu {}
     }
 
     Connections {

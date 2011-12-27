@@ -33,6 +33,7 @@ Page {
         id: searchPageTools
         visible: true
         IconBack {}
+        IconMenu {}
     }
 
     ListView {
@@ -42,53 +43,12 @@ Page {
         model: MPSearch
         pressDelay: 140
 
-        delegate: Item {
-            id: searchItem
-            height: 50 + 2 * MPUi.DefaultMargin
-            width: parent.width
-
-            ItemBackground {
-                id: itemBackground
-                anchors.leftMargin: -searchResultsPage.anchors.leftMargin
-                anchors.rightMargin: -searchResultsPage.anchors.rightMargin
-                visible: mouseAreaItem.pressed
-            }
-
-            Separator {
-                anchors.leftMargin: -searchResultsPage.anchors.leftMargin
-                anchors.rightMargin: -searchResultsPage.anchors.rightMargin
-            }
-
-            Row {
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: MPUi.DefaultMargin
-
-                Avatar {
-                    id: icon
-                    active: mouseAreaItem.pressed
-                    image: model.image
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                Label {
-                    id: name
-                    font: MPUi.TitleFont
-                    text: model.name
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            IconListArrow { }
-
-            MouseArea {
-                id: mouseAreaItem
-                anchors.fill: itemBackground
-                onClicked: {
-                    MPPeople.request(model.id)
-                    MPActivities.list(model.id)
-                }
-            }
+        delegate: SearchPersonDelegate {
+            personId: model.id
+            name: model.name
+            image: model.image
         }
+
         footer: Item {
             id: searchFooter
             height: 44
@@ -96,14 +56,13 @@ Page {
 
             ItemBackground {
                 id: footerBackground
-                anchors.leftMargin: -searchResultsPage.anchors.leftMargin
-                anchors.rightMargin: -searchResultsPage.anchors.rightMargin
+                anchors.leftMargin: -MPUi.DefaultMargin
+                anchors.rightMargin: -MPUi.DefaultMargin
                 visible: mouseAreaFooter.pressed
             }
 
-            Label {
+            LabelTitle {
                 id: footerLabel
-                font: MPUi.TitleFont
                 text: qsTr("Load more")
             }
 

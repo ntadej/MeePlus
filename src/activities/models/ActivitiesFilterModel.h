@@ -28,8 +28,8 @@ public:
     MPActivitiesFilterModel(QObject *parent = 0);
     ~MPActivitiesFilterModel();
 
-    QString id() const { return _id; }
-    void setId(const QString &id);
+    Q_INVOKABLE QString id() const { return _id; }
+    Q_INVOKABLE void setId(const QString &id);
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;

@@ -22,18 +22,18 @@
 #include "core/Common.h"
 #include "core/Constants.h"
 
-QDeclarativePropertyMap *MeePlus::Constants::common()
+QDeclarativePropertyMap *MPConstants::common()
 {
     QDeclarativePropertyMap *commonConstantsData = new QDeclarativePropertyMap();
 
-    commonConstantsData->insert("MeePlusVersion", MeePlus::version());
-    commonConstantsData->insert("GoogleClientId", MeePlus::clientId());
-    commonConstantsData->insert("GoogleClientSecret", MeePlus::clientSecret());
+    commonConstantsData->insert("MeePlusVersion", MPCommon::version());
+    commonConstantsData->insert("GoogleClientId", MPCommon::clientId());
+    commonConstantsData->insert("GoogleClientSecret", MPCommon::clientSecret());
 
     return commonConstantsData;
 }
 
-QDeclarativePropertyMap *MeePlus::Constants::ui()
+QDeclarativePropertyMap *MPConstants::ui()
 {
     QDeclarativePropertyMap *uiConstantsData = new QDeclarativePropertyMap();
     uiConstantsData->insert("DefaultMargin", QVariant(16));

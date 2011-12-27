@@ -25,6 +25,7 @@ import "../views"
 Page {
     id: profilePage
     anchors.topMargin: header.height
+    anchors.margins: MPUi.DefaultMargin
 
     ListView {
         id: profileView

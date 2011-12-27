@@ -36,8 +36,8 @@ Sheet {
     }
 
     content: Item {
-        anchors.topMargin: MPUi.DefaultMargin
-        anchors.bottomMargin: MPUi.DefaultMargin
+        anchors.leftMargin: MPUi.DefaultMargin
+        anchors.rightMargin: MPUi.DefaultMargin
         anchors.fill: parent
 
         OrganizationsList {

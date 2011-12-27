@@ -17,33 +17,11 @@
 *****************************************************************************/
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
 
-Item {
-    id: infoElement
-
-    property alias name: name.text
-    property alias value: value.text
-
-    visible: value.text != ""
-
+BorderImage {
+    id: spacer
     anchors.left: parent.left
     anchors.right: parent.right
-
-    height: name.visible ? name.height + value.height : value.height
-
-    LabelSmall {
-        id: name
-        anchors.top: parent.top
-
-        visible: text != ""
-    }
-
-    Label {
-        id: value
-        wrapMode: Text.WordWrap
-        width: parent.width
-
-        anchors.top: name.visible ? name.bottom : parent.top
-    }
+    height: 2
+    source: "image://theme/meegotouch-separator-background-horizontal"
 }

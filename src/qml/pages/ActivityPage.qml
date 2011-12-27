@@ -20,71 +20,63 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 import "../common"
+import "../icons"
 import "../views"
 
 Page {
-    id: activitiesPage
+    id: activityPage
+    tools: ToolBarLayout {
+        id: activityPageTools
+        visible: true
+        IconBack {}
+        IconMenu {}
+    }
+
     anchors.margins: MPUi.DefaultMargin
     anchors.topMargin: header.height
 
     ListView {
-        id: activitiesView
+        id: activityView
         anchors.fill: parent
         width: parent.width
-        model: MPActivitiesList
+        model: MPActivity
         pressDelay: 140
 
         height: 44
 
-        delegate: ActivityDelegate {
-            activityId: model.id
-
-            title: model.title
+        delegate: ActivitySingleDelegate {
             verb: model.verb
             published: model.published
-            actorOriginal: model.originalActorName !== "" ? (qsTr("Original post by:") + " " + model.originalActorName) : ""
+            actorOriginalId: model.originalActorId
+            actorOriginalImage: model.originalActorImage
+            actorOriginalName: model.originalActorName
 
             actorName: model.actorName
             actorImage: model.actorImage
+
+            content: model.content
+            annotation: model.annotation
+            aTitle: model.articleTitle
+            aContent: model.articleContent
+            aUrl: model.articleUrl
 
             comments: qsTr("Comments:") + " " + model.comments
             plusoners: qsTr("+1:") + " " + model.plusoners
             resharers: qsTr("Reshares:") + " " + model.resharers
 
             photo: model.photo
-        }
-
-        footer: Item {
-            id: activitiesFooter
-            height: 44
-            width: parent.width
-
-            ItemBackground {
-                id: footerBackground
-                anchors.leftMargin: -MPUi.DefaultMargin
-                anchors.rightMargin: -MPUi.DefaultMargin
-                visible: mouseAreaFooter.pressed
-            }
-
-            LabelTitle {
-                id: footerLabel
-                text: qsTr("Load more")
-            }
-
-            MouseArea {
-                id: mouseAreaFooter
-                anchors.fill: footerBackground
-                onClicked: MPActivities.listNext()
-            }
+            photoFull: model.photoFull
+            photoHeight: model.photoHeight
+            photoWidth: model.photoWidth
         }
     }
 
     ScrollDecorator {
-        flickableItem: activitiesView
+        flickableItem: activityView
     }
 
     PageHeader {
         id: header
-        title: qsTr("Activities")
+        title: qsTr("Activity")
     }
 }

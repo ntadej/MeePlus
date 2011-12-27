@@ -26,11 +26,12 @@ ListView
     id: organizationsList
     model: MPProfileOrganizations
     delegate: OrganizationsListDelegate {
-        name: model.type
-        value: model.name
+        type: model.type
+        name: model.name
+        title: model.title
+        startDate: model.startDate
+        endDate: model.endDate
     }
-    height: count * 100 + (count-1) * spacing
     cacheBuffer: 1
-    //interactive: false
-    spacing: MPUi.DefaultMargin/2
+    interactive: false
 }

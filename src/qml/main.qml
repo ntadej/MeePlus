@@ -25,7 +25,7 @@ import "pages"
 import "js/core.js" as MPJs
 
 PageStackWindow {
-    id: appWindow
+    id: main
     anchors.margins: MPUi.DefaultMargin
 
     initialPage: welcomePage

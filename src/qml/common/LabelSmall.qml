@@ -19,31 +19,11 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Item {
-    id: infoElement
+Label {
+    id: labelSmall
 
-    property alias name: name.text
-    property alias value: value.text
+    font: MPUi.InfoFont
+    color: MPUi.LightColor
 
-    visible: value.text != ""
-
-    anchors.left: parent.left
-    anchors.right: parent.right
-
-    height: name.visible ? name.height + value.height : value.height
-
-    LabelSmall {
-        id: name
-        anchors.top: parent.top
-
-        visible: text != ""
-    }
-
-    Label {
-        id: value
-        wrapMode: Text.WordWrap
-        width: parent.width
-
-        anchors.top: name.visible ? name.bottom : parent.top
-    }
+    wrapMode: Text.WordWrap
 }

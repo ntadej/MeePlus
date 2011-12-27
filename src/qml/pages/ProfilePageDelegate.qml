@@ -38,6 +38,9 @@ Column {
     width: parent.width
     ProfileHeader {
         id: profileHeader
+
+        anchors.leftMargin: -MPUi.DefaultMargin
+        anchors.rightMargin: -MPUi.DefaultMargin
     }
     Spacer { }
 

@@ -45,7 +45,9 @@ public:
         ActorImageRole,
         OriginalActorIdRole,
         OriginalActorNameRole,
+        OriginalActorImageRole,
         VerbRole,
+        AnnotationRole,
         CommentsRole,
         PlusonersRole,
         ResharersRole,
@@ -53,7 +55,9 @@ public:
         ArticleContentRole,
         ArticleUrlRole,
         PhotoRole,
-        PhotoFullRole
+        PhotoFullRole,
+        PhotoHeightRole,
+        PhotoWidthRole
     };
 
     MPActivity(const QString &id,
@@ -83,6 +87,8 @@ public:
     void setOriginalActor(MPPerson *originalActor);
     inline QString verb() const { return _verb; }
     void setVerb(const QString &verb);
+    inline QString annotation() const { return _annotation; }
+    void setAnnotation(const QString &annotation);
     inline int comments() const { return _comments; }
     void setComments(const int &comments);
     inline int plusoners() const { return _plusoners; }
@@ -99,8 +105,14 @@ public:
     void setPhoto(const QString &photo);
     inline QString photoFull() const { return _photoFull; }
     void setPhotoFull(const QString &photoFull);
+    inline int photoHeight() const { return _photoHeight; }
+    void setPhotoHeight(const int &photoHeight);
+    inline int photoWidth() const { return _photoWidth; }
+    void setPhotoWidth(const int &photoWidth);
 
 private:
+    QString dateOutput(const QDateTime &date) const;
+
     QString _id;
     QString _title;
     QString _content;
@@ -110,6 +122,7 @@ private:
     MPPerson *_actor;
     MPPerson *_originalActor;
     QString _verb;
+    QString _annotation;
     int _comments;
     int _plusoners;
     int _resharers;
@@ -118,6 +131,8 @@ private:
     QString _articleUrl;
     QString _photo;
     QString _photoFull;
+    int _photoHeight;
+    int _photoWidth;
 };
 
 #endif // MEEPLUS_ACTIVITY_H_

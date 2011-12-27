@@ -22,7 +22,11 @@ import com.nokia.meego 1.0
 Item {
     property alias image: icon.image
     property alias name: name.text
+
     property alias tagline: tagline.text
+
+    property alias verb: verb.text
+    property alias published: published.text
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -49,19 +53,27 @@ Item {
         anchors.leftMargin: MPUi.DefaultMargin
         anchors.verticalCenter: parent.verticalCenter
 
-         Label {
+         LabelTitle {
              id: name
-             font: MPUi.TitleFont
          }
 
-         Label {
+         LabelSubtitle {
              id: tagline
-             width: parent.width
-             text: ""
-             wrapMode: Text.WordWrap
-             font: MPUi.SubtitleFont
-             color: MPUi.HighlightColor
-             visible: text != ""
+             visible: text !== ""
+         }
+
+         Row {
+             spacing: MPUi.DefaultMargin / 2
+
+             LabelSmall {
+                 id: verb
+                 visible: text !== ""
+             }
+
+             LabelSmall {
+                 id: published
+                 visible: text !== ""
+             }
          }
     }
 }
