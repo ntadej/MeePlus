@@ -172,7 +172,10 @@ include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
 OTHER_FILES += api.txt \
-    api_translations.txt
+    LICENSE.GPL \
+    NEWS \
+    README \
+    VERSION \
 
 OTHER_FILES += \
     qtc_packaging/debian_harmattan/rules \

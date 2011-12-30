@@ -19,7 +19,7 @@
 #ifndef MEEPLUS_CONFIG_H_
 #define MEEPLUS_CONFIG_H_
 
-#define VERSION "0.1.0"
+#define VERSION "0.2.0"
 #ifdef GIT
     #define VERSION_PATCH GIT
 #endif

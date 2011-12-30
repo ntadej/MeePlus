@@ -1,7 +1,31 @@
 MeePlus - Google+ client for Harmattan
 ==============================================
+MeePlus is an unofficial Google+ client for Nokia N9. You can
+browse people, activities and other content on Google+.
+
+NOTE:
+Due to current Google API restrictions only public content
+is available!
+
 
 Installation
 ============
+Use QtCreator to build for Harmattan. My client ID and secret is
+not public to prevent possible abuse.
+
 Configure with:
-qmake CLIENT_ID="number part of Google Client ID"
+qmake CLIENT_ID="Google Client ID" CLIENT_SECRET="Google Client secret"
+
+
+Copyright info
+==============
+Copyright (C) 2011 Tadej Novak
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+This file may be used under the terms of the
+GNU General Public License version 3.0 as published by the
+Free Software Foundation and appearing in the file LICENSE.GPL
+included in the packaging of this file.

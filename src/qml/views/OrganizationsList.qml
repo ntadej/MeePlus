@@ -33,5 +33,4 @@ ListView
         endDate: model.endDate
     }
     cacheBuffer: 1
-    interactive: false
 }

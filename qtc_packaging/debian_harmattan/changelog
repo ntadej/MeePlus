@@ -1,5 +1,7 @@
-meeplus (0.1.0) unstable; urgency=low
+meeplus (0.2.0) unstable; urgency=low
+  * Initial release
+  * Support for People and activities
+  * People search
+  * Authentication
 
-  * Initial Release.
-
- -- Tadej Novak <tadej@tano.si>  Wed, 28 Sep 2011 14:50:13 +0200
+ -- Tadej Novak <tadej@tano.si>  Fri, 30 Dec 2011 10:57:17 +0100
