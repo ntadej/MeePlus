@@ -38,6 +38,7 @@ public slots:
 
 signals:
     void authenticated();
+    void login();
 
 private slots:
     void error(const int &err);

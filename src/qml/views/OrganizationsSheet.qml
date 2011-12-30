@@ -28,11 +28,17 @@ Sheet {
 
     acceptButtonText: qsTr("Close")
 
-    title: SectionHeader {
-        id: organizationsInfo
-        name: qsTr("Work and education")
-        simple: true
+    title: Item {
         anchors.fill: parent
+        anchors.leftMargin: MPUi.DefaultMargin
+        anchors.rightMargin: MPUi.DefaultMargin
+
+        SectionHeader {
+            id: organizationsInfo
+            name: qsTr("Work and education")
+            simple: true
+            anchors.verticalCenter: parent.verticalCenter
+        }
     }
 
     content: Item {

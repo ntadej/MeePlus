@@ -68,7 +68,9 @@ MPApplication::MPApplication(QObject *parent)
     //_peopleHandler->requestProfile("me");
     //_peopleHandler->search("Larry Page");
     //_activitiesHandler->list("me");
-    //_authentication->refreshToken();
+
+    // Currently refresh auth token on launch
+    _authentication->refreshToken();
 }
 
 MPApplication::~MPApplication()

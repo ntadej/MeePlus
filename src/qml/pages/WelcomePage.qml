@@ -39,6 +39,13 @@ Page {
     onStatusChanged: MPJs.settings()
 
     Connections {
+        target: MPAuthentication
+        onLogin: {
+            MPJs.addPage("LoginPage.qml")
+        }
+    }
+
+    Connections {
         target: MPPeople
         onFinishedProfile: {
             MPJs.addPage("PersonPage.qml")
@@ -117,6 +124,11 @@ Page {
                 }
             }
         }
+    }
+
+    LabelSubtitle {
+        anchors.bottom: parent.bottom
+        text: qsTr("Due to current Google API restrictions only public content is available!")
     }
 
     ScrollDecorator {

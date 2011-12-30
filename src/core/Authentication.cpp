@@ -49,6 +49,11 @@ void MPAuthentication::error(const int &err)
 void MPAuthentication::refreshToken()
 {
     MPSettings *settings = new MPSettings(this);
+    if (settings->refreshToken().isEmpty()) {
+        emit login();
+        return;
+    }
+
     QNetworkRequest request(QUrl("https://accounts.google.com/o/oauth2/token"));
     request.setRawHeader("Host", "accounts.google.com");
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
