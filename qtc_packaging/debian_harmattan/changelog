@@ -1,3 +1,8 @@
+meeplus (0.2.1) unstable; urgency=low
+  * Bugfixes
+
+ -- Tadej Novak <tadej@tano.si>  Sun, 15 Jan 2012 16:18:44 +0100
+
 meeplus (0.2.0) unstable; urgency=low
   * Initial release
   * Support for People and activities

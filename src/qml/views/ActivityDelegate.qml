@@ -102,6 +102,8 @@ Item {
 
         Label {
             id: title
+            wrapMode: Text.WordWrap
+            width: parent.width
         }
 
         Image {

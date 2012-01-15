@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 #ifndef MEEPLUS_CONFIG_H_
 #define MEEPLUS_CONFIG_H_
 
-#define VERSION "0.2.0"
+#define VERSION "0.2.1"
 #ifdef GIT
     #define VERSION_PATCH GIT
 #endif

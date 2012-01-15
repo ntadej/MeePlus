@@ -19,7 +19,7 @@ qmake CLIENT_ID="Google Client ID" CLIENT_SECRET="Google Client secret"
 
 Copyright info
 ==============
-Copyright (C) 2011 Tadej Novak
+Copyright (C) 2011-2012 Tadej Novak
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

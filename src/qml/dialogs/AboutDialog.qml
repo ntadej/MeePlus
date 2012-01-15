@@ -21,7 +21,7 @@ import com.nokia.meego 1.0
 
 QueryDialog {
     titleText: qsTr("About MeePlus " + MPCommon.MeePlusVersion)
-    message: "© 2011 Tadej Novak\n\n" +
+    message: "© 2011-2012 Tadej Novak\n\n" +
              qsTr("MeePlus is an unofficial Google+ client for Nokia N9. You can browse people, activities and other content on Google+.") +
              qsTr("\n\nNOTE:\nDue to current Google API restrictions only public content is available!")
 
