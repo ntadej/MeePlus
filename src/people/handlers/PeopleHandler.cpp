@@ -58,43 +58,43 @@ void MPPeopleHandler::profile(const QString &profile)
     qDebug() << profile;
     //qDebug() << reader->result();
 
-    if (MPCommon::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#person") {
-        MPPerson *person = new MPPerson(MPCommon::codec()->toUnicode(reader->result().toMap()["id"].toByteArray()));
-        person->setName(MPCommon::codec()->toUnicode(reader->result().toMap()["displayName"].toByteArray()));
-        person->setAboutMe(MPCommon::codec()->toUnicode(reader->result().toMap()["aboutMe"].toByteArray()));
-        person->setBirthday(MPCommon::codec()->toUnicode(reader->result().toMap()["birthday"].toByteArray()));
-        person->setCurrentLocation(MPCommon::codec()->toUnicode(reader->result().toMap()["currentLocation"].toByteArray()));
-        person->setGender(MPTranslations::gender(MPCommon::codec()->toUnicode(reader->result().toMap()["gender"].toByteArray())));
-        person->setImage(MPCommon::codec()->toUnicode(reader->result().toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
-        person->setNickname(MPCommon::codec()->toUnicode(reader->result().toMap()["nickname"].toByteArray()));
-        person->setRelationshipStatus(MPTranslations::relationshipStatus(MPCommon::codec()->toUnicode(reader->result().toMap()["relationshipStatus"].toByteArray())));
-        person->setTagline(MPCommon::codec()->toUnicode(reader->result().toMap()["tagline"].toByteArray()));
-        person->setUrl(MPCommon::codec()->toUnicode(reader->result().toMap()["url"].toByteArray()));
+    if (reader->result().toMap()["kind"].toString() == "plus#person") {
+        MPPerson *person = new MPPerson(reader->result().toMap()["id"].toString());
+        person->setName(reader->result().toMap()["displayName"].toString());
+        person->setAboutMe(reader->result().toMap()["aboutMe"].toString());
+        person->setBirthday(reader->result().toMap()["birthday"].toString());
+        person->setCurrentLocation(reader->result().toMap()["currentLocation"].toString());
+        person->setGender(MPTranslations::gender(reader->result().toMap()["gender"].toString()));
+        person->setImage(reader->result().toMap()["image"].toMap()["url"].toString().replace("sz=50","sz="));
+        person->setNickname(reader->result().toMap()["nickname"].toString());
+        person->setRelationshipStatus(MPTranslations::relationshipStatus(reader->result().toMap()["relationshipStatus"].toString()));
+        person->setTagline(reader->result().toMap()["tagline"].toString());
+        person->setUrl(reader->result().toMap()["url"].toString());
 
         foreach (QVariant v, reader->result().toMap()["emails"].toList()) {
-            MPPersonInformation *email = new MPPersonInformation(person->id(), MPCommon::codec()->toUnicode(v.toMap()["value"].toByteArray()));
-            email->setType(MPCommon::codec()->toUnicode(v.toMap()["type"].toByteArray()));
+            MPPersonInformation *email = new MPPersonInformation(person->id(), v.toMap()["value"].toString());
+            email->setType(v.toMap()["type"].toString());
             email->setPrimary(v.toMap()["primary"].toBool());
 
             emit newEmail(email);
         }
 
         foreach (QVariant v, reader->result().toMap()["organizations"].toList()) {
-            MPPersonOrganization *org = new MPPersonOrganization(person->id(), MPCommon::codec()->toUnicode(v.toMap()["name"].toByteArray()));
-            org->setDepartment(MPCommon::codec()->toUnicode(v.toMap()["department"].toByteArray()));
-            org->setTitle(MPCommon::codec()->toUnicode(v.toMap()["title"].toByteArray()));
-            org->setType(MPTranslations::organization(MPCommon::codec()->toUnicode(v.toMap()["type"].toByteArray())));
-            org->setStartDate(MPCommon::codec()->toUnicode(v.toMap()["startDate"].toByteArray()));
-            org->setEndDate(MPCommon::codec()->toUnicode(v.toMap()["endDate"].toByteArray()));
-            org->setLocation(MPCommon::codec()->toUnicode(v.toMap()["location"].toByteArray()));
-            org->setDescription(MPCommon::codec()->toUnicode(v.toMap()["description"].toByteArray()));
+            MPPersonOrganization *org = new MPPersonOrganization(person->id(), v.toMap()["name"].toString());
+            org->setDepartment(v.toMap()["department"].toString());
+            org->setTitle(v.toMap()["title"].toString());
+            org->setType(MPTranslations::organization(v.toMap()["type"].toString()));
+            org->setStartDate(v.toMap()["startDate"].toString());
+            org->setEndDate(v.toMap()["endDate"].toString());
+            org->setLocation(v.toMap()["location"].toString());
+            org->setDescription(v.toMap()["description"].toString());
             org->setPrimary(v.toMap()["primary"].toBool());
 
             emit newOrganization(org);
         }
 
         foreach (QVariant v, reader->result().toMap()["placesLived"].toList()) {
-            MPPersonInformation *place = new MPPersonInformation(person->id(), MPCommon::codec()->toUnicode(v.toMap()["value"].toByteArray()));
+            MPPersonInformation *place = new MPPersonInformation(person->id(), v.toMap()["value"].toString());
             place->setPrimary(v.toMap()["primary"].toBool());
 
             if(place->primary())
@@ -104,8 +104,8 @@ void MPPeopleHandler::profile(const QString &profile)
         }
 
         foreach (QVariant v, reader->result().toMap()["urls"].toList()) {
-            MPPersonInformation *url = new MPPersonInformation(person->id(), MPCommon::codec()->toUnicode(v.toMap()["value"].toByteArray()));
-            url->setType(MPCommon::codec()->toUnicode(v.toMap()["type"].toByteArray()));
+            MPPersonInformation *url = new MPPersonInformation(person->id(), v.toMap()["value"].toString());
+            url->setType(v.toMap()["type"].toString());
             url->setPrimary(v.toMap()["primary"].toBool());
 
             emit newUrl(url);
@@ -117,19 +117,19 @@ void MPPeopleHandler::profile(const QString &profile)
         emit currentProfileId(id);
 
         emit finishedProfile();
-    } else if (MPCommon::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#peopleFeed") {
+    } else if (reader->result().toMap()["kind"].toString() == "plus#peopleFeed") {
         foreach (QVariant item, reader->result().toMap()["items"].toList()) {
-            if (MPCommon::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#person") {
-                MPPerson *person = new MPPerson(MPCommon::codec()->toUnicode(item.toMap()["id"].toByteArray()));
-                person->setName(MPCommon::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
-                person->setImage(MPCommon::codec()->toUnicode(item.toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
+            if (item.toMap()["kind"].toString() == "plus#person") {
+                MPPerson *person = new MPPerson(item.toMap()["id"].toString());
+                person->setName(item.toMap()["displayName"].toString());
+                person->setImage(item.toMap()["image"].toMap()["url"].toString().replace("sz=50","sz="));
 
                 emit newPerson(person);
             }
         }
 
-        _nextPage = MPCommon::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
-        qDebug() << "Next page:" << MPCommon::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
+        _nextPage = reader->result().toMap()["nextPageToken"].toString();
+        qDebug() << "Next page:" << reader->result().toMap()["nextPageToken"].toString();
 
         if (_primary)
             emit finishedSearch();

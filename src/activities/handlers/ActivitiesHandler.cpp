@@ -51,22 +51,22 @@ void MPActivitiesHandler::activity(const QString &activity)
     qDebug() << activity;
     //qDebug() << reader->result();
 
-    if (MPCommon::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activity") {
+    if (reader->result().toMap()["kind"].toString() == "plus#activity") {
         MPActivity *activity = processActivity(reader->result().toMap());
 
         emit currentActivity(activity);
         emit finishedActivity();
-    } else if (MPCommon::codec()->toUnicode(reader->result().toMap()["kind"].toByteArray()) == "plus#activityFeed") {
+    } else if (reader->result().toMap()["kind"].toString() == "plus#activityFeed") {
         foreach (QVariant item, reader->result().toMap()["items"].toList()) {
-            if (MPCommon::codec()->toUnicode(item.toMap()["kind"].toByteArray()) == "plus#activity") {
+            if (item.toMap()["kind"].toString() == "plus#activity") {
                 MPActivity *activity = processActivity(item.toMap());
 
                 emit newActivity(activity);
             }
         }
 
-        _nextPage = MPCommon::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
-        qDebug() << "Next page:" << MPCommon::codec()->toUnicode(reader->result().toMap()["nextPageToken"].toByteArray());
+        _nextPage = reader->result().toMap()["nextPageToken"].toString();
+        qDebug() << "Next page:" << reader->result().toMap()["nextPageToken"].toString();
 
         if (_primary)
             emit finishedList();
@@ -123,22 +123,22 @@ MPActivity *MPActivitiesHandler::processActivity(const QVariantMap &map)
 {
     QRegExp reshared("(Reshared post from .*\n)");
 
-    MPActivity *activity = new MPActivity(MPCommon::codec()->toUnicode(map["id"].toByteArray()));
-    activity->setTitle(MPCommon::codec()->toUnicode(map["title"].toByteArray()).replace(reshared, ""));
-    activity->setContent(MPCommon::codec()->toUnicode(map["object"].toMap()["content"].toByteArray()));
-    activity->setAnnotation(MPCommon::codec()->toUnicode(map["annotation"].toByteArray()));
-    activity->setPublished(QDateTime::fromString(MPCommon::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
-    activity->setPublished(QDateTime::fromString(MPCommon::codec()->toUnicode(map["published"].toByteArray()), Qt::ISODate));
-    activity->setVerb(MPTranslations::activityVerb(MPCommon::codec()->toUnicode(map["verb"].toByteArray())));
+    MPActivity *activity = new MPActivity(map["id"].toString());
+    activity->setTitle(map["title"].toString().replace(reshared, ""));
+    activity->setContent(map["object"].toMap()["content"].toString());
+    activity->setAnnotation(map["annotation"].toString());
+    activity->setPublished(QDateTime::fromString(map["published"].toString(), Qt::ISODate));
+    activity->setPublished(QDateTime::fromString(map["published"].toString(), Qt::ISODate));
+    activity->setVerb(MPTranslations::activityVerb(map["verb"].toString()));
 
-    MPPerson *actor = new MPPerson(MPCommon::codec()->toUnicode(map["actor"].toMap()["id"].toByteArray()));
-    actor->setName(MPCommon::codec()->toUnicode(map["actor"].toMap()["displayName"].toByteArray()));
-    actor->setImage(MPCommon::codec()->toUnicode(map["actor"].toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
+    MPPerson *actor = new MPPerson(map["actor"].toMap()["id"].toString());
+    actor->setName(map["actor"].toMap()["displayName"].toString());
+    actor->setImage(map["actor"].toMap()["image"].toMap()["url"].toString().replace("sz=50","sz="));
     activity->setActor(actor);
 
-    MPPerson *originalActor = new MPPerson(MPCommon::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["id"].toByteArray()));
-    originalActor->setName(MPCommon::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["displayName"].toByteArray()));
-    originalActor->setImage(MPCommon::codec()->toUnicode(map["object"].toMap()["actor"].toMap()["image"].toMap()["url"].toByteArray()).replace("sz=50","sz="));
+    MPPerson *originalActor = new MPPerson(map["object"].toMap()["actor"].toMap()["id"].toString());
+    originalActor->setName(map["object"].toMap()["actor"].toMap()["displayName"].toString());
+    originalActor->setImage(map["object"].toMap()["actor"].toMap()["image"].toMap()["url"].toString().replace("sz=50","sz="));
     activity->setOriginalActor(originalActor);
 
     activity->setComments((map["object"].toMap()["replies"].toMap()["totalItems"].toInt()));
@@ -146,11 +146,11 @@ MPActivity *MPActivitiesHandler::processActivity(const QVariantMap &map)
     activity->setResharers((map["object"].toMap()["resharers"].toMap()["totalItems"].toInt()));
 
     foreach (QVariant item, map["object"].toMap()["attachments"].toList()) {
-        if (MPCommon::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "article") {
-            activity->setArticleTitle(MPCommon::codec()->toUnicode(item.toMap()["displayName"].toByteArray()));
-            activity->setArticleContent(MPCommon::codec()->toUnicode(item.toMap()["content"].toByteArray()));
-            activity->setArticleUrl(MPCommon::codec()->toUnicode(item.toMap()["url"].toByteArray()));
-        } else if (MPCommon::codec()->toUnicode(item.toMap()["objectType"].toByteArray()) == "photo") {
+        if (item.toMap()["objectType"].toString() == "article") {
+            activity->setArticleTitle(item.toMap()["displayName"].toString());
+            activity->setArticleContent(item.toMap()["content"].toString());
+            activity->setArticleUrl(item.toMap()["url"].toString());
+        } else if (item.toMap()["objectType"].toString() == "photo") {
             activity->setPhoto(QUrl::fromEncoded(item.toMap()["image"].toMap()["url"].toByteArray()).toString());
             activity->setPhotoFull(QUrl::fromEncoded(item.toMap()["fullImage"].toMap()["url"].toByteArray()).toString());
             activity->setPhotoHeight(item.toMap()["fullImage"].toMap()["height"].toInt());

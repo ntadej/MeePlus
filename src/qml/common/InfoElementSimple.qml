@@ -41,7 +41,7 @@ Item {
         width: parent.width
 
         font: small ? MPUi.InfoFont : MPUi.BodyTextFont
-        color: small ? MPUi.LightColor : black
+        color: small ? MPUi.LightColor : "black"
 
         anchors.top: parent.top
     }

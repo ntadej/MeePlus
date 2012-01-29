@@ -18,6 +18,7 @@
 
 #include <QtCore/QDebug>
 
+#include "core/Common.h"
 #include "core/NetworkRequest.h"
 
 MPNetworkRequest::MPNetworkRequest(QObject *parent)
@@ -62,7 +63,7 @@ void MPNetworkRequest::httpRequestFinished()
 
         return;
     } else {
-        _currentResult = _nreply->readAll();
+        _currentResult = MPCommon::codec()->toUnicode(_nreply->readAll());
         emit result(_currentResult);
     }
 
