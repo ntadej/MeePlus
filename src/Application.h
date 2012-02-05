@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 class QmlApplicationViewer;
 
 class MPAuthentication;
+class MPPageStack;
 class MPSettings;
 
 // Activities
@@ -53,7 +54,6 @@ public:
     ~MPApplication();
 
 private slots:
-    void initActivitiesList();
     void initPeopleSearch();
     void selectPerson(const QString &id);
 
@@ -64,6 +64,7 @@ private:
     QmlApplicationViewer *_viewer;
 
     MPAuthentication *_authentication;
+    MPPageStack *_stack;
     MPSettings *_settings;
 
     // Activities

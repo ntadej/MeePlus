@@ -92,6 +92,7 @@ SOURCES += src/main.cpp \
     src/core/ListModel.cpp \
     src/core/LocaleManager.cpp  \
     src/core/NetworkRequest.cpp \
+    src/core/PageStack.cpp \
     src/core/Settings.cpp \
     src/core/Translations.cpp
 
@@ -137,8 +138,10 @@ HEADERS += \
     src/core/ListModel.h \
     src/core/LocaleManager.h  \
     src/core/NetworkRequest.h \
+    src/core/PageStack.h \
     src/core/Settings.h \
-    src/core/Translations.h
+    src/core/Translations.h \
+    src/core/Enums.h
 
 # Activities
 HEADERS += \

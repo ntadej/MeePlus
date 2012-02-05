@@ -29,6 +29,7 @@ QDeclarativePropertyMap *MPConstants::common()
     commonConstantsData->insert("MeePlusVersion", MPCommon::version());
     commonConstantsData->insert("GoogleClientId", MPCommon::clientId());
     commonConstantsData->insert("GoogleClientSecret", MPCommon::clientSecret());
+    commonConstantsData->insert("Path", MPCommon::locateResource("qml/main.qml").replace("main.qml", ""));
 
     return commonConstantsData;
 }

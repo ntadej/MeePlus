@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
 #include <QtCore/QRegExp>
 #include <QtCore/QUrl>
+#include <QtGui/QTextEdit>
 #include <QtNetwork/QNetworkRequest>
 
 #include "core/Common.h"
@@ -48,9 +48,6 @@ void MPActivitiesHandler::activity(const QString &activity)
     JsonReader *reader = new JsonReader();
     reader->parse(activity);
 
-    qDebug() << activity;
-    //qDebug() << reader->result();
-
     if (reader->result().toMap()["kind"].toString() == "plus#activity") {
         MPActivity *activity = processActivity(reader->result().toMap());
 
@@ -66,7 +63,6 @@ void MPActivitiesHandler::activity(const QString &activity)
         }
 
         _nextPage = reader->result().toMap()["nextPageToken"].toString();
-        qDebug() << "Next page:" << reader->result().toMap()["nextPageToken"].toString();
 
         if (_primary)
             emit finishedList();
@@ -122,10 +118,12 @@ void MPActivitiesHandler::listPrivate()
 MPActivity *MPActivitiesHandler::processActivity(const QVariantMap &map)
 {
     QRegExp reshared("(Reshared post from .*\n)");
+    QTextEdit text;
 
     MPActivity *activity = new MPActivity(map["id"].toString());
     activity->setTitle(map["title"].toString().replace(reshared, ""));
-    activity->setContent(map["object"].toMap()["content"].toString());
+    text.setHtml(map["object"].toMap()["content"].toString());
+    activity->setContent(text.toPlainText());
     activity->setAnnotation(map["annotation"].toString());
     activity->setPublished(QDateTime::fromString(map["published"].toString(), Qt::ISODate));
     activity->setPublished(QDateTime::fromString(map["published"].toString(), Qt::ISODate));
@@ -147,8 +145,10 @@ MPActivity *MPActivitiesHandler::processActivity(const QVariantMap &map)
 
     foreach (QVariant item, map["object"].toMap()["attachments"].toList()) {
         if (item.toMap()["objectType"].toString() == "article") {
-            activity->setArticleTitle(item.toMap()["displayName"].toString());
-            activity->setArticleContent(item.toMap()["content"].toString());
+            text.setHtml(item.toMap()["displayName"].toString());
+            activity->setArticleTitle(text.toPlainText());
+            text.setHtml(item.toMap()["content"].toString());
+            activity->setArticleContent(text.toPlainText());
             activity->setArticleUrl(item.toMap()["url"].toString());
         } else if (item.toMap()["objectType"].toString() == "photo") {
             activity->setPhoto(QUrl::fromEncoded(item.toMap()["image"].toMap()["url"].toByteArray()).toString());

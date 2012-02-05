@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,15 @@ function replacePage(file) {
     }
 }
 
+function removePage() {
+    pageStack.pop()
+}
+
+function myProfile() {
+    MPActivities.list("me");
+    MPPeople.request("me");
+}
+
 function settings() {
 
 }
@@ -44,4 +53,35 @@ function settings() {
 // Login
 function validateLogin(title) {
     return title.indexOf("code") !== -1
+}
+
+// Page stack
+function addActivityPage(activityId) {
+    addPage(MPCommon.Path + "pages/ActivityPage.qml")
+    MPPageStack.addActivityPage(activityId)
+}
+
+function addLoginPage() {
+    addPage(MPCommon.Path + "pages/LoginPage.qml")
+    MPPageStack.addGenericPage()
+}
+
+function addPersonPage(personId) {
+    addPage(MPCommon.Path + "pages/PersonPage.qml")
+    MPPageStack.addPersonPage(personId)
+}
+
+function addSearchPage() {
+    addPage(MPCommon.Path + "pages/SearchPage.qml")
+    MPPageStack.addGenericPage()
+}
+
+function addSearchResultsPage() {
+    addPage(MPCommon.Path + "pages/SearchResultsPage.qml")
+    MPPageStack.addGenericPage()
+}
+
+function addSettingsPage() {
+    addPage(MPCommon.Path + "pages/SettingsPage.qml")
+    MPPageStack.addGenericPage()
 }

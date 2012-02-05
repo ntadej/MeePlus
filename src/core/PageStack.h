@@ -16,12 +16,41 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+#ifndef MEEPLUS_PAGESTACK_H_
+#define MEEPLUS_PAGESTACK_H_
 
-import "../js/core.js" as MPJs
+#include <QtCore/QList>
+#include <QtCore/QObject>
 
-ToolIcon {
-    iconId: "toolbar-settings"
-    onClicked: MPJs.addSettingsPage()
-}
+#include "core/Enums.h"
+
+struct MPPage
+{
+    QString id;
+    MPEnums::PageType type;
+};
+
+class MPPageStack : public QObject
+{
+Q_OBJECT
+public:
+    MPPageStack(QObject *parent = 0);
+    ~MPPageStack();
+
+    Q_INVOKABLE void addActivityPage(const QString &id);
+    Q_INVOKABLE void addGenericPage();
+    Q_INVOKABLE void addPersonPage(const QString &id);
+
+    Q_INVOKABLE void removePage();
+
+signals:
+    void applyActivity(const QString &);
+    void applyPerson(const QString &);
+
+    void remove();
+
+private:
+    QList<MPPage> _pages;
+};
+
+#endif // MEEPLUS_PAGESTACK_H_

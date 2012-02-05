@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
 #include <QtCore/QRegExp>
 #include <QtCore/QUrl>
 #include <QtNetwork/QNetworkRequest>
@@ -54,9 +53,6 @@ void MPPeopleHandler::profile(const QString &profile)
 {
     JsonReader *reader = new JsonReader();
     reader->parse(profile);
-
-    qDebug() << profile;
-    //qDebug() << reader->result();
 
     if (reader->result().toMap()["kind"].toString() == "plus#person") {
         MPPerson *person = new MPPerson(reader->result().toMap()["id"].toString());
@@ -116,7 +112,7 @@ void MPPeopleHandler::profile(const QString &profile)
         emit currentProfile(person);
         emit currentProfileId(id);
 
-        emit finishedProfile();
+        emit finishedProfile(id);
     } else if (reader->result().toMap()["kind"].toString() == "plus#peopleFeed") {
         foreach (QVariant item, reader->result().toMap()["items"].toList()) {
             if (item.toMap()["kind"].toString() == "plus#person") {
@@ -129,7 +125,6 @@ void MPPeopleHandler::profile(const QString &profile)
         }
 
         _nextPage = reader->result().toMap()["nextPageToken"].toString();
-        qDebug() << "Next page:" << reader->result().toMap()["nextPageToken"].toString();
 
         if (_primary)
             emit finishedSearch();

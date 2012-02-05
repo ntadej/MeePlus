@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ MPActivitiesFilterModel::MPActivitiesFilterModel(QObject *parent)
     : QSortFilterProxyModel(parent)
 {
     _id = "";
+    _personId = "";
 }
 
 MPActivitiesFilterModel::~MPActivitiesFilterModel() { }
@@ -34,13 +35,23 @@ bool MPActivitiesFilterModel::filterAcceptsRow(int sourceRow,
 
     bool name = sourceModel()->data(index, MPActivity::TitleRole).toString().contains(filterRegExp());
     bool id = sourceModel()->data(index, MPActivity::IdRole).toString().contains(_id, Qt::CaseInsensitive);
-    return (name && id);
+    bool personId = sourceModel()->data(index, MPActivity::ActorIdRole).toString().contains(_personId, Qt::CaseInsensitive);
+
+    return (name && id && personId);
 }
 
 void MPActivitiesFilterModel::setId(const QString &id)
 {
     if(_id != id) {
         _id = id;
+        invalidateFilter();
+    }
+}
+
+void MPActivitiesFilterModel::setPersonId(const QString &personId)
+{
+    if(_personId != personId) {
+        _personId = personId;
         invalidateFilter();
     }
 }

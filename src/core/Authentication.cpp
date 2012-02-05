@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
 #include <QtCore/QRegExp>
 #include <QtCore/QUrl>
 #include <QtNetwork/QNetworkRequest>
@@ -64,8 +63,6 @@ void MPAuthentication::refreshToken()
             "refresh_token=" + settings->refreshToken() + "&"
             "grant_type=refresh_token";
 
-    qDebug() << data.toUtf8();
-
     _nr->postRequest(request, data.toUtf8());
     delete settings;
 }
@@ -82,8 +79,6 @@ void MPAuthentication::requestToken(const QString &code)
             "code=" + code + "&"
             "redirect_uri=urn:ietf:wg:oauth:2.0:oob&"
             "grant_type=authorization_code";
-
-    qDebug() << data.toUtf8();
 
     _nr->postRequest(request, data.toUtf8());
 }
@@ -105,7 +100,6 @@ bool MPAuthentication::responseCode(const QString &title)
 
     QRegExp exp(".*=(.*)");
     exp.indexIn(title);
-    qDebug() << exp.cap(1);
 
     QString code = exp.cap(1);
     requestToken(code);
@@ -123,9 +117,6 @@ void MPAuthentication::token(const QString &token)
         settings->setRefreshToken(reader->result().toMap()["refresh_token"].toString());
     settings->setAccessToken(reader->result().toMap()["access_token"].toString());
     settings->writeSettings();
-
-    qDebug() << token;
-    qDebug() << settings->refreshToken() << settings->accessToken();
     delete settings;
 
     delete reader;

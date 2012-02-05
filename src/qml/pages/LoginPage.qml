@@ -45,7 +45,7 @@ Page {
         onTitleChanged: {
             if(MPAuthentication.responseCode(title)) {
                 login.done = true
-                pageStack.pop();
+                MPJs.removePage()
             }
         }
     }

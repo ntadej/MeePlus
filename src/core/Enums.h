@@ -16,12 +16,17 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+#ifndef MEEPLUS_ENUMS_H_
+#define MEEPLUS_ENUMS_H_
 
-import "../js/core.js" as MPJs
-
-ToolIcon {
-    iconId: "toolbar-settings"
-    onClicked: MPJs.addSettingsPage()
+namespace MPEnums
+{
+    enum PageType
+    {
+        Generic,
+        Activity,
+        Person
+    };
 }
+
+#endif // MEEPLUS_ENUMS_H_

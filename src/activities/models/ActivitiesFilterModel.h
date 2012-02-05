@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,13 +29,18 @@ public:
     ~MPActivitiesFilterModel();
 
     Q_INVOKABLE QString id() const { return _id; }
+    Q_INVOKABLE QString personId() const { return _personId; }
+
+public slots:
     Q_INVOKABLE void setId(const QString &id);
+    Q_INVOKABLE void setPersonId(const QString &personId);
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
 private:
     QString _id;
+    QString _personId;
 };
 
 #endif // MEEPLUS_ACTIVITIESFILTERMODEL_H_

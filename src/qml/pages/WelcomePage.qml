@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,33 +38,17 @@ Page {
 
     onStatusChanged: MPJs.settings()
 
-    Connections {
-        target: MPAuthentication
-        onLogin: {
-            MPJs.addPage("LoginPage.qml")
-        }
-    }
-
-    Connections {
-        target: MPPeople
-        onFinishedProfile: {
-            MPJs.addPage("PersonPage.qml")
-        }
-    }
-
     ListModel {
         id: pagesModel
         ListElement {
-            page: ""
+            page: 1
             title: "My profile"
             subtitle: "Checkout your profile"
-            image: "image://theme/icon-m-common-drilldown-arrow"
         }
         ListElement {
-            page: "SearchPage.qml"
+            page: 2
             title: "Search G+"
             subtitle: "Search for users, pages, etc."
-            image: "image://theme/icon-m-common-drilldown-arrow"
         }
     }
 
@@ -115,12 +99,16 @@ Page {
                 id: mouseArea
                 anchors.fill: background
                 onClicked: {
-                    if(model.title === "My profile") {
-                        MPPeople.request("me")
-                        MPActivities.list("me")
+                    switch (page) {
+                    case 1:
+                        MPJs.myProfile()
+                        break
+                    case 2:
+                        MPJs.addSearchPage()
+                        break
+                    default:
+                        break
                     }
-                    if(model.page !== "")
-                        MPJs.addPage(model.page)
                 }
             }
         }

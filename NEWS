@@ -1,7 +1,11 @@
+0.3 (git)
+ * Unlimited nested pages
+ * Encoding fixes
+
 0.2.1 (2012-01-15)
  * Bugfixes
 
-0.2.0 (2011-12-30)
+0.2 (2011-12-30)
  * Initial release
  * Support for People and activities
  * People search

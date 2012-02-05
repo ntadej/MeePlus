@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 
 #include "core/Authentication.h"
 #include "core/Constants.h"
+#include "core/PageStack.h"
 #include "core/Settings.h"
 
 #include "activities/handlers/ActivitiesHandler.h"
@@ -52,6 +53,9 @@ MPApplication::MPApplication(QObject *parent)
     _viewer->rootContext()->setContextProperty("MPCommon", MPConstants::common());
     _viewer->rootContext()->setContextProperty("MPUi", MPConstants::ui());
 
+    _stack = new MPPageStack(this);
+    _viewer->rootContext()->setContextProperty("MPPageStack", _stack);
+
     _settings = new MPSettings(this);
     _viewer->rootContext()->setContextProperty("MPSettings", _settings);
 
@@ -63,11 +67,6 @@ MPApplication::MPApplication(QObject *parent)
 
     _viewer->setMainQmlFile(QLatin1String("qml/main.qml"));
     _viewer->showExpanded();
-
-    // Tests - only one active at a time!
-    //_peopleHandler->requestProfile("me");
-    //_peopleHandler->search("Larry Page");
-    //_activitiesHandler->list("me");
 
     // Currently refresh auth token on launch
     _authentication->refreshToken();
@@ -111,22 +110,13 @@ void MPApplication::initActivities()
     _viewer->rootContext()->setContextProperty("MPActivitiesList", _activities);
     _activity = new MPActivitiesFilterModel(this);
     _viewer->rootContext()->setContextProperty("MPActivity", _activity);
-    _activitiesList = 0;
-
-    connect(_activitiesHandler, SIGNAL(reset()), this, SLOT(initActivitiesList()));
-}
-
-void MPApplication::initActivitiesList()
-{
-    if (_activitiesList) {
-        disconnect(_activitiesHandler, SIGNAL(newActivity(MPActivity *)), _activitiesList, SLOT(appendActivity(MPActivity *)));
-        delete _activitiesList;
-    }
 
     _activitiesList = new MPActivitiesModel(this);
     _activities->setSourceModel(_activitiesList);
     _activity->setSourceModel(_activitiesList);
     connect(_activitiesHandler, SIGNAL(newActivity(MPActivity *)), _activitiesList, SLOT(appendActivity(MPActivity *)));
+
+    connect(_stack, SIGNAL(applyActivity(QString)), _activity, SLOT(setId(QString)));
 }
 
 void MPApplication::initPeople()
@@ -174,6 +164,7 @@ void MPApplication::initPeople()
 
     connect(_peopleHandler, SIGNAL(currentProfile(MPPerson *)), _peopleMain, SLOT(appendPerson(MPPerson *)));
     connect(_peopleHandler, SIGNAL(currentProfileId(QString)), this, SLOT(selectPerson(QString)));
+    connect(_stack, SIGNAL(applyPerson(QString)), this, SLOT(selectPerson(QString)));
 
     connect(_peopleHandler, SIGNAL(reset()), this, SLOT(initPeopleSearch()));
 }
@@ -196,6 +187,8 @@ void MPApplication::selectPerson(const QString &id)
 
     if (!_peopleMain->find(id))
         return;
+
+    _activities->setPersonId(id);
 
     _profileEmails->setPerson(id);
     _profileLanguages->setPerson(id);

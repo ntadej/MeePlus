@@ -1,6 +1,6 @@
 /****************************************************************************
 * MeePlus - Google+ client for Harmattan
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ public slots:
 signals:
     void currentProfile(MPPerson *);
     void currentProfileId(const QString &);
-    void finishedProfile();
+    void finishedProfile(const QString &id);
     void finishedSearch();
     void newEmail(MPPersonInformation *);
     void newLanguage(MPPersonInformation *);
